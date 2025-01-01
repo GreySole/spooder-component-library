@@ -3,10 +3,10 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/greysole"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
@@ -14,6 +14,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@greysole/spooder-component-library": "file:",
     "@rollup/plugin-json": "^6.1.0",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
