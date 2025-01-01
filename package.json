@@ -32,10 +32,7 @@
     "react-dom": "^18.0.0"
   },
   "scripts": {
-    "build": "rollup -c",
-    "start": "craco start",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "build": "rollup -c"
   },
   "eslintConfig": {
     "extends": [
