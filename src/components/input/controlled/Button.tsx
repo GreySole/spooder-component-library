@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getIcon } from '../../../util/MediaUtil';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import useTheme from '../../../context/useTheme';
+import useTheme from '../../../context/ThemeContext';
 
 interface ButtonProps {
   className?: string;
