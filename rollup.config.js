@@ -4,6 +4,7 @@ const typescript = require('@rollup/plugin-typescript');
 const dts = require('rollup-plugin-dts');
 const json = require('@rollup/plugin-json');
 const postcss = require('rollup-plugin-postcss');
+const url = require('@rollup/plugin-url');
 const packageJson = require('./package.json');
 const fs = require('fs-extra');
 
@@ -28,6 +29,10 @@ module.exports = [{
             postcss({
                 extensions: ['.css'],
             }),
+            url({
+                include: ['**/*.svg'],
+                limit: 0, // Always include the SVGs as separate files
+            }),
         ],
     },
     {
@@ -46,5 +51,6 @@ module.exports = [{
                 }
             }
         ],
+        external: [/\.svg$/], // Exclude SVG files from the type declaration step
     },
 ];

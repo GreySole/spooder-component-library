@@ -12,8 +12,8 @@ export * from './util/MediaUtil';
 export * from './util/ScriptUtil';
 
 //Icons
-export {DashedCircle} from './icons/DashedCircle.svg';
-export {DiscordIcon} from './icons/discord.svg';
-export {OBSIcon} from './icons/obs.svg';
-export {TwitchIcon} from './icons/twitch.svg';
+export { default as DashedCircle } from './icons/DashedCircle.svg';
+export { default as DiscordIcon } from './icons/discord.svg';
+export { default as OBSIcon } from './icons/obs.svg';
+export { default as TwitchIcon } from './icons/twitch.svg';
 export * from './Icons/SvgIcon';
