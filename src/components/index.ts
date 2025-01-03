@@ -43,3 +43,6 @@ export {default as TypeFace} from "./layout/TypeFace";
 //loader
 export {default as CircleLoader} from "./loader/CircleLoader";
 export {default as FormLoader} from "./loader/FormLoader";
+
+//media
+export {default as SvgIcon} from "./media/SvgIcon";

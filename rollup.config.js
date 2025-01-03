@@ -1,14 +1,16 @@
-const resolve = require('@rollup/plugin-node-resolve');
-const commonjs = require('@rollup/plugin-commonjs');
-const typescript = require('@rollup/plugin-typescript');
-const dts = require('rollup-plugin-dts');
-const json = require('@rollup/plugin-json');
-const postcss = require('rollup-plugin-postcss');
-const svgr = require('@svgr/rollup');
-const packageJson = require('./package.json');
-const fs = require('fs-extra');
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import dts from 'rollup-plugin-dts';
+import json from '@rollup/plugin-json';
+import postcss from 'rollup-plugin-postcss';
+import svgr from '@svgr/rollup';
+import fs from 'fs-extra';
 
-module.exports = [{
+const packageFile = fs.readFileSync('./package.json', 'utf8');
+const packageJson = JSON.parse(packageFile);
+
+export default [{
         input: 'src/index.ts',
         output: [{
                 file: packageJson.main,
@@ -29,7 +31,7 @@ module.exports = [{
             postcss({
                 extensions: ['.css'],
             }),
-            svgr({ icon: true, typescript: true }),
+            svgr({ typescript: true }), // Ensure this line is included
         ],
     },
     {
@@ -39,7 +41,7 @@ module.exports = [{
             { file: 'dist/esm/index.d.ts', format: 'esm' }
         ],
         plugins: [
-            dts.dts(),
+            dts(),
             {
                 name: 'copy-types',
                 buildEnd() {
@@ -47,7 +49,6 @@ module.exports = [{
                     fs.copySync('dist/types', 'dist/esm/types');
                 }
             }
-        ],
-        external: [/\.svg$/], // Exclude SVG files from the type declaration step
+        ]
     },
 ];
