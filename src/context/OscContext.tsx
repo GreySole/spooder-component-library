@@ -87,6 +87,10 @@ export function OscProvider(props: OscProviderProps) {
   return <OscContext.Provider value={value}>{children}</OscContext.Provider>;
 }
 
-export default function useOSC() {
-  return useContext(OscContext);
+export function useOSC() {
+  const context = useContext(OscContext);
+    if (!context) {
+      throw new Error("useOSC must be used within a OSCProvider");
+    }
+    return context;
 }

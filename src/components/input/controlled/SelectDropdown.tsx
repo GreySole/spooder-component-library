@@ -1,6 +1,6 @@
 import React from 'react';
 import { SelectOption } from '../../../Types';
-import useTheme from '../../../context/ThemeContext';
+import {useTheme} from '../../../context/ThemeContext';
 
 interface SelectDropdownProps {
   label?: string;

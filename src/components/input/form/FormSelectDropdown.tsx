@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SelectOption, StyleSize } from '../../../Types';
-import useTheme from '../../../context/ThemeContext';
+import {useTheme} from '../../../context/ThemeContext';
 
 interface SelectDropdownProps {
   formKey: string;

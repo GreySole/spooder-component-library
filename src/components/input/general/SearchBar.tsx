@@ -1,7 +1,7 @@
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import useTheme from '../../../context/ThemeContext';
+import {useTheme} from '../../../context/ThemeContext';
 
 interface SearchBarProps {
   placeholder?: string;

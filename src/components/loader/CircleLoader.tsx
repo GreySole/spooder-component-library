@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '../layout/Box';
-import useTheme from '../../context/ThemeContext';
+import {useTheme} from '../../context/ThemeContext';
 
 export default function CircleLoader() {
   const { themeColors } = useTheme();
