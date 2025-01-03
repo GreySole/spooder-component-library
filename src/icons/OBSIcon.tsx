@@ -1,4 +1,3 @@
 import ObsIcon from './svg/obs.svg';
-export default function OBSIcon(){
-    return ObsIcon;
-}
+const OBSIcon = ObsIcon;
+export default OBSIcon;
