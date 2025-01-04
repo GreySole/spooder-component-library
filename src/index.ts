@@ -12,7 +12,4 @@ export * from './util/MediaUtil';
 export * from './util/ScriptUtil';
 
 //Icons
-export * from './icons/DashedCircle';
-export * from './icons/DiscordIcon';
-export * from './icons/OBSIcon';
-export * from './icons/TwitchIcon';
+export * from './icons/icons';
