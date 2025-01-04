@@ -34,7 +34,9 @@ export default [{
             typescript({ tsconfig: './tsconfig.json' }),
             json(),
             postcss({
-                extensions: ['.css'],
+                extensions: ['.css', '.scss'],
+                extract: true, // Extract CSS to a separate file
+                minimize: true, // Minify the CSS
             }),
             svgr({ typescript: true }),
             builtins(),
