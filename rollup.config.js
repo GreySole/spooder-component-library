@@ -4,6 +4,8 @@ import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import json from '@rollup/plugin-json';
 import postcss from 'rollup-plugin-postcss';
+import builtins from 'rollup-plugin-node-builtins';
+import globals from 'rollup-plugin-node-globals';
 import svgr from '@svgr/rollup';
 import fs from 'fs-extra';
 
@@ -24,14 +26,32 @@ export default [{
             },
         ],
         plugins: [
-            resolve(),
+            resolve({
+                preferBuiltins: true,
+                browser: true,
+            }),
             commonjs(),
             typescript({ tsconfig: './tsconfig.json' }),
             json(),
             postcss({
                 extensions: ['.css'],
             }),
-            svgr({ typescript: true }), // Ensure this line is included
+            svgr({ typescript: true }),
+            builtins(),
+            globals(),
+        ],
+        external: [
+            'dgram',
+            'events',
+            'https',
+            'http',
+            'net',
+            'tls',
+            'crypto',
+            'stream',
+            'url',
+            'zlib',
+            'buffer',
         ],
     },
     {
