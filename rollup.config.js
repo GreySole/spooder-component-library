@@ -42,7 +42,7 @@ export default [{
             commonjs(),
             typescript({ tsconfig: './tsconfig.json' }),
             json(),
-            postcss({ plugins: [autoprefixer()], use: ['sass'] }),
+            postcss({ plugins: [autoprefixer()], extract: true, use: ['sass'] }),
             svgr({ typescript: true }),
             builtins(),
             globals()
@@ -70,7 +70,7 @@ export default [{
         plugins: [
             alias({
                 entries: [
-                    { find: '../css/index.scss', replacement: path.resolve('dist/css/index.css') },
+                    { find: '../css/index.scss', replacement: path.resolve('dist/index.esm.css') },
                 ],
             }),
             postcss(),
