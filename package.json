@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/greysole"
   },
-  "version": "0.1.11",
+  "version": "0.1.12",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -19,6 +19,7 @@
     "@testing-library/react": "^16.1.0",
     "@types/node": "^16.7.13",
     "@uiw/react-textarea-code-editor": "^3.1.0",
+    "autoprefixer": "^10.4.20",
     "fs-extra": "^11.2.0",
     "osc-js": "^2.4.1",
     "react-hook-form": "^7.54.2",
@@ -54,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
@@ -69,6 +71,8 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-scss": "^4.0.1",
+    "sass": "^1.83.1",
     "ts-jest": "^29.2.5"
   }
 }

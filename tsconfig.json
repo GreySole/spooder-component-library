@@ -23,6 +23,7 @@
     },
     "include": [
         "src",
-        "svg.d.ts"
+        "svg.d.ts",
+        "style.d.ts"
     ]
 }

@@ -1,3 +1,4 @@
+import '../css/index.scss';
 //controlled
 export {default as Button} from "./input/controlled/Button";
 export {default as BoolSwitch} from "./input/controlled/BoolSwitch";
@@ -11,7 +12,6 @@ export {default as TextInput} from "./input/controlled/TextInput";
 
 //form
 export {default as FormBoolSwitch} from "./input/form/FormBoolSwitch";
-export {default as FormCodeInput} from "./input/form/FormCodeInput";
 export {default as FormColorInput} from "./input/form/FormColorInput";
 export {default as FormNumberInput} from "./input/form/FormNumberInput";
 export {default as FormRangeInput} from "./input/form/FormRangeInput";
