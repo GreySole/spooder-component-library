@@ -1,4 +1,3 @@
-import '../css/index.scss';
 //controlled
 export {default as Button} from "./input/controlled/Button";
 export {default as BoolSwitch} from "./input/controlled/BoolSwitch";

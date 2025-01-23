@@ -14,6 +14,8 @@ import {
   fullLuminance,
   setLuminance,
 } from "../util/ColorUtil";
+import {Global, css} from '@emotion/react';
+import { resetStyle, indexStyle, inputStyle, animations, styleVariables } from "./style/Style";
 
 const applyThemeColors = (colors: ThemeColors) => {
   const {
@@ -308,6 +310,8 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
     }));
   }
 
+  
+
   return (
     <ThemeContext.Provider
       value={{
@@ -323,6 +327,7 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
         setCustomSpooder,
       }}
     >
+      <Global styles={[styleVariables, resetStyle, indexStyle, inputStyle, animations]} />
       {children}
     </ThemeContext.Provider>
   );
