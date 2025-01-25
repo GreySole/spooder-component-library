@@ -36,10 +36,14 @@ export function OscProvider(props: OscProviderProps) {
     });
     newOsc.open();
     setOsc(newOsc);
+
     return () => {
-      osc?.close();
+      newOsc.close();
+      setOsc(undefined);
+      setIsReady(false);
+      setOscListeners([]);
     };
-  }, []);
+  }, [host, port]);
 
   function addListener(address: string, callback: (message: any) => void) {
     if (!osc) {

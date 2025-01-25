@@ -3,8 +3,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import json from '@rollup/plugin-json';
-import builtins from 'rollup-plugin-node-builtins';
-import globals from 'rollup-plugin-node-globals';
 import svgr from '@svgr/rollup';
 import fs from 'fs-extra';
 
@@ -16,12 +14,22 @@ export default [{
         output: [{
                 file: packageJson.main,
                 format: 'cjs',
+                sourcemap:true,
+                sourcemapPathTransform: (relativeSourcePath, sourcemapPath) => {
+                    return relativeSourcePath.replace('src', 'dist/src');
+                }
             },
             {
                 file: packageJson.module,
                 format: 'esm',
+                sourcemap:true,
+                sourcemapPathTransform: (relativeSourcePath, sourcemapPath) => {
+                    console.log(relativeSourcePath);
+                    return relativeSourcePath.replace('src', 'dist/src');
+                }
             },
         ],
+        external: ['react', 'react-dom', 'react-hook-form'],
         plugins: [
             resolve({
                 preferBuiltins: true,
@@ -31,21 +39,12 @@ export default [{
             typescript({ tsconfig: './tsconfig.json', sourceMap:true }),
             json(),
             svgr({ typescript: true }),
-            builtins(),
-            globals(),
-        ],
-        external: [
-            'dgram',
-            'events',
-            'https',
-            'http',
-            'net',
-            'tls',
-            'crypto',
-            'stream',
-            'url',
-            'zlib',
-            'buffer',
+            {
+                name: 'copy-src',
+                buildEnd() {
+                    fs.copySync('src', 'dist/src');
+                }
+            }
         ],
     },
     {

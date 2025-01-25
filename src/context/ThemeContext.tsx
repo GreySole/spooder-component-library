@@ -15,7 +15,11 @@ import {
   setLuminance,
 } from "../util/ColorUtil";
 import {Global, css} from '@emotion/react';
-import { resetStyle, indexStyle, inputStyle, animations, styleVariables } from "./style/Style";
+import { animations } from "./style/Animations";
+import { indexStyle } from "./style/IndexStyle";
+import { inputStyle } from "./style/InputStyle";
+import { resetStyle } from "./style/ResetStyle";
+import { styleVariables } from "./style/StyleVariables";
 
 const applyThemeColors = (colors: ThemeColors) => {
   const {
