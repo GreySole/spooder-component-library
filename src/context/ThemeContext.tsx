@@ -6,7 +6,12 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { SpooderPet, ThemeColors, ThemeConstants, ThemeVariables } from "../Types";
+import {
+  SpooderPet,
+  ThemeColors,
+  ThemeConstants,
+  ThemeVariables,
+} from "../Types";
 import {
   rgbToHsl,
   hslToRgb,
@@ -14,7 +19,7 @@ import {
   fullLuminance,
   setLuminance,
 } from "../util/ColorUtil";
-import {Global, css} from '@emotion/react';
+import { Global, css } from "@emotion/react";
 import { animations } from "./style/Animations";
 import { indexStyle } from "./style/IndexStyle";
 import { inputStyle } from "./style/InputStyle";
@@ -162,7 +167,7 @@ interface ThemeProviderProps {
 
 interface ThemeContextProps {
   themeVariables: ThemeVariables;
-  themeConstants:ThemeConstants;
+  themeConstants: ThemeConstants;
   themeColors: ThemeColors;
   customSpooder: SpooderPet;
   isMobileDevice: boolean;
@@ -179,57 +184,57 @@ const ThemeContext = createContext<ThemeContextProps>({
     saturation: 0,
     isDarkTheme: false,
   },
-  themeConstants:{
+  themeConstants: {
     settings: "#090",
     assets: "#008080",
     delete: "#8f2525",
   },
-  themeColors:{
-    baseColor: '#525252',
-    backgroundColorFar:'',
-    backgroundColorNear:'',
-    buttonBackgroundColor:'',
-    buttonBorderColor:'',
-    buttonFontColor: '#fff',
-    darkColorAnalogousCW: setLuminance('#525252', 0.2),
-    darkColorAnalogousCCW: setLuminance('#525252', 0.2),
-    colorAnalogousCW: '#525252',
-    colorAnalogousCCW: '#525252',
-    buttonFontColorAnalogousCW: '#fff',
-    buttonFontColorAnalogousCCW: '#fff',
+  themeColors: {
+    baseColor: "#525252",
+    backgroundColorFar: "",
+    backgroundColorNear: "",
+    buttonBackgroundColor: "",
+    buttonBorderColor: "",
+    buttonFontColor: "#fff",
+    darkColorAnalogousCW: setLuminance("#525252", 0.2),
+    darkColorAnalogousCCW: setLuminance("#525252", 0.2),
+    colorAnalogousCW: "#525252",
+    colorAnalogousCCW: "#525252",
+    buttonFontColorAnalogousCW: "#fff",
+    buttonFontColorAnalogousCCW: "#fff",
     inputTextColor: "#fff",
-    inputBackgroundColor:"#000",
+    inputBackgroundColor: "#000",
   },
-  customSpooder:{
+  customSpooder: {
     parts: {
-      bigeyeleft: 'o',
-      bigeyeright: 'o',
-      littleeyeleft: '\u00ba',
-      littleeyeright: '\u00ba',
-      fangleft: ' ',
-      fangright: ' ',
-      mouth: '\u03c9',
-      bodyleft: '(',
-      bodyright: ')',
-      shortlegleft: '/\\',
-      longlegleft: '/╲',
-      shortlegright: '/\\',
-      longlegright: '╱\\',
+      bigeyeleft: "o",
+      bigeyeright: "o",
+      littleeyeleft: "\u00ba",
+      littleeyeright: "\u00ba",
+      fangleft: " ",
+      fangright: " ",
+      mouth: "\u03c9",
+      bodyleft: "(",
+      bodyright: ")",
+      shortlegleft: "/\\",
+      longlegleft: "/╲",
+      shortlegright: "/\\",
+      longlegright: "╱\\",
     },
     colors: {
-      bigeyeleft: '#FFFFFF',
-      bigeyeright: '#FFFFFF',
-      littleeyeleft: '#FFFFFF',
-      littleeyeright: '#FFFFFF',
-      fangleft: '#FFFFFF',
-      fangright: '#FFFFFF',
-      mouth: '#FFFFFF',
-      bodyleft: '#FFFFFF',
-      bodyright: '#FFFFFF',
-      shortlegleft: '#FFFFFF',
-      shortlegright: '#FFFFFF',
-      longlegleft: '#FFFFFF',
-      longlegright: '#FFFFFF',
+      bigeyeleft: "#FFFFFF",
+      bigeyeright: "#FFFFFF",
+      littleeyeleft: "#FFFFFF",
+      littleeyeright: "#FFFFFF",
+      fangleft: "#FFFFFF",
+      fangright: "#FFFFFF",
+      mouth: "#FFFFFF",
+      bodyleft: "#FFFFFF",
+      bodyright: "#FFFFFF",
+      shortlegleft: "#FFFFFF",
+      shortlegright: "#FFFFFF",
+      longlegleft: "#FFFFFF",
+      longlegright: "#FFFFFF",
     },
   },
   isMobileDevice: false,
@@ -240,26 +245,32 @@ const ThemeContext = createContext<ThemeContextProps>({
   setCustomSpooder: () => {},
 });
 
-export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) {
+export function ThemeProvider({
+  theme,
+  spooder,
+  children,
+}: ThemeProviderProps) {
   const [themeVariables, setThemeVariables] = useState(theme);
   const [spooderPet, setSpooderPet] = useState<SpooderPet>(spooder);
   const [themeColors, setThemeColors] = useState<ThemeColors>({
-    baseColor: '#525252',
-    backgroundColorFar:'',
-    backgroundColorNear:'',
-    buttonBackgroundColor:'',
-    buttonBorderColor:'',
-    buttonFontColor: '#fff',
-    darkColorAnalogousCW: setLuminance('#525252', 0.2),
-    darkColorAnalogousCCW: setLuminance('#525252', 0.2),
-    colorAnalogousCW: '#525252',
-    colorAnalogousCCW: '#525252',
-    buttonFontColorAnalogousCW: '#fff',
-    buttonFontColorAnalogousCCW: '#fff',
+    baseColor: "#525252",
+    backgroundColorFar: "",
+    backgroundColorNear: "",
+    buttonBackgroundColor: "",
+    buttonBorderColor: "",
+    buttonFontColor: "#fff",
+    darkColorAnalogousCW: setLuminance("#525252", 0.2),
+    darkColorAnalogousCCW: setLuminance("#525252", 0.2),
+    colorAnalogousCW: "#525252",
+    colorAnalogousCCW: "#525252",
+    buttonFontColorAnalogousCW: "#fff",
+    buttonFontColorAnalogousCCW: "#fff",
     inputTextColor: "#fff",
-    inputBackgroundColor:"#000",
+    inputBackgroundColor: "#000",
   });
-  const isMobileDevice = /Mobi|Android/i.test(window.navigator.userAgent) || window.innerWidth <= 900;
+  const isMobileDevice =
+    /Mobi|Android/i.test(window.navigator.userAgent) ||
+    window.innerWidth <= 900;
 
   const handleResize = useCallback(() => {
     setThemeHue(themeVariables.hue);
@@ -267,12 +278,17 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
     setThemeMode(themeVariables.isDarkTheme);
 
     window.addEventListener("resize", handleResize);
-  }, [themeVariables.hue, themeVariables.isDarkTheme, themeVariables.saturation]);
+  }, [
+    themeVariables.hue,
+    themeVariables.isDarkTheme,
+    themeVariables.saturation,
+  ]);
 
   useEffect(() => {
     setThemeHue(theme.hue);
     setThemeSaturation(theme.saturation);
     setThemeMode(theme.isDarkTheme);
+    refreshThemeColors();
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -314,8 +330,6 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
     }));
   }
 
-  
-
   return (
     <ThemeContext.Provider
       value={{
@@ -331,7 +345,15 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
         setCustomSpooder,
       }}
     >
-      <Global styles={[styleVariables, resetStyle, indexStyle, inputStyle, animations]} />
+      <Global
+        styles={[
+          styleVariables,
+          resetStyle,
+          indexStyle,
+          inputStyle,
+          animations,
+        ]}
+      />
       {children}
     </ThemeContext.Provider>
   );

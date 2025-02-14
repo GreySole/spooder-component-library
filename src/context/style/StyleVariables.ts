@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
 
 export const styleVariables = css`
-  --font-family: 'Arial; Helvetica; sans-serif';
+:root {
+  	--font-family: Arial; Helvetica; sans-serif;
 	--color-primary: #006e6e;
 	--color-background-far: #002733;
 	--color-background-near: #00526b;
@@ -46,4 +47,5 @@ export const styleVariables = css`
 
 	--input-text-color:#000;
 	--input-background-color:#fff;
+}
 `;

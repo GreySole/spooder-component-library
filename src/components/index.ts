@@ -26,6 +26,7 @@ export {default as FilterButton} from "./input/general/FilterButton";
 export {default as ImageFile} from "./input/general/ImageFile";
 export {default as LinkButton} from "./input/general/LinkButton";
 export {default as Modal} from "./input/general/Modal";
+export {default as MultiPageModal} from "./input/general/MultiPageModal";
 export {default as Pagination} from "./input/general/Pagination";
 export {default as SearchBar} from "./input/general/SearchBar";
 export {default as Slider} from "./input/general/Slider";

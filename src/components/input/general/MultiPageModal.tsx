@@ -1,26 +1,33 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import Box from "../../layout/Box";
 import Button from "../controlled/Button";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import TypeFace from "../../layout/TypeFace";
+import Pagination from "./Pagination";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-interface ModalProps {
+interface ModalPage {
   title: string;
   content: ReactNode;
+}
+
+interface MultiPageModalProps {
+  title: string;
+  pages: ModalPage[];
   footerContent?: ReactNode;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function Modal({
+export default function MultiPageModal({
   title,
-  content,
+  pages,
   isOpen,
   onClose,
   footerContent,
-}: ModalProps) {
+}: MultiPageModalProps) {
+  const [currentPage, setCurrentPage] = useState(0);
 
   if (!isOpen) {
     return null;
@@ -73,7 +80,20 @@ export default function Modal({
   `;
 
   const _onClose = () => {
+    setCurrentPage(0);
     onClose();
+  };
+
+  const handleNext = () => {
+    if (currentPage < pages.length - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const ModalOverlay = styled.div`
@@ -90,7 +110,7 @@ export default function Modal({
   `;
   const ModalClose = styled.div`
     ${modalCloseStyle}
-    `;
+  `;
 
   return (
     <ModalOverlay>
@@ -111,13 +131,22 @@ export default function Modal({
         </ModalHeader>
       </Box>
       <ModalContent>
-        <div className="modal-body">{content}</div>
+        <div className="modal-body">{pages[currentPage].content}</div>
       </ModalContent>
       <ModalFooter>
       <Box classes={["modal-footer"]} width="100%" flexFlow="column" padding="medium">
+        <Pagination
+          pageTitles={pages.map((page) => page.title)}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          handleNext={handleNext}
+          handlePrevious={handlePrevious}
+          endAction={() => {}}
+        />
         {footerContent}
       </Box>
       </ModalFooter>
+      
     </ModalOverlay>
   );
 }

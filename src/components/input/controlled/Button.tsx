@@ -43,10 +43,10 @@ export default function Button(props: ButtonProps) {
     case 'left':
       flexFlow = 'row-reverse';
       break;
-    case 'top':
+    case 'bottom':
       flexFlow = 'column';
       break;
-    case 'bottom':
+    case 'top':
       flexFlow = 'column-reverse';
       break;
   }

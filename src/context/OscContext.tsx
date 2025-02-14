@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
-import OSC from 'osc-js';
+import OSC from '@greysole/osc-js';
 import { KeyedObject } from '../Types';
 
 export const OscContext = createContext({
