@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 interface ImageProps {
   src: string;
@@ -8,7 +8,7 @@ interface ImageProps {
   height?: string;
   alt?: string;
   fallbackIcon?: any;
-  clip?: 'circle' | 'square';
+  clip?: "circle" | "square";
 }
 
 export default function ImageFile({
@@ -26,16 +26,19 @@ export default function ImageFile({
   };
 
   let clipPath = undefined;
-  if (clip === 'circle') {
-    clipPath = 'circle(50% at 50% 50%)';
-  } else if (clip === 'square') {
-    clipPath = 'inset(0px round 10%)';
+  if (clip === "circle") {
+    clipPath = "circle(50% at 50% 50%)";
+  } else if (clip === "square") {
+    clipPath = "inset(0px round 10%)";
   }
 
   return (
     <>
       {hasError ? (
-        <FontAwesomeIcon icon={fallbackIcon} style={{ width: width, height: height }} />
+        <FontAwesomeIcon
+          icon={fallbackIcon}
+          style={{ width: width, height: height }}
+        />
       ) : (
         <img
           src={src}

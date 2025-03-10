@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import {
@@ -26,7 +27,7 @@ import { inputStyle } from "./style/InputStyle";
 import { resetStyle } from "./style/ResetStyle";
 import { styleVariables } from "./style/StyleVariables";
 
-const applyThemeColors = (colors: ThemeColors) => {
+const applyThemeColors = (colors: ThemeColors, isMobileDevice: boolean) => {
   const {
     baseColor,
     backgroundColorFar,
@@ -103,6 +104,12 @@ const applyThemeColors = (colors: ThemeColors) => {
     "--input-background-color",
     inputBackgroundColor
   );
+
+  if (isMobileDevice) {
+    document.documentElement.style.setProperty("--font-size", "14px");
+  } else {
+    document.documentElement.style.setProperty("--font-size", "16px");
+  }
 };
 
 const calculateThemeColors = (
@@ -250,8 +257,15 @@ export function ThemeProvider({
   spooder,
   children,
 }: ThemeProviderProps) {
-  const [themeVariables, setThemeVariables] = useState(theme);
-  const [spooderPet, setSpooderPet] = useState<SpooderPet>(spooder);
+  const initialTheme = useRef(theme);
+  const initialSpooder = useRef(spooder);
+  const [themeVariables, setThemeVariables] = useState(initialTheme.current);
+  const [spooderPet, setSpooderPet] = useState<SpooderPet>(
+    initialSpooder.current
+  );
+  const [isMobileDevice, setIsMobileDevice] = useState(
+    /Mobi|Android/i.test(window.navigator.userAgent) || window.innerWidth <= 900
+  );
   const [themeColors, setThemeColors] = useState<ThemeColors>({
     baseColor: "#525252",
     backgroundColorFar: "",
@@ -268,31 +282,26 @@ export function ThemeProvider({
     inputTextColor: "#fff",
     inputBackgroundColor: "#000",
   });
-  const isMobileDevice =
-    /Mobi|Android/i.test(window.navigator.userAgent) ||
-    window.innerWidth <= 900;
 
-  const handleResize = useCallback(() => {
-    setThemeHue(themeVariables.hue);
-    setThemeSaturation(themeVariables.saturation);
-    setThemeMode(themeVariables.isDarkTheme);
+  const handleResize = () => {
+    setIsMobileDevice(
+      /Mobi|Android/i.test(window.navigator.userAgent) ||
+        window.innerWidth <= 900
+    );
+    applyThemeColors(themeColors, isMobileDevice);
+  };
 
+  useEffect(() => {
     window.addEventListener("resize", handleResize);
-  }, [
-    themeVariables.hue,
-    themeVariables.isDarkTheme,
-    themeVariables.saturation,
-  ]);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
 
   useEffect(() => {
     setThemeHue(theme.hue);
     setThemeSaturation(theme.saturation);
     setThemeMode(theme.isDarkTheme);
     refreshThemeColors();
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [theme.hue, theme.saturation, theme.isDarkTheme, handleResize]);
+  }, [theme.hue, theme.saturation, theme.isDarkTheme]);
 
   const themeConstants = {
     settings: "#090",
@@ -301,14 +310,17 @@ export function ThemeProvider({
   };
 
   function setThemeHue(hue: number) {
+    initialTheme.current.hue = hue;
     setThemeVariables((prev) => ({ ...prev, hue }));
   }
 
   function setThemeSaturation(saturation: number) {
+    initialTheme.current.saturation = saturation;
     setThemeVariables((prev) => ({ ...prev, saturation }));
   }
 
   function setThemeMode(isDarkTheme: boolean) {
+    initialTheme.current.isDarkTheme = isDarkTheme;
     setThemeVariables((prev) => ({ ...prev, isDarkTheme }));
   }
 
@@ -319,10 +331,11 @@ export function ThemeProvider({
       themeVariables.isDarkTheme
     );
     setThemeColors(newColors);
-    applyThemeColors(newColors);
+    applyThemeColors(newColors, isMobileDevice);
   }
 
   function setCustomSpooder(parts: any, colors: any) {
+    initialSpooder.current = { parts, colors };
     setSpooderPet((prev) => ({
       ...prev,
       parts: { ...prev.parts, ...parts },

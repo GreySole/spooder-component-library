@@ -1,12 +1,13 @@
-import React from 'react';
-import LinkButton from './LinkButton';
-import Button from '../controlled/Button';
-import Columns from '../../layout/Columns';
-import TypeFace from '../../layout/TypeFace';
+import React from "react";
+import LinkButton from "./LinkButton";
+import Button from "../controlled/Button";
+import Columns from "../../layout/Columns";
+import TypeFace from "../../layout/TypeFace";
+import { StyleSize, StyleSizeButton, StyleSizeType } from "../../../Types";
 
 interface ButtonRowButton {
   icon: any;
-  iconSize: string;
+  iconSize?: string;
   color?: string;
   isLink?: boolean;
   linkName?: string;
@@ -17,37 +18,48 @@ interface ButtonRowButton {
 
 interface ButtonRowProps {
   buttons: ButtonRowButton[];
+  buttonSize: StyleSizeType;
+  iconSize: StyleSizeType;
 }
 
 export default function ButtonRow(props: ButtonRowProps) {
-  const { buttons } = props;
+  const { buttons, buttonSize, iconSize } = props;
+
+  const realButtonSize =
+    buttonSize in StyleSizeButton
+      ? StyleSizeButton[buttonSize as keyof typeof StyleSizeButton]
+      : "5rem";
+  const realIconSize =
+    iconSize in StyleSize
+      ? StyleSize[iconSize as keyof typeof StyleSize]
+      : "2rem";
 
   const buttonMap = buttons.map((button, index) => {
-    let className = 'plugin-button';
+    let className = "plugin-button";
     if (index == 0) {
-      className += ' start';
+      className += " start";
     } else if (index == buttons.length - 1) {
-      className += ' end';
+      className += " end";
     }
     if (button.isLink) {
       return (
         <LinkButton
-          width='5rem'
+          width={realButtonSize}
           className={className}
-          mode='download'
-          name={button.linkName + '.zip'}
+          mode="download"
+          name={button.linkName + ".zip"}
           iconOnly={true}
-          iconSize={button.iconSize}
-          link={button.link ?? ''}
+          iconSize={button.iconSize ? button.iconSize : realIconSize}
+          link={button.link ?? ""}
         />
       );
     } else {
       return (
         <Button
-          width='5rem'
+          width={realButtonSize}
           className={className}
           icon={button.icon}
-          iconSize={button.iconSize}
+          iconSize={button.iconSize ? button.iconSize : realIconSize}
           color={button.color}
           colorOnHover={!button.isActive}
           onClick={button.onClick ?? (() => {})}
@@ -57,8 +69,8 @@ export default function ButtonRow(props: ButtonRowProps) {
   });
 
   return (
-    <TypeFace fontSize='medium'>
-      <Columns spacing='none' padding='small'>
+    <TypeFace fontSize="medium">
+      <Columns spacing="none" padding="small">
         {buttonMap}
       </Columns>
     </TypeFace>

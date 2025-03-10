@@ -58,9 +58,10 @@ export default function MultiPageModal({
     justify-content: space-between;
     flex-grow: 1;
     padding: 1rem;
+    background: var(--color-background-near);
     border-radius: var(--interactive-radius);
     width: 100%;
-    height: calc(100dvh - var(--header-height) - var(--footer-height));
+    height: 100%;
   `;
 
   const modalCloseStyle = css`
@@ -134,19 +135,24 @@ export default function MultiPageModal({
         <div className="modal-body">{pages[currentPage].content}</div>
       </ModalContent>
       <ModalFooter>
-      <Box classes={["modal-footer"]} width="100%" flexFlow="column" padding="medium">
-        <Pagination
-          pageTitles={pages.map((page) => page.title)}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          handleNext={handleNext}
-          handlePrevious={handlePrevious}
-          endAction={() => {}}
-        />
-        {footerContent}
-      </Box>
+        <Box
+          classes={["modal-footer"]}
+          width="100%"
+          flexFlow="row"
+          justifyContent="space-between"
+          padding="medium"
+        >
+          <Pagination
+            pageTitles={pages.map((page) => page.title)}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            endAction={() => {}}
+          />
+          {footerContent}
+        </Box>
       </ModalFooter>
-      
     </ModalOverlay>
   );
 }

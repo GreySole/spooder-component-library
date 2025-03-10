@@ -13,3 +13,6 @@ export * from './util/ScriptUtil';
 
 //Icons
 export * from './icons/icons';
+
+//Types
+export * from './Types';

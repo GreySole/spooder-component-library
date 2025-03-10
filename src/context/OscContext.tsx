@@ -1,6 +1,15 @@
-import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
-import OSC from '@greysole/osc-js';
-import { KeyedObject } from '../Types';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+  useCallback,
+  useRef,
+} from "react";
+import OSC from "@greysole/osc-js";
+import { KeyedObject } from "../Types";
+import osc from "@greysole/osc-js";
 
 export const OscContext = createContext({
   isReady: false,
@@ -17,49 +26,59 @@ interface OscProviderProps {
 
 export function OscProvider(props: OscProviderProps) {
   const { host, port, children } = props;
-  const [osc, setOsc] = useState<OSC | undefined>(undefined);
   const [isReady, setIsReady] = useState(false);
-  const [oscListeners, setOscListeners] = useState<KeyedObject[]>([]);
+  const oscRef = useRef<OSC | undefined>(undefined);
+  const oscListenersRef = useRef<KeyedObject[]>([]);
 
   useEffect(() => {
-    console.log('OSC Provider', host, port);
+    console.log("OSC Provider", host, port);
     const newOsc = new OSC({
-      plugin: new OSC.WebsocketClientPlugin({ host: host, port: port, secure: false }),
+      plugin: new OSC.WebsocketClientPlugin({
+        host: host,
+        port: port,
+        secure: false,
+      }),
     });
-    newOsc.on('open', () => {
-      console.log('OSC Connected');
+    newOsc.on("open", () => {
+      console.log("OSC Connected");
       setIsReady(true);
     });
-    newOsc.on('close', () => {
-      console.log('OSC Disconnected');
+    newOsc.on("close", () => {
+      console.log("OSC Disconnected");
       setIsReady(false);
     });
     newOsc.open();
-    setOsc(newOsc);
+    oscRef.current = newOsc;
 
     return () => {
       newOsc.close();
-      setOsc(undefined);
+      oscRef.current = undefined;
       setIsReady(false);
-      setOscListeners([]);
+      oscListenersRef.current = [];
     };
   }, [host, port]);
 
-  function addListener(address: string, callback: (message: any) => void) {
-    if (!osc) {
-      return;
-    }
-    const subId = osc?.on(address, callback);
-    console.log('SUB ID', subId);
-    setOscListeners([...oscListeners, { address: address, subId: subId }]);
-  }
+  const addListener = useCallback(
+    (address: string, callback: (message: any) => void) => {
+      if (!oscRef.current) {
+        return;
+      }
+      const subId = oscRef.current.on(address, callback);
+      console.log("SUB ID", subId);
+      oscListenersRef.current = [
+        ...oscListenersRef.current,
+        { address: address, subId: subId },
+      ];
+    },
+    []
+  );
 
-  function removeListener(address: string) {
-    if (!osc) {
+  const removeListener = useCallback((address: string) => {
+    if (!oscRef.current) {
       return;
     }
     let removeIndex = -1;
-    const listener = oscListeners.find((listener, index) => {
+    const listener = oscListenersRef.current.find((listener, index) => {
       if (listener.address === address) {
         removeIndex = index;
         return listener;
@@ -67,18 +86,18 @@ export function OscProvider(props: OscProviderProps) {
     });
 
     if (listener !== undefined) {
-      setOscListeners(oscListeners.splice(removeIndex, 1));
+      oscListenersRef.current = oscListenersRef.current.splice(removeIndex, 1);
       console.log(listener);
-      osc?.off(listener.address, listener.subId);
+      oscRef.current.off(listener.address, listener.subId);
     }
-  }
+  }, []);
 
   function sendOSC(address: string, value: any) {
-    console.log('SEND OSC', address, value, osc?.status());
+    console.log("SEND OSC", address, value, oscRef.current?.status());
     if (!osc) {
       return;
     }
-    osc?.send(new OSC.Message(address, value));
+    oscRef.current?.send(new OSC.Message(address, value));
   }
 
   const value = {
@@ -93,8 +112,8 @@ export function OscProvider(props: OscProviderProps) {
 
 export function useOSC() {
   const context = useContext(OscContext);
-    if (!context) {
-      throw new Error("useOSC must be used within a OSCProvider");
-    }
-    return context;
+  if (!context) {
+    throw new Error("useOSC must be used within a OSCProvider");
+  }
+  return context;
 }

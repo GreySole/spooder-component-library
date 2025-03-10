@@ -148,6 +148,15 @@ export enum StyleSize {
   xlarge = '2rem',
 }
 
+export enum StyleSizeButton{
+  none = '0rem',
+  xsmall = '1rem',
+  small = '3rem',
+  medium = '5rem',
+  large = '7rem',
+  xlarge = '9rem',
+}
+
 export type StyleSizeType = 'none' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
 export interface NewPlugin {

@@ -6,7 +6,8 @@ export const indexStyle = css`
   --navigation-tabs-height: 70px;
   --footer-height: 70px;
   --interactive-radius: 0.5rem;
-  font-size: 16px;
+  --font-size: 16px;
+  font-size: var(--font-size);
 }
 
 * {

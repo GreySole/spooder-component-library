@@ -21,7 +21,6 @@ export default function Modal({
   onClose,
   footerContent,
 }: ModalProps) {
-
   if (!isOpen) {
     return null;
   }
@@ -51,9 +50,10 @@ export default function Modal({
     justify-content: space-between;
     flex-grow: 1;
     padding: 1rem;
+    background: var(--color-background-near);
     border-radius: var(--interactive-radius);
     width: 100%;
-    height: calc(100dvh - var(--header-height) - var(--footer-height));
+    height: 100%;
   `;
 
   const modalCloseStyle = css`
@@ -90,7 +90,7 @@ export default function Modal({
   `;
   const ModalClose = styled.div`
     ${modalCloseStyle}
-    `;
+  `;
 
   return (
     <ModalOverlay>
@@ -110,13 +110,16 @@ export default function Modal({
           </Box>
         </ModalHeader>
       </Box>
-      <ModalContent>
-        <div className="modal-body">{content}</div>
-      </ModalContent>
+      <ModalContent>{content}</ModalContent>
       <ModalFooter>
-      <Box classes={["modal-footer"]} width="100%" flexFlow="column" padding="medium">
-        {footerContent}
-      </Box>
+        <Box
+          classes={["modal-footer"]}
+          width="100%"
+          flexFlow="column"
+          padding="medium"
+        >
+          {footerContent}
+        </Box>
       </ModalFooter>
     </ModalOverlay>
   );
