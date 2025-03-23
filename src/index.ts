@@ -11,8 +11,5 @@ export * from './util/DataUtil';
 export * from './util/MediaUtil';
 export * from './util/ScriptUtil';
 
-//Icons
-export * from './icons/icons';
-
 //Types
 export * from './Types';

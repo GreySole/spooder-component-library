@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React, { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
   formKey: string;
@@ -9,12 +9,23 @@ interface TextInputProps {
   charLimit?: number;
   jsonFriendly?: boolean;
   password?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export default function FormTextInput(props: TextInputProps) {
-  const { formKey, label, width, placeholder, charLimit, jsonFriendly, password } = props;
-  const { watch, register } = useFormContext();
-  const value = watch(formKey);
+  const {
+    formKey,
+    label,
+    width,
+    placeholder,
+    charLimit,
+    jsonFriendly,
+    password,
+    onFocus,
+    onBlur,
+  } = props;
+  const { register } = useFormContext();
 
   function _onInput(value: string) {
     if (charLimit !== undefined) {
@@ -23,7 +34,9 @@ export default function FormTextInput(props: TextInputProps) {
       }
     }
     if (jsonFriendly) {
-      return value.replaceAll(/[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/g, '').replaceAll(' ', '_');
+      return value
+        .replaceAll(/[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/g, "")
+        .replaceAll(" ", "_");
     }
     return value;
   }
@@ -32,11 +45,13 @@ export default function FormTextInput(props: TextInputProps) {
       {label}
       <input
         id={`text-${label}`}
-        style={{ width: width, fontSize: '1rem' }}
-        className='text-input'
+        style={{ width: width, fontSize: "1rem" }}
+        className="text-input"
         placeholder={placeholder}
-        type={password ? 'password' : 'text'}
+        type={password ? "password" : "text"}
         {...register(formKey, { setValueAs: _onInput })}
+        onFocus={() => onFocus}
+        onBlur={() => onBlur}
       />
     </label>
   );

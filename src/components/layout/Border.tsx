@@ -27,7 +27,9 @@ export default function Border(props: BorderProps) {
     inactiveColor = "",
   } = props;
 
-  const [displayBorderColor, setDisplayBorderColor] = useState(borderColor);
+  const [displayBorderColor, setDisplayBorderColor] = useState(
+    colorOnHover ? inactiveColor : borderColor
+  );
 
   const borderStyleValues =
     borderTop || borderRight || borderBottom || borderLeft

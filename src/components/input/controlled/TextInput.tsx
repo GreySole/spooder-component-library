@@ -9,10 +9,23 @@ interface TextInputProps {
   jsonFriendly?: boolean;
   password?: boolean;
   onInput?: (value: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export default function TextInput(props: TextInputProps) {
-  const { value, label, width, placeholder, charLimit, jsonFriendly, password, onInput } = props;
+  const {
+    value,
+    label,
+    width,
+    placeholder,
+    charLimit,
+    jsonFriendly,
+    password,
+    onInput,
+    onFocus,
+    onBlur,
+  } = props;
   function _onInput(value: string) {
     if (!onInput) return;
     if (charLimit !== undefined) {
@@ -22,7 +35,11 @@ export default function TextInput(props: TextInputProps) {
       }
     }
     if (jsonFriendly) {
-      onInput(value.replaceAll(/[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/g, '').replaceAll(' ', '_'));
+      onInput(
+        value
+          .replaceAll(/[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/g, "")
+          .replaceAll(" ", "_")
+      );
       return;
     }
     onInput(value);
@@ -33,12 +50,14 @@ export default function TextInput(props: TextInputProps) {
       {label}
       <input
         id={`text-${label}`}
-        style={{ width: width, fontSize: '1rem' }}
-        className='text-input'
+        style={{ width: width, fontSize: "1rem" }}
+        className="text-input"
         placeholder={placeholder}
-        type={password ? 'password' : 'text'}
+        type={password ? "password" : "text"}
         value={value}
         onInput={(e) => _onInput(e.currentTarget.value)}
+        onFocus={() => onFocus}
+        onBlur={() => onBlur}
       />
     </label>
   );

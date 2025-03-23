@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import { getIcon } from "../../../util/MediaUtil";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { icon, IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useTheme } from "../../../context/ThemeContext";
+import { StyleSize, StyleSizeButton, StyleSizeType } from "../../../Types";
 
 interface ButtonProps {
   className?: string;
@@ -11,10 +12,12 @@ interface ButtonProps {
   disabled?: boolean;
   icon?: IconProp | string;
   fallbackIcon?: IconProp | string;
-  iconSize?: string;
+  iconSize?: string | StyleSizeType;
+  iconGap?: string | StyleSizeType;
   iconPosition?: "left" | "right" | "top" | "bottom";
   color?: string;
   colorOnHover?: boolean;
+  truncate?: boolean;
   onClick: () => void;
   onLongPress?: () => void;
 }
@@ -23,21 +26,54 @@ export default function Button(props: ButtonProps) {
   const {
     className,
     label,
-    width,
-    height,
+    //width,
+    //height,
     disabled,
     icon,
     fallbackIcon,
-    iconSize,
+    //iconSize,
+    //iconGap = "1rem",
     iconPosition,
     onClick,
     onLongPress,
     color,
     colorOnHover,
+    truncate,
   } = props;
   const { themeVariables } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  function convertSizeToStyleSizeFont(
+    size: string | StyleSizeType | undefined
+  ) {
+    if (!size) {
+      return undefined;
+    }
+    if (Object.keys(StyleSize).includes(size as StyleSize)) {
+      return StyleSize[size as StyleSizeType];
+    }
+    return size;
+  }
+
+  function convertSizeToStyleSizeButton(
+    size: string | StyleSizeType | undefined
+  ) {
+    if (!size) {
+      return undefined;
+    }
+    if (Object.keys(StyleSize).includes(size as StyleSize)) {
+      return StyleSizeButton[size as StyleSizeType];
+    }
+    return size;
+  }
+
+  const width = convertSizeToStyleSizeButton(props.width);
+  const height = convertSizeToStyleSizeButton(props.height);
+  const iconSize = convertSizeToStyleSizeFont(props.iconSize);
+  const iconGap = convertSizeToStyleSizeFont(
+    props.iconGap ? props.iconGap : "1rem"
+  );
 
   let flexFlow = "left";
 
@@ -80,6 +116,15 @@ export default function Button(props: ButtonProps) {
     }
   };
 
+  const truncateStyle = truncate
+    ? {
+        width,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      }
+    : {};
+
   return (
     <button
       className={className}
@@ -93,7 +138,7 @@ export default function Button(props: ButtonProps) {
         width,
         height,
         display: "flex",
-        gap: "1rem",
+        gap: iconGap,
         flexFlow,
         fontSize: "1rem",
         alignItems: "center",
@@ -101,7 +146,7 @@ export default function Button(props: ButtonProps) {
         backgroundColor: colorOnHover ? (isHovered ? color : undefined) : color,
       }}
     >
-      {label}{" "}
+      {label ? <span style={truncateStyle}>{label}</span> : null}
       {icon
         ? getIcon(icon, themeVariables.isDarkTheme, iconSize, fallbackIcon)
         : null}

@@ -1,14 +1,13 @@
-import React from 'react';
-import { ReactNode } from 'react';
-import { StyleSize, StyleSizeType } from '../../Types';
-import { Properties } from 'csstype';
+import React from "react";
+import { ReactNode } from "react";
+import { StyleSize, StyleSizeType } from "../../Types";
+import { Properties } from "csstype";
 
 interface StackProps {
   children: ReactNode;
   spacing: StyleSizeType;
-  width?: Properties['width'];
-  height?: Properties['height'];
-  dividers?: boolean;
+  width?: Properties["width"];
+  height?: Properties["height"];
   padding?: StyleSizeType;
   paddingTop?: StyleSizeType;
   paddingRight?: StyleSizeType;
@@ -22,7 +21,7 @@ interface StackProps {
 }
 
 export default function Stack(props: StackProps) {
-  const { children, spacing, dividers, width, height, ...styles } = props;
+  const { children, spacing, width, height, ...styles } = props;
 
   const paddingStyle = styles.padding
     ? {
@@ -32,10 +31,18 @@ export default function Stack(props: StackProps) {
         paddingLeft: StyleSize[styles.padding],
       }
     : {
-        paddingTop: styles.paddingTop ? StyleSize[styles.paddingTop] : undefined,
-        paddingRight: styles.paddingRight ? StyleSize[styles.paddingRight] : undefined,
-        paddingBottom: styles.paddingBottom ? StyleSize[styles.paddingBottom] : undefined,
-        paddingLeft: styles.paddingLeft ? StyleSize[styles.paddingLeft] : undefined,
+        paddingTop: styles.paddingTop
+          ? StyleSize[styles.paddingTop]
+          : undefined,
+        paddingRight: styles.paddingRight
+          ? StyleSize[styles.paddingRight]
+          : undefined,
+        paddingBottom: styles.paddingBottom
+          ? StyleSize[styles.paddingBottom]
+          : undefined,
+        paddingLeft: styles.paddingLeft
+          ? StyleSize[styles.paddingLeft]
+          : undefined,
       };
 
   const marginStyle = styles.margin
@@ -47,16 +54,22 @@ export default function Stack(props: StackProps) {
       }
     : {
         marginTop: styles.marginTop ? StyleSize[styles.marginTop] : undefined,
-        marginRight: styles.marginRight ? StyleSize[styles.marginRight] : undefined,
-        marginBottom: styles.marginBottom ? StyleSize[styles.marginBottom] : undefined,
-        marginLeft: styles.marginLeft ? StyleSize[styles.marginLeft] : undefined,
+        marginRight: styles.marginRight
+          ? StyleSize[styles.marginRight]
+          : undefined,
+        marginBottom: styles.marginBottom
+          ? StyleSize[styles.marginBottom]
+          : undefined,
+        marginLeft: styles.marginLeft
+          ? StyleSize[styles.marginLeft]
+          : undefined,
       };
 
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: "flex",
+        flexDirection: "column",
         gap: StyleSize[spacing],
         width: width,
         height: height,

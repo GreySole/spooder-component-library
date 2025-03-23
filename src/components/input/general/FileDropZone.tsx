@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ReactNode } from "react";
 import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { Properties } from "csstype";
 import { getIcon } from "../../../util/MediaUtil";
@@ -13,10 +13,11 @@ interface FileDropZoneProps {
   height: Properties["height"];
   acceptedFileTypes?: string[];
   handleFile: (file: File) => void;
+  children?: ReactNode;
 }
 
 export default function FileDropZone(props: FileDropZoneProps) {
-  const { width, height, acceptedFileTypes, handleFile } = props;
+  const { width, height, acceptedFileTypes, handleFile, children } = props;
   const [isDragging, setIsDragging] = useState(false);
   const { isMobileDevice } = useTheme();
   const [fileDropMessage, setFileDropMessage] = useState(
@@ -71,24 +72,41 @@ export default function FileDropZone(props: FileDropZoneProps) {
         onDragLeave={handleDragLeave}
         onDrop={(e) => handleDrop(e)}
       >
-        <Box
-          flexFlow="column"
-          width={width}
-          height={height}
-          justifyContent="center"
-          alignItems="center"
-          onClick={handleClick}
-        >
-          {getIcon(faFileArrowDown, true, "10%")}
-          <TypeFace fontSize="large">{fileDropMessage}</TypeFace>
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-            accept={acceptedFileTypes ? acceptedFileTypes.join(",") : undefined}
-          />
-        </Box>
+        {children ? (
+          <>
+            {children}
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              accept={
+                acceptedFileTypes ? acceptedFileTypes.join(",") : undefined
+              }
+            />
+          </>
+        ) : (
+          <Box
+            flexFlow="column"
+            width={width}
+            height={height}
+            justifyContent="center"
+            alignItems="center"
+            onClick={handleClick}
+          >
+            {getIcon(faFileArrowDown, true, "10%")}
+            <TypeFace fontSize="large">{fileDropMessage}</TypeFace>
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              accept={
+                acceptedFileTypes ? acceptedFileTypes.join(",") : undefined
+              }
+            />
+          </Box>
+        )}
       </MouseArea>
     </Border>
   );

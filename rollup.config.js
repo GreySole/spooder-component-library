@@ -3,7 +3,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import json from '@rollup/plugin-json';
-import svgr from '@svgr/rollup';
 import fs from 'fs-extra';
 
 const packageFile = fs.readFileSync('./package.json', 'utf8');
@@ -38,7 +37,6 @@ export default [{
             commonjs(),
             typescript({ tsconfig: './tsconfig.json', sourceMap:true }),
             json(),
-            svgr({ typescript: true }),
             {
                 name: 'copy-src',
                 buildEnd() {

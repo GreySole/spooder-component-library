@@ -24,7 +24,6 @@ export default function Pagination(props: PaginationProps) {
     setCurrentPage,
     handleNext,
     handlePrevious,
-    endAction,
   } = props;
 
   const circleRadius = 7;
@@ -73,16 +72,11 @@ export default function Pagination(props: PaginationProps) {
           </svg>
         </Box>
       </Box>
-
       <Button
-        icon={
-          endAction && currentPage === pageTitles.length - 1
-            ? faCheck
-            : faArrowRight
-        }
+        icon={currentPage !== pageTitles.length - 1 ? faArrowRight : undefined}
         iconSize="large"
         onClick={handleNext}
-        disabled={!endAction ? currentPage === pageTitles.length - 1 : false}
+        disabled={currentPage === pageTitles.length - 1}
       />
     </Box>
   );
