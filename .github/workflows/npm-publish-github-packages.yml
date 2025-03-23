@@ -17,7 +17,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20'
-          registry-url: 'https://npm.pkg.github.com/greysole'
+
+      - name: Authenticate with GitHub Package Registry
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "@greysole:registry=https://npm.pkg.github.com" >> ~/.npmrc
 
       - name: Install dependencies
         run: npm install
