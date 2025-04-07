@@ -18,7 +18,7 @@ export default function Expandable(props: ExpandableProps) {
   const [open, setOpen] = useState<boolean>(forceOpen ? true : false);
   return (
     <Box
-      classes={["expandable" + (open ? " open" : "")]}
+      className={"expandable" + (open ? " open" : "")}
       flexFlow="column"
       padding="small"
     >

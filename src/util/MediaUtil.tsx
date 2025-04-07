@@ -1,12 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { StyleSize } from "../Types";
+import { StyleSize, StyleSizeType } from "../Types";
 import SvgIcon from "../components/media/SvgIcon";
 import React, { ReactNode } from "react";
 import ImageFile from "../components/media/ImageFile";
 
 interface MediaExtensions {
   [key: string]: string[];
+}
+
+export function resolveStyleSize(value: StyleSizeType | string) {
+  return value && value in StyleSize
+    ? StyleSize[value as StyleSizeType]
+    : value;
 }
 
 export function getIcon(

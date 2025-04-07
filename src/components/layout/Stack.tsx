@@ -8,6 +8,8 @@ interface StackProps {
   spacing: StyleSizeType;
   width?: Properties["width"];
   height?: Properties["height"];
+  overflow?: Properties["overflow"];
+  align?: "center" | "left" | "right";
   padding?: StyleSizeType;
   paddingTop?: StyleSizeType;
   paddingRight?: StyleSizeType;
@@ -65,6 +67,27 @@ export default function Stack(props: StackProps) {
           : undefined,
       };
 
+  const alignStyle = styles.align
+    ? {
+        alignItems:
+          styles.align === "left"
+            ? "flex-start"
+            : styles.align === "right"
+            ? "flex-end"
+            : styles.align === "center"
+            ? "center"
+            : undefined,
+        justifyContent:
+          styles.align === "left"
+            ? "flex-start"
+            : styles.align === "right"
+            ? "flex-end"
+            : styles.align === "center"
+            ? "center"
+            : undefined,
+      }
+    : {};
+
   return (
     <div
       style={{
@@ -75,6 +98,7 @@ export default function Stack(props: StackProps) {
         height: height,
         ...paddingStyle,
         ...marginStyle,
+        ...alignStyle,
       }}
     >
       {children}

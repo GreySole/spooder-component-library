@@ -297,11 +297,23 @@ export function ThemeProvider({
   }, [handleResize]);
 
   useEffect(() => {
-    setThemeHue(theme.hue);
-    setThemeSaturation(theme.saturation);
-    setThemeMode(theme.isDarkTheme);
+    initialTheme.current = {
+      hue: theme.hue,
+      saturation: theme.saturation,
+      isDarkTheme: theme.isDarkTheme,
+    };
+    setThemeVariables({
+      hue: theme.hue,
+      saturation: theme.saturation,
+      isDarkTheme: theme.isDarkTheme,
+    });
+    initialSpooder.current = spooder;
+    setSpooderPet(spooder);
+  }, [theme, spooder]);
+
+  useEffect(() => {
     refreshThemeColors();
-  }, [theme.hue, theme.saturation, theme.isDarkTheme]);
+  }, [themeVariables]);
 
   const themeConstants = {
     settings: "#090",

@@ -1,16 +1,21 @@
-import { Properties } from 'csstype';
-import React, { forwardRef, ReactNode } from 'react';
-import { StyleSize, StyleSizeType } from '../../Types';
+import { Properties } from "csstype";
+import React, { forwardRef, ReactNode } from "react";
+import { StyleSize, StyleSizeType } from "../../Types";
+import { resolveStyleSize } from "../../util/MediaUtil";
 
 interface BoxProps {
   children: ReactNode;
-  classes?: string[];
-  width?: Properties['width'];
-  height?: Properties['height'];
-  flexFlow?: Properties['flexFlow'];
-  alignItems?: Properties['alignItems'];
-  justifyContent?: Properties['justifyContent'];
-  overflow?: Properties['overflow'];
+  className?: string;
+  width?: Properties["width"];
+  height?: Properties["height"];
+  minWidth?: Properties["minWidth"];
+  minHeight?: Properties["minHeight"];
+  maxWidth?: Properties["maxWidth"];
+  maxHeight?: Properties["maxHeight"];
+  flexFlow?: Properties["flexFlow"];
+  alignItems?: Properties["alignItems"];
+  justifyContent?: Properties["justifyContent"];
+  overflow?: Properties["overflow"];
   padding?: StyleSizeType | string;
   paddingTop?: StyleSizeType | string;
   paddingRight?: StyleSizeType | string;
@@ -21,15 +26,20 @@ interface BoxProps {
   marginRight?: StyleSizeType | string;
   marginBottom?: StyleSizeType | string;
   marginLeft?: StyleSizeType | string;
+  backgroundColor?: Properties["backgroundColor"];
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export default forwardRef<HTMLDivElement, BoxProps>(function Box(
   {
     children,
-    classes,
+    className,
     onClick,
     width,
+    minWidth,
+    maxWidth,
+    minHeight,
+    maxHeight,
     height,
     flexFlow,
     alignItems,
@@ -37,12 +47,8 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
     overflow,
     ...styles
   },
-  ref,
+  ref
 ) {
-  const resolveStyleSize = (value: StyleSizeType | string | undefined) => {
-    return value && value in StyleSize ? StyleSize[value as StyleSizeType] : value;
-  };
-
   const paddingStyle = styles.padding
     ? {
         paddingTop: resolveStyleSize(styles.padding),
@@ -51,10 +57,10 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         paddingLeft: resolveStyleSize(styles.padding),
       }
     : {
-        paddingTop: resolveStyleSize(styles.paddingTop),
-        paddingRight: resolveStyleSize(styles.paddingRight),
-        paddingBottom: resolveStyleSize(styles.paddingBottom),
-        paddingLeft: resolveStyleSize(styles.paddingLeft),
+        paddingTop: resolveStyleSize(styles.paddingTop ?? "none"),
+        paddingRight: resolveStyleSize(styles.paddingRight ?? "none"),
+        paddingBottom: resolveStyleSize(styles.paddingBottom ?? "none"),
+        paddingLeft: resolveStyleSize(styles.paddingLeft ?? "none"),
       };
 
   const marginStyle = styles.margin
@@ -65,26 +71,31 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         marginLeft: resolveStyleSize(styles.margin),
       }
     : {
-        marginTop: resolveStyleSize(styles.marginTop),
-        marginRight: resolveStyleSize(styles.marginRight),
-        marginBottom: resolveStyleSize(styles.marginBottom),
-        marginLeft: resolveStyleSize(styles.marginLeft),
+        marginTop: resolveStyleSize(styles.marginTop ?? "none"),
+        marginRight: resolveStyleSize(styles.marginRight ?? "none"),
+        marginBottom: resolveStyleSize(styles.marginBottom ?? "none"),
+        marginLeft: resolveStyleSize(styles.marginLeft ?? "none"),
       };
 
   return (
     <div
-      className={'box ' + (classes ? classes.join(' ') : '')}
+      className={"box " + (className ? className : "")}
       ref={ref}
       onClick={onClick}
       style={{
-        display: 'flex',
+        display: "flex",
         flexFlow: flexFlow || undefined,
         alignItems: alignItems || undefined,
         justifyContent: justifyContent || undefined,
         width: width || undefined,
         height: height || undefined,
-        boxSizing: 'border-box',
+        minWidth: minWidth || undefined,
+        minHeight: minHeight || undefined,
+        maxWidth: maxWidth || undefined,
+        maxHeight: maxHeight || undefined,
+        boxSizing: "border-box",
         overflow: overflow || undefined,
+        backgroundColor: styles.backgroundColor || undefined,
         ...paddingStyle,
         ...marginStyle,
       }}

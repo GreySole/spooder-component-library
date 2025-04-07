@@ -11,14 +11,23 @@ import { useTheme } from "../../../context/ThemeContext";
 interface FileDropZoneProps {
   width: Properties["width"];
   height: Properties["height"];
+  backgroundColor?: Properties["backgroundColor"];
   acceptedFileTypes?: string[];
   handleFile: (file: File) => void;
   children?: ReactNode;
 }
 
 export default function FileDropZone(props: FileDropZoneProps) {
-  const { width, height, acceptedFileTypes, handleFile, children } = props;
+  const {
+    width,
+    height,
+    backgroundColor,
+    acceptedFileTypes,
+    handleFile,
+    children,
+  } = props;
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const { isMobileDevice } = useTheme();
   const [fileDropMessage, setFileDropMessage] = useState(
     isMobileDevice ? "Click to Browse" : "Drop File Here"
@@ -58,16 +67,20 @@ export default function FileDropZone(props: FileDropZoneProps) {
   };
 
   return (
-    <Border borderWidth="0.25rem" borderStyle={isDragging ? "solid" : "dashed"}>
+    <Border borderWidth="0.25rem" borderStyle={isHovered ? "solid" : "dashed"}>
       <MouseArea
-        onPointerEnter={() =>
-          isDragging ? {} : setFileDropMessage("Click to Browse")
-        }
-        onPointerLeave={() =>
+        onPointerEnter={() => {
+          if (!isDragging) {
+            setFileDropMessage("Click to Browse");
+          }
+          setIsHovered(true);
+        }}
+        onPointerLeave={() => {
           setFileDropMessage(
             isMobileDevice ? "Click to Browse" : "Drop File Here"
-          )
-        }
+          );
+          setIsHovered(false);
+        }}
         onDragOver={(e) => handleDragOver(e)}
         onDragLeave={handleDragLeave}
         onDrop={(e) => handleDrop(e)}
@@ -92,6 +105,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
             height={height}
             justifyContent="center"
             alignItems="center"
+            backgroundColor={backgroundColor}
             onClick={handleClick}
           >
             {getIcon(faFileArrowDown, true, "10%")}

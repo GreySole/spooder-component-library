@@ -5,12 +5,13 @@ import React, {
   useCallback,
   CSSProperties,
 } from "react";
+import { useTheme } from "../../../context/ThemeContext";
 
 interface SliderProps {
   value: number;
   step?: number;
   orientation: "horizontal" | "vertical";
-  gradient: string;
+  gradient?: string;
   onChange: (value: number) => void;
 }
 
@@ -24,6 +25,11 @@ const Slider: React.FC<SliderProps> = ({
   const [grabbed, setGrabbed] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const knobRef = useRef<HTMLDivElement>(null);
+  const { themeColors } = useTheme();
+
+  const backgroundGradient = gradient
+    ? gradient
+    : `${themeColors.backgroundColorFar}, ${themeColors.buttonBackgroundColor}`;
 
   const handlePointerMove = useCallback(
     (event: PointerEvent) => {
@@ -44,8 +50,9 @@ const Slider: React.FC<SliderProps> = ({
         );
       }
       if (step) {
-        newValue = Math.round(newValue / step) * step;
+        newValue = parseFloat((Math.round(newValue / step) * step).toFixed(2));
       }
+
       onChange(newValue);
     },
     [grabbed, orientation, onChange]
@@ -77,7 +84,10 @@ const Slider: React.FC<SliderProps> = ({
   }, [handlePointerMove]);
 
   const getKnobColor = () => {
-    const gradientColors = gradient.split(",").map((color) => color.trim());
+    const gradientColors = backgroundGradient
+      .split(",")
+      .map((color) => color.trim());
+    console.log(gradientColors);
 
     const interpolateColor = (
       color1: string,
@@ -111,17 +121,21 @@ const Slider: React.FC<SliderProps> = ({
     const index = Math.floor(value / segment);
     const factor = (value - index * segment) / segment;
 
+    const forwardIndex = segment === index ? index : index + 1;
+
     return interpolateColor(
       gradientColors[index],
-      gradientColors[index + 1],
+      gradientColors[forwardIndex],
       factor
     );
   };
 
+  console.log(backgroundGradient);
+
   const sliderStyle =
     orientation === "horizontal"
       ? {
-          background: `linear-gradient(to right, ${gradient})`,
+          background: `linear-gradient(to right, ${backgroundGradient})`,
           position: "relative" as CSSProperties["position"],
           borderRadius: "10px",
           outline: "solid var(--button-border-color) 2px",
@@ -130,7 +144,7 @@ const Slider: React.FC<SliderProps> = ({
           cursor: "pointer",
         }
       : {
-          background: `linear-gradient(to bottom, ${gradient})`,
+          background: `linear-gradient(to bottom, ${backgroundGradient})`,
           position: "relative" as CSSProperties["position"],
           borderRadius: "10px",
           outline: "solid var(--button-border-color) 2px",

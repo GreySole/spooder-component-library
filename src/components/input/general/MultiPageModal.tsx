@@ -118,7 +118,7 @@ export default function MultiPageModal({
       <Box flexFlow="column" width="100%">
         <ModalHeader>
           <Box
-            classes={["modal-header"]}
+            className="modal-header"
             width="100%"
             justifyContent="space-between"
             alignItems="center"
@@ -136,7 +136,7 @@ export default function MultiPageModal({
       </ModalContent>
       <ModalFooter>
         <Box
-          classes={["modal-footer"]}
+          className="modal-footer"
           width="100%"
           flexFlow="row"
           justifyContent="space-between"
@@ -148,7 +148,6 @@ export default function MultiPageModal({
             setCurrentPage={setCurrentPage}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
-            endAction={() => {}}
           />
           {footerContent}
         </Box>

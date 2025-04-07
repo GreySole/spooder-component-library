@@ -97,7 +97,7 @@ export default function Modal({
       <Box flexFlow="column" width="100%">
         <ModalHeader>
           <Box
-            classes={["modal-header"]}
+            className="modal-header"
             width="100%"
             justifyContent="space-between"
             alignItems="center"
@@ -113,7 +113,7 @@ export default function Modal({
       <ModalContent>{content}</ModalContent>
       <ModalFooter>
         <Box
-          classes={["modal-footer"]}
+          className="modal-footer"
           width="100%"
           flexFlow="column"
           padding="medium"
