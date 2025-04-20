@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 interface ImageProps {
   src: string;
   width?: string;
   height?: string;
   alt?: string;
-  fallbackIcon?: any;
+  altSrc?: any;
   clip?: "circle" | "square";
+  onError?: () => void;
 }
 
 export default function ImageFile({
@@ -16,13 +15,15 @@ export default function ImageFile({
   width,
   height,
   alt,
-  fallbackIcon = faExclamationTriangle,
+  altSrc,
   clip,
+  onError,
 }: ImageProps) {
   const [hasError, setHasError] = useState(false);
 
   const handleError = () => {
     setHasError(true);
+    onError && onError();
   };
 
   let clipPath = undefined;
@@ -33,20 +34,11 @@ export default function ImageFile({
   }
 
   return (
-    <>
-      {hasError ? (
-        <FontAwesomeIcon
-          icon={fallbackIcon}
-          style={{ width: width, height: height }}
-        />
-      ) : (
-        <img
-          src={src}
-          alt={alt}
-          style={{ width: width, height: height, clipPath: clipPath }}
-          onError={handleError}
-        />
-      )}
-    </>
+    <img
+      src={hasError ? altSrc : src}
+      alt={alt}
+      style={{ width: width, height: height, clipPath: clipPath }}
+      onError={handleError}
+    />
   );
 }

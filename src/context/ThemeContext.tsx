@@ -187,9 +187,9 @@ interface ThemeContextProps {
 
 const ThemeContext = createContext<ThemeContextProps>({
   themeVariables: {
-    hue: 0,
-    saturation: 0,
-    isDarkTheme: false,
+    hue: 0.5,
+    saturation: 1,
+    isDarkTheme: true,
   },
   themeConstants: {
     settings: "#090",

@@ -5,10 +5,12 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import TypeFace from "../../layout/TypeFace";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import Columns from "../../layout/Columns";
 
 interface ModalProps {
   title: string;
   content: ReactNode;
+  headerContent?: ReactNode;
   footerContent?: ReactNode;
   isOpen: boolean;
   onClose: () => void;
@@ -19,6 +21,7 @@ export default function Modal({
   content,
   isOpen,
   onClose,
+  headerContent,
   footerContent,
 }: ModalProps) {
   if (!isOpen) {
@@ -104,9 +107,10 @@ export default function Modal({
             padding="small"
           >
             <TypeFace fontSize="xlarge">{title}</TypeFace>
-            <ModalClose>
+            <Columns spacing="small">
               <Button icon={faX} iconSize="large" onClick={_onClose} />
-            </ModalClose>
+              {headerContent}
+            </Columns>
           </Box>
         </ModalHeader>
       </Box>

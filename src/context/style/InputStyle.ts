@@ -1,13 +1,19 @@
 import { css } from "@emotion/react";
 
 export const inputStyle = css`
-    div:has(> input + button) {
+  div:has(> input + button) {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
   }
 
-  label:not(.field-section):has(> input, > textarea, > select, > button, > .boolswitch) {
+  label:not(.field-section):has(
+      > input,
+      > textarea,
+      > select,
+      > button,
+      > .boolswitch
+    ) {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -15,10 +21,10 @@ export const inputStyle = css`
     font-weight: bold;
   }
 
-  input:not([type='checkbox']):not([type='radio']):not([type='range']),
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
   button,
   select {
-    font-size: 20px;
+    font-size: 1.25rem;
     border: none;
     padding: 0.5rem;
     border-radius: var(--interactive-radius);
@@ -30,13 +36,15 @@ export const inputStyle = css`
 
     box-shadow: 0 0 0 1px var(--gray-900);
 
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s ease-in-out, outline-offset 0.2s ease-in-out, filter 0.2s, padding 0.2s ease-in-out, margin 0.2s ease-in-out;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s ease-in-out,
+      outline-offset 0.2s ease-in-out, filter 0.2s, padding 0.2s ease-in-out,
+      margin 0.2s ease-in-out;
 
     &:focus-visible {
       outline-offset: 4px;
     }
 
-    &[type='color'] {
+    &[type="color"] {
       appearance: none;
       display: block;
       padding: 0;
@@ -111,7 +119,7 @@ export const inputStyle = css`
     background-repeat: no-repeat;
     background-position: right 0.5rem center;
     background-size: 1.5rem;
-    padding-right:2rem;
+    padding-right: 2rem;
 
     option {
       color: var(--input-text-color);
@@ -136,13 +144,13 @@ export const inputStyle = css`
     overflow: visible;
 
     input {
-          --v-size: 1em;
-          --size-ratio: 2;
-          --h-size: calc(var(--size-ratio) * var(--v-size));
-          --border-size: 2px;
+      --v-size: 1em;
+      --size-ratio: 2;
+      --h-size: calc(var(--size-ratio) * var(--v-size));
+      --border-size: 2px;
 
-          position: relative;
-          display: block;
+      position: relative;
+      display: block;
       height: var(--v-size);
       width: calc(2 * var(--v-size));
 
@@ -151,91 +159,93 @@ export const inputStyle = css`
       border: var(--border-size) solid var(--gray-500);
       border-radius: calc(0.5 * var(--v-size));
 
-          box-shadow: 0 0 0 0 var(--color-primary);
+      box-shadow: 0 0 0 0 var(--color-primary);
 
-          cursor: pointer;
+      cursor: pointer;
 
       outline-offset: 0px;
 
-          transition: outline .2s ease, outline-offset .2s ease-in-out, box-shadow .1s ease-in-out;
+      transition: outline 0.2s ease, outline-offset 0.2s ease-in-out,
+        box-shadow 0.1s ease-in-out;
 
-          // Toggle switch on BG color
+      // Toggle switch on BG color
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+
+        left: 0;
+        height: calc(var(--v-size) - 2 * var(--border-size));
+        width: calc(var(--v-size) - 2 * var(--border-size));
+        border-radius: calc(0.5 * var(--v-size));
+
+        background-color: var(--color-primary);
+
+        transition: width 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+      }
+
+      // Toggle switch nub
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+
+        margin: calc(-1 * var(--border-size));
+
+        height: var(--v-size);
+        width: var(--v-size);
+        left: 0;
+        border-radius: calc(0.5 * var(--v-size));
+        background: var(--white);
+        box-shadow: 0 0.1em calc(2px + 0.3em) rgba(0, 0, 0, 0.5),
+          0 0 0 2px var(--gray-100);
+
+        transition: left 0.1s ease-in-out;
+
+        // For testing
+        // opacity: 0.25;
+      }
+
+      &:hover,
+      &:focus {
+        &:before {
+          width: calc(var(--v-size) - var(--border-size));
+        }
+        &:after {
+          left: var(--border-size);
+        }
+      }
+
+      &:focus-visible {
+        outline: var(--border-size) solid var(--color-primary);
+        outline-offset: calc(2 * var(--border-size));
+      }
+
+      &:checked {
+        box-shadow: 0 0 6px 0 var(--color-primary);
+
+        &:before {
+          width: calc(var(--h-size) - 2 * var(--border-size));
+        }
+
+        &:after {
+          left: var(--v-size);
+        }
+
+        &:hover,
+        &:focus {
           &:before {
-              content: '';
-              display: block;
-              position: absolute;
-
-              left: 0;
-              height: calc(var(--v-size) - 2 * var(--border-size));
-              width: calc(var(--v-size) - 2 * var(--border-size));
-              border-radius: calc(0.5 * var(--v-size));
-
-              background-color: var(--color-primary);
-
-              transition: width 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+            width: calc(var(--h-size) - 3 * var(--border-size));
           }
-
-          // Toggle switch nub
           &:after {
-              content: '';
-              display: block;
-              position: absolute;
-
-              margin: calc(-1 * var(--border-size));
-
-              height: var(--v-size);
-              width: var(--v-size);
-              left: 0;
-              border-radius: calc(0.5 * var(--v-size));
-              background: var(--white);
-              box-shadow: 0 0.1em calc(2px + 0.3em) rgba(0, 0, 0, 0.5), 0 0 0 2px var(--gray-100);
-
-              transition: left 0.1s ease-in-out;
-
-              // For testing
-              // opacity: 0.25;
+            left: calc(var(--h-size) - var(--v-size) - var(--border-size));
           }
-
-          &:hover,
-          &:focus {
-              &:before {
-                  width: calc(var(--v-size) - var(--border-size));
-              }
-              &:after {
-                  left: var(--border-size);
-              }
-          }
-
-          &:focus-visible {
-              outline: var(--border-size) solid var(--color-primary);
-              outline-offset: calc(2 * var(--border-size));
-          }
-
-          &:checked {
-              box-shadow: 0 0 6px 0 var(--color-primary);
-
-              &:before {
-                  width: calc(var(--h-size) - 2 * var(--border-size));
-              }
-
-              &:after {
-                  left: var(--v-size);
-              }
-
-              &:hover,
-              &:focus {
-                  &:before {
-                      width: calc(var(--h-size) - 3 * var(--border-size));
-                  }
-                  &:after {
-                      left: calc(var(--h-size) - var(--v-size) - var(--border-size));
-                  }
-              }
-          }
+        }
+      }
     }
 
     div {
       display: none !important;
     }
   }
-  `;
+`;

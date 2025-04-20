@@ -20,18 +20,29 @@ interface TypeFaceProps {
   textShadow?: Properties["textShadow"];
   textOverflow?: Properties["textOverflow"];
   userSelect?: Properties["userSelect"];
+  truncate?: boolean;
+  width?: Properties["width"];
 }
 
 export default function TypeFace({ children, ...styles }: TypeFaceProps) {
   const fontSize = styles.fontSize ? resolveStyleSize(styles.fontSize) : "1rem";
+  const truncateStyle = styles.truncate
+    ? {
+        width: styles.width,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      }
+    : {};
   return (
-    <div
+    <span
       style={{
         ...styles,
+        ...truncateStyle,
         fontSize,
       }}
     >
       {children}
-    </div>
+    </span>
   );
 }

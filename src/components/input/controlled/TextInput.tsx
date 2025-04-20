@@ -11,6 +11,11 @@ interface TextInputProps {
   onInput?: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  autoFocus?: boolean;
+  autoCapitalize?: boolean;
+  autoComplete?: boolean;
+  autoCorrect?: boolean;
+  spellCheck?: boolean;
 }
 
 export default function TextInput(props: TextInputProps) {
@@ -25,6 +30,11 @@ export default function TextInput(props: TextInputProps) {
     onInput,
     onFocus,
     onBlur,
+    autoFocus,
+    autoCapitalize,
+    autoComplete,
+    autoCorrect,
+    spellCheck,
   } = props;
   function _onInput(value: string) {
     if (!onInput) return;
@@ -50,14 +60,19 @@ export default function TextInput(props: TextInputProps) {
       {label}
       <input
         id={`text-${label}`}
-        style={{ width: width, fontSize: "1rem" }}
+        style={{ width: width }}
         className="text-input"
         placeholder={placeholder}
         type={password ? "password" : "text"}
         value={value}
         onInput={(e) => _onInput(e.currentTarget.value)}
-        onFocus={() => onFocus}
-        onBlur={() => onBlur}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        autoFocus={autoFocus}
+        autoCapitalize={autoCapitalize ? "on" : "off"}
+        autoComplete={autoComplete ? "on" : "off"}
+        autoCorrect={autoCorrect ? "on" : "off"}
+        spellCheck={spellCheck ? "true" : "false"}
       />
     </label>
   );

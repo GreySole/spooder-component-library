@@ -11,6 +11,11 @@ interface TextInputProps {
   password?: boolean;
   onFocus?: () => void;
   onBlur?: () => void;
+  autoFocus?: boolean;
+  autoCapitalize?: boolean;
+  autoComplete?: boolean;
+  autoCorrect?: boolean;
+  spellCheck?: boolean;
 }
 
 export default function FormTextInput(props: TextInputProps) {
@@ -24,6 +29,11 @@ export default function FormTextInput(props: TextInputProps) {
     password,
     onFocus,
     onBlur,
+    autoFocus,
+    autoCapitalize,
+    autoComplete,
+    autoCorrect,
+    spellCheck,
   } = props;
   const { register } = useFormContext();
 
@@ -45,13 +55,18 @@ export default function FormTextInput(props: TextInputProps) {
       {label}
       <input
         id={`text-${label}`}
-        style={{ width: width, fontSize: "1rem" }}
+        style={{ width: width }}
         className="text-input"
         placeholder={placeholder}
         type={password ? "password" : "text"}
         {...register(formKey, { setValueAs: _onInput })}
-        onFocus={() => onFocus}
-        onBlur={() => onBlur}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        autoFocus={autoFocus}
+        autoCapitalize={autoCapitalize ? "on" : "off"}
+        autoComplete={autoComplete ? "on" : "off"}
+        autoCorrect={autoCorrect ? "on" : "off"}
+        spellCheck={spellCheck ? "true" : "false"}
       />
     </label>
   );

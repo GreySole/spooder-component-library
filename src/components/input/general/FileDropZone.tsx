@@ -1,12 +1,12 @@
 import React, { useState, useRef, ReactNode } from "react";
 import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { Properties } from "csstype";
-import { getIcon } from "../../../util/MediaUtil";
 import Border from "../../layout/Border";
 import Box from "../../layout/Box";
 import TypeFace from "../../layout/TypeFace";
 import MouseArea from "../controlled/MouseArea";
 import { useTheme } from "../../../context/ThemeContext";
+import Icon from "../../media/Icon";
 
 interface FileDropZoneProps {
   width: Properties["width"];
@@ -108,7 +108,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
             backgroundColor={backgroundColor}
             onClick={handleClick}
           >
-            {getIcon(faFileArrowDown, true, "10%")}
+            <Icon icon={faFileArrowDown} iconSize="10%" />
             <TypeFace fontSize="large">{fileDropMessage}</TypeFace>
             <input
               type="file"

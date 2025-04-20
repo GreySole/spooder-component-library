@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import { getIcon } from "../../../util/MediaUtil";
 import { icon, IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useTheme } from "../../../context/ThemeContext";
 import { StyleSize, StyleSizeButton, StyleSizeType } from "../../../Types";
+import Icon from "../../media/Icon";
 
 interface ButtonProps {
   className?: string;
@@ -11,7 +11,7 @@ interface ButtonProps {
   height?: string;
   disabled?: boolean;
   icon?: IconProp | string;
-  fallbackIcon?: IconProp | string;
+  fallbackIcon?: IconProp;
   iconSize?: string | StyleSizeType;
   iconGap?: string | StyleSizeType;
   iconPosition?: "left" | "right" | "top" | "bottom";
@@ -147,9 +147,9 @@ export default function Button(props: ButtonProps) {
       }}
     >
       {label ? <span style={truncateStyle}>{label}</span> : null}
-      {icon
-        ? getIcon(icon, themeVariables.isDarkTheme, iconSize, fallbackIcon)
-        : null}
+      {icon ? (
+        <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} />
+      ) : null}
     </button>
   );
 }

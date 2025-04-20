@@ -6,6 +6,7 @@ import TypeFace from "../../layout/TypeFace";
 import Pagination from "./Pagination";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import Columns from "../../layout/Columns";
 
 interface ModalPage {
   title: string;
@@ -15,6 +16,7 @@ interface ModalPage {
 interface MultiPageModalProps {
   title: string;
   pages: ModalPage[];
+  headerContent?: ReactNode;
   footerContent?: ReactNode;
   isOpen: boolean;
   onClose: () => void;
@@ -25,6 +27,7 @@ export default function MultiPageModal({
   pages,
   isOpen,
   onClose,
+  headerContent,
   footerContent,
 }: MultiPageModalProps) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -124,10 +127,13 @@ export default function MultiPageModal({
             alignItems="center"
             padding="small"
           >
-            <TypeFace fontSize="xlarge">{title}</TypeFace>
-            <ModalClose>
+            <TypeFace fontSize="xlarge" truncate>
+              {title}
+            </TypeFace>
+            <Columns spacing="medium">
               <Button icon={faX} iconSize="large" onClick={_onClose} />
-            </ModalClose>
+              {headerContent}
+            </Columns>
           </Box>
         </ModalHeader>
       </Box>

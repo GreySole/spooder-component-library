@@ -1,9 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { StyleSize, StyleSizeType } from "../Types";
-import SvgIcon from "../components/media/SvgIcon";
-import React, { ReactNode } from "react";
-import ImageFile from "../components/media/ImageFile";
+import React from "react";
 
 interface MediaExtensions {
   [key: string]: string[];
@@ -13,46 +9,6 @@ export function resolveStyleSize(value: StyleSizeType | string) {
   return value && value in StyleSize
     ? StyleSize[value as StyleSizeType]
     : value;
-}
-
-export function getIcon(
-  icon: IconProp | string,
-  isDarkTheme: boolean,
-  size?: string,
-  fallbackIcon?: IconProp | string
-): ReactNode | undefined {
-  size = size
-    ? size in StyleSize
-      ? StyleSize[size as keyof typeof StyleSize]
-      : size
-    : "2rem";
-  if (typeof icon === "object" && "icon" in icon) {
-    // If icon is a FontAwesome icon prop
-    return (
-      <FontAwesomeIcon icon={icon} style={{ width: size, height: size }} />
-    );
-  } else if (typeof icon === "string") {
-    if (icon.endsWith(".svg")) {
-      // If icon is a React component
-      return (
-        <SvgIcon
-          fill={isDarkTheme ? "white" : "black"}
-          width={size}
-          height={size}
-          src={icon}
-        />
-      );
-    }
-    // If icon is a string (URL)
-    return (
-      <ImageFile
-        src={icon}
-        width={size}
-        height={size}
-        fallbackIcon={fallbackIcon}
-      />
-    );
-  }
 }
 
 export const mediaExtensions: MediaExtensions = {
