@@ -44,6 +44,7 @@ export default function ButtonRow(props: ButtonRowProps) {
     if (button.isLink) {
       return (
         <LinkButton
+          key={index}
           width={realButtonSize}
           className={className}
           mode="download"
@@ -56,6 +57,7 @@ export default function ButtonRow(props: ButtonRowProps) {
     } else {
       return (
         <Button
+          key={index}
           width={realButtonSize}
           className={className}
           icon={button.icon}

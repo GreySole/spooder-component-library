@@ -36,20 +36,24 @@ export default function Icon(props: IconProps) {
       : iconSize
     : "2rem";
 
-  if (hasError && fallbackIcon) {
+  if ((!icon || hasError) && fallbackIcon) {
     return (
       <FontAwesomeIcon
         icon={fallbackIcon}
         style={{ width: size, height: size }}
       />
     );
+  } else if ((!icon || hasError) && !fallbackIcon) {
+    return null;
   }
+
   if (typeof icon === "object" && "icon" in icon) {
     // If icon is a FontAwesome icon prop
     return (
       <FontAwesomeIcon
         icon={icon}
         style={{ width: size, height: size, clipPath: clipPath }}
+        color={isDarkTheme ? "white" : "black"}
         onError={() => {
           handleError();
         }}

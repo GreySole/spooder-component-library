@@ -141,10 +141,18 @@ const calculateThemeColors = (
   );
 
   const baseColor = fullLuminance(color);
-  const backgroundColorFar = setLuminance(baseColor, 0.05);
-  const backgroundColorNear = setLuminance(baseColor, 0.1);
-  const buttonBackgroundColor = setLuminance(baseColor, 0.2);
-  const buttonBorderColor = baseColor;
+  const backgroundColorFar = isDarkTheme
+    ? setLuminance(baseColor, 0.05)
+    : setLuminance(baseColor, 0.4);
+  const backgroundColorNear = isDarkTheme
+    ? setLuminance(baseColor, 0.1)
+    : setLuminance(baseColor, 0.55);
+  const buttonBackgroundColor = isDarkTheme
+    ? setLuminance(baseColor, 0.2)
+    : setLuminance(baseColor, 0.8);
+  const buttonBorderColor = isDarkTheme
+    ? setLuminance(baseColor, 0.5)
+    : setLuminance(baseColor, 0.2);
 
   //console.log('DARK THEME', isDarkTheme, isDarkTheme ? '#fff' : '#000');
 
@@ -155,8 +163,12 @@ const calculateThemeColors = (
     buttonBackgroundColor,
     buttonBorderColor,
     buttonFontColor: isDarkTheme ? "#fff" : "#000",
-    darkColorAnalogousCW: setLuminance(cwAnalogousColor, 0.2),
-    darkColorAnalogousCCW: setLuminance(ccwAnalogousColor, 0.2),
+    darkColorAnalogousCW: isDarkTheme
+      ? setLuminance(cwAnalogousColor, 0.2)
+      : setLuminance(cwAnalogousColor, 0.8),
+    darkColorAnalogousCCW: isDarkTheme
+      ? setLuminance(ccwAnalogousColor, 0.2)
+      : setLuminance(ccwAnalogousColor, 0.8),
     colorAnalogousCW: cwAnalogousColor,
     colorAnalogousCCW: ccwAnalogousColor,
     buttonFontColorAnalogousCW: isDarkTheme ? "#fff" : "#000",
@@ -319,6 +331,7 @@ export function ThemeProvider({
     settings: "#090",
     assets: "#008080",
     delete: "#8f2525",
+    save: "#4caf50",
   };
 
   function setThemeHue(hue: number) {

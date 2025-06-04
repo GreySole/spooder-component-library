@@ -36,7 +36,7 @@ export function OscProvider(props: OscProviderProps) {
       plugin: new OSC.WebsocketClientPlugin({
         host: host,
         port: port,
-        secure: false,
+        secure: port === null ? true : false,
       }),
     });
     newOsc.on("open", () => {

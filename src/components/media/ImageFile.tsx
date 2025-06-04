@@ -7,6 +7,7 @@ interface ImageProps {
   alt?: string;
   altSrc?: any;
   clip?: "circle" | "square";
+  objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
   onError?: () => void;
 }
 
@@ -17,6 +18,7 @@ export default function ImageFile({
   alt,
   altSrc,
   clip,
+  objectFit,
   onError,
 }: ImageProps) {
   const [hasError, setHasError] = useState(false);
@@ -37,7 +39,7 @@ export default function ImageFile({
     <img
       src={hasError ? altSrc : src}
       alt={alt}
-      style={{ width: width, height: height, clipPath: clipPath }}
+      style={{ width: width, height: height, clipPath: clipPath, objectFit }}
       onError={handleError}
     />
   );

@@ -87,7 +87,6 @@ const Slider: React.FC<SliderProps> = ({
     const gradientColors = backgroundGradient
       .split(",")
       .map((color) => color.trim());
-    console.log(gradientColors);
 
     const interpolateColor = (
       color1: string,
@@ -119,7 +118,10 @@ const Slider: React.FC<SliderProps> = ({
 
     const segment = 1 / (gradientColors.length - 1);
     const index = Math.floor(value / segment);
-    const factor = (value - index * segment) / segment;
+    const factor =
+      orientation === "horizontal"
+        ? (value - index * segment) / segment
+        : 1.0 - (value - index * segment) / segment;
 
     const forwardIndex = segment === index ? index : index + 1;
 
@@ -130,7 +132,7 @@ const Slider: React.FC<SliderProps> = ({
     );
   };
 
-  console.log(backgroundGradient);
+  //console.log(backgroundGradient);
 
   const sliderStyle =
     orientation === "horizontal"
@@ -158,7 +160,7 @@ const Slider: React.FC<SliderProps> = ({
     width: "40px",
     height: "40px",
     borderRadius: "50%",
-    outline: "solid var(--button-font-color) 2px",
+    outline: "solid var(--button-border-color) 2px",
     transform:
       orientation === "horizontal"
         ? "translate(-50%, -25%)"

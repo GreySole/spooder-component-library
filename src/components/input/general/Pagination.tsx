@@ -12,7 +12,7 @@ import Button from "../controlled/Button";
 interface PaginationProps {
   pageTitles: string[];
   currentPage: number;
-  setCurrentPage?: (page: number) => void;
+  handleCircleClick?: (page: number) => void;
   handleNext?: () => void;
   handlePrevious?: () => void;
 }
@@ -21,7 +21,7 @@ export default function Pagination(props: PaginationProps) {
   const {
     pageTitles,
     currentPage,
-    setCurrentPage,
+    handleCircleClick,
     handleNext,
     handlePrevious,
   } = props;
@@ -91,9 +91,6 @@ export default function Pagination(props: PaginationProps) {
                   }
                   stroke="var(--button-border-color)"
                   strokeWidth={index === currentPage ? 4 : 2}
-                  onClick={() =>
-                    setCurrentPage ? setCurrentPage(index) : null
-                  }
                 />
                 <rect
                   x={`${circleSpacing / 4 + index * circleSpacing}%`}
@@ -112,6 +109,9 @@ export default function Pagination(props: PaginationProps) {
                       label: "",
                       position: -1,
                     });
+                  }}
+                  onClick={() => {
+                    handleCircleClick && handleCircleClick(index);
                   }}
                   style={{ cursor: "pointer" }}
                 />

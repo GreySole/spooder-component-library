@@ -5,25 +5,25 @@ export interface FilterProps {
 }
 
 export enum ToastType {
-  SAVE = 'toast-save',
-  ERROR = 'toast-error',
-  REFRESH = 'toast-refresh',
-  SUCCESS = 'toast-success',
+  SAVE = "toast-save",
+  ERROR = "toast-error",
+  REFRESH = "toast-refresh",
+  SUCCESS = "toast-success",
 }
 
 export enum OSCConditionType {
-  equal = '==',
-  notEqual = '!=',
-  greaterThanOrEqual = '>=',
-  lessThanOrEqual = '<=',
-  greaterThan = '>',
-  lessThan = '<',
+  equal = "==",
+  notEqual = "!=",
+  greaterThanOrEqual = ">=",
+  lessThanOrEqual = "<=",
+  greaterThan = ">",
+  lessThan = "<",
 }
 
 export enum OSCHandleType {
-  trigger = 'trigger',
-  toggle = 'toggle',
-  search = 'search',
+  trigger = "trigger",
+  toggle = "toggle",
+  search = "search",
 }
 
 export interface PluginsObject {
@@ -77,37 +77,37 @@ export interface ChatTriggerConditionObject {
   vip: boolean;
 }
 
-export interface SpooderPet{
+export interface SpooderPet {
   parts: {
-    bigeyeleft: string,
-    bigeyeright: string,
-    littleeyeleft: string,
-    littleeyeright: string,
-    fangleft: string,
-    fangright: string,
-    mouth: string,
-    bodyleft: string,
-    bodyright: string,
-    shortlegleft: string,
-    longlegleft: string,
-    shortlegright: string,
-    longlegright: string,
-  },
+    bigeyeleft: string;
+    bigeyeright: string;
+    littleeyeleft: string;
+    littleeyeright: string;
+    fangleft: string;
+    fangright: string;
+    mouth: string;
+    bodyleft: string;
+    bodyright: string;
+    shortlegleft: string;
+    longlegleft: string;
+    shortlegright: string;
+    longlegright: string;
+  };
   colors: {
-    bigeyeleft: string,
-    bigeyeright: string,
-    littleeyeleft: string,
-    littleeyeright: string,
-    fangleft: string,
-    fangright: string,
-    mouth: string,
-    bodyleft: string,
-    bodyright: string,
-    shortlegleft: string,
-    shortlegright: string,
-    longlegleft: string,
-    longlegright: string,
-  },
+    bigeyeleft: string;
+    bigeyeright: string;
+    littleeyeleft: string;
+    littleeyeright: string;
+    fangleft: string;
+    fangright: string;
+    mouth: string;
+    bodyleft: string;
+    bodyright: string;
+    shortlegleft: string;
+    shortlegright: string;
+    longlegleft: string;
+    longlegright: string;
+  };
 }
 
 export interface ThemeColors {
@@ -133,31 +133,43 @@ export interface ThemeVariables {
   isDarkTheme: boolean;
 }
 
-export interface ThemeConstants{
+export interface ThemeConstants {
   settings: string;
   assets: string;
   delete: string;
 }
 
 export enum StyleSize {
-  none = '0rem',
-  xsmall = '0.25rem',
-  small = '0.5rem',
-  medium = '1rem',
-  large = '1.5rem',
-  xlarge = '2rem',
+  none = "0rem",
+  xsmall = "0.25rem",
+  small = "0.5rem",
+  smedium = "0.75rem",
+  medium = "1rem",
+  large = "1.5rem",
+  mlarge = "1.25rem",
+  xlarge = "2rem",
 }
 
-export enum StyleSizeButton{
-  none = '0rem',
-  xsmall = '1rem',
-  small = '3rem',
-  medium = '5rem',
-  large = '7rem',
-  xlarge = '9rem',
+export enum StyleSizeButton {
+  none = "0rem",
+  xsmall = "1rem",
+  small = "3rem",
+  smedium = "4rem",
+  medium = "5rem",
+  large = "7rem",
+  mlarge = "8rem",
+  xlarge = "9rem",
 }
 
-export type StyleSizeType = 'none' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export type StyleSizeType =
+  | "none"
+  | "xsmall"
+  | "small"
+  | "smedium"
+  | "medium"
+  | "large"
+  | "mlarge"
+  | "xlarge";
 
 export interface NewPlugin {
   [key: string]: {

@@ -13,7 +13,8 @@ interface FileDropZoneProps {
   height: Properties["height"];
   backgroundColor?: Properties["backgroundColor"];
   acceptedFileTypes?: string[];
-  handleFile: (file: File) => void;
+  handleFile: (file: FileList) => void;
+  multiple?: boolean;
   children?: ReactNode;
 }
 
@@ -23,6 +24,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
     height,
     backgroundColor,
     acceptedFileTypes,
+    multiple = false,
     handleFile,
     children,
   } = props;
@@ -49,8 +51,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
 
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
-      const file = files[0];
-      handleFile(file);
+      handleFile(files);
     }
   };
 
@@ -60,9 +61,8 @@ export default function FileDropZone(props: FileDropZoneProps) {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      handleFile(file);
+    if (files) {
+      handleFile(files);
     }
   };
 
@@ -115,6 +115,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
               ref={fileInputRef}
               style={{ display: "none" }}
               onChange={handleFileChange}
+              multiple={multiple}
               accept={
                 acceptedFileTypes ? acceptedFileTypes.join(",") : undefined
               }

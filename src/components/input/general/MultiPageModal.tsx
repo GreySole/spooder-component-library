@@ -94,6 +94,10 @@ export default function MultiPageModal({
     }
   };
 
+  const handleCircleClick = (index: number) => {
+    setCurrentPage(index);
+  };
+
   const handlePrevious = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -151,7 +155,7 @@ export default function MultiPageModal({
           <Pagination
             pageTitles={pages.map((page) => page.title)}
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            handleCircleClick={handleCircleClick}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
           />

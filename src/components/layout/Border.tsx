@@ -24,7 +24,7 @@ export default function Border(props: BorderProps) {
     borderWidth = "1px",
     borderStyle = "solid",
     colorOnHover = false,
-    inactiveColor = "",
+    inactiveColor = "transparent",
   } = props;
 
   const [displayBorderColor, setDisplayBorderColor] = useState(

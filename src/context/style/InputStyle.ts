@@ -7,6 +7,10 @@ export const inputStyle = css`
     flex-wrap: wrap;
   }
 
+  label {
+    color: var(--input-text-color);
+  }
+
   label:not(.field-section):has(
       > input,
       > textarea,
@@ -17,8 +21,12 @@ export const inputStyle = css`
     display: flex;
     align-items: center;
     gap: 0.75rem;
-
+    color: var(--input-text-color);
     font-weight: bold;
+  }
+
+  span {
+    color: var(--input-text-color);
   }
 
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
