@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface NumberInputProps {
   key?: string;
@@ -41,7 +42,7 @@ export default function NumberInput(props: NumberInputProps) {
     if (onFocus) onFocus();
   };
 
-  const forIdPair = label ? `number-${label}` : `number-${key || crypto.randomUUID()}`;
+  const forIdPair = label ? `number-${label}` : `number-${key || uuidv4()}`;
 
   return (
     <label htmlFor={forIdPair} data-unit={unit ? unit : undefined}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ColorInputProps {
   label?: string;
@@ -9,7 +10,7 @@ interface ColorInputProps {
 export default function ColorInput(props: ColorInputProps) {
   const { label, value, onChange } = props;
 
-  const forIdPair = label ? `color-${label}` : `color-${crypto.randomUUID()}`;
+  const forIdPair = label ? `color-${label}` : `color-${uuidv4()}`;
 
   return (
     <label htmlFor={forIdPair}>

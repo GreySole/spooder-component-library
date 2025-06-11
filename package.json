@@ -2,8 +2,8 @@
   "name": "@greysole/spooder-component-library",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/greysole"
-},
-"version": "0.1.223",
+  },
+  "version": "0.1.42",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -19,7 +19,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@greysole/osc-js": "^2.4.1",
     "@greysole/spooder-component-library": "file:",
-    "react-svg": "^16.2.0"
+    "react-svg": "^16.2.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",

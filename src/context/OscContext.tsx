@@ -6,10 +6,9 @@ import React, {
   useContext,
   useCallback,
   useRef,
-} from "react";
-import OSC from "@greysole/osc-js";
-import { KeyedObject } from "../Types";
-import osc from "@greysole/osc-js";
+} from 'react';
+import OSC from '@greysole/osc-js';
+import { KeyedObject } from '../Types';
 
 export const OscContext = createContext({
   isReady: false,
@@ -31,47 +30,40 @@ export function OscProvider(props: OscProviderProps) {
   const oscListenersRef = useRef<KeyedObject[]>([]);
 
   useEffect(() => {
-    console.log("OSC Provider", host, port);
-    const newOsc = new OSC({
+    console.log('OSC Provider', host, port);
+    const url = port ? `ws://${host}:${port}/osc` : `wss://${host}/osc`;
+    const osc = new OSC({
       plugin: new OSC.WebsocketClientPlugin({
-        host: host,
-        port: port,
-        secure: port === null ? true : false,
+        url: url,
       }),
     });
-    newOsc.on("open", () => {
-      console.log("OSC Connected");
+    osc.on('open', () => {
+      console.log('OSC Connected');
       setIsReady(true);
     });
-    newOsc.on("close", () => {
-      console.log("OSC Disconnected");
+    osc.on('close', () => {
+      console.log('OSC Disconnected');
       setIsReady(false);
     });
-    newOsc.open();
-    oscRef.current = newOsc;
+    osc.open();
+    oscRef.current = osc;
 
     return () => {
-      newOsc.close();
+      osc.close();
       oscRef.current = undefined;
       setIsReady(false);
       oscListenersRef.current = [];
     };
   }, [host, port]);
 
-  const addListener = useCallback(
-    (address: string, callback: (message: any) => void) => {
-      if (!oscRef.current) {
-        return;
-      }
-      const subId = oscRef.current.on(address, callback);
-      console.log("SUB ID", subId);
-      oscListenersRef.current = [
-        ...oscListenersRef.current,
-        { address: address, subId: subId },
-      ];
-    },
-    []
-  );
+  const addListener = useCallback((address: string, callback: (message: any) => void) => {
+    if (!oscRef.current) {
+      return;
+    }
+    const subId = oscRef.current.on(address, callback);
+    console.log('SUB ID', subId);
+    oscListenersRef.current = [...oscListenersRef.current, { address: address, subId: subId }];
+  }, []);
 
   const removeListener = useCallback((address: string) => {
     if (!oscRef.current) {
@@ -93,10 +85,7 @@ export function OscProvider(props: OscProviderProps) {
   }, []);
 
   function sendOSC(address: string, value: any) {
-    console.log("SEND OSC", address, value, oscRef.current?.status());
-    if (!osc) {
-      return;
-    }
+    console.log('SEND OSC', address, value, oscRef.current?.status());
     oscRef.current?.send(new OSC.Message(address, value));
   }
 
@@ -113,7 +102,7 @@ export function OscProvider(props: OscProviderProps) {
 export function useOSC() {
   const context = useContext(OscContext);
   if (!context) {
-    throw new Error("useOSC must be used within a OSCProvider");
+    throw new Error('useOSC must be used within a OSCProvider');
   }
   return context;
 }

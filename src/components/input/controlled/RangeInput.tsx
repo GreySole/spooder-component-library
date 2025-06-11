@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface RangeInputProps {
   label?: string;
@@ -14,7 +15,7 @@ interface RangeInputProps {
 export default function RangeInput(props: RangeInputProps) {
   const { label, min, max, step, value, showValue, vertical, onChange } = props;
 
-  const forIdPair = label ? `range-${label}` : `range-${crypto.randomUUID()}`;
+  const forIdPair = label ? `range-${label}` : `range-${uuidv4()}`;
   return (
     <label className={'range-label' + (vertical ? ' vertical' : '')} htmlFor={forIdPair}>
       {label}
