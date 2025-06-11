@@ -1,8 +1,11 @@
 import { css } from "@emotion/react";
 
 export const styleVariables = css`
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
-  	--font-family: Arial; Helvetica; sans-serif;
+  	--font-family: 'Recursive', Helvetica, Arial, sans-serif;
 	--color-primary: #006e6e;
 	--color-background-far: #002733;
 	--color-background-near: #00526b;
@@ -13,6 +16,7 @@ export const styleVariables = css`
 	--color-analogous-cw: #00376E;
 	--color-analogous-ccw: #006E37;
 	--color-delete: #8f2525;
+	--color-delete-border: #df1414;
 	--color-add: #4141ac;
 	--color-save: #268626;
 	--color-plugin: #09c;
@@ -44,6 +48,8 @@ export const styleVariables = css`
 	--border-settings-color: #090;
 	--border-assets-color: #008080;
 	--input-field-color: #111;
+
+    --theme-text-color: #fff;
 
 	--input-text-color:#000;
 	--input-background-color:#fff;

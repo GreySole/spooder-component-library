@@ -8,7 +8,7 @@ export default function CircleLoader() {
     <svg
       width="inherit"
       height="inherit"
-      fill={themeColors.baseColor}
+      fill='var(--button-border-color)'
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 64 64"
     >

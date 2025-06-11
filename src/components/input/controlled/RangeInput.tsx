@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface RangeInputProps {
   label?: string;
@@ -13,11 +13,13 @@ interface RangeInputProps {
 
 export default function RangeInput(props: RangeInputProps) {
   const { label, min, max, step, value, showValue, vertical, onChange } = props;
+
+  const forIdPair = label ? `range-${label}` : `range-${crypto.randomUUID()}`;
   return (
-    <label className={'range-label' + (vertical ? ' vertical' : '')} htmlFor={`range-${label}`}>
+    <label className={'range-label' + (vertical ? ' vertical' : '')} htmlFor={forIdPair}>
       {label}
       <input
-        id={`range-${label}`}
+        id={forIdPair}
         className={'range-input' + (vertical ? ' vertical' : '')}
         type='range'
         min={min}

@@ -15,7 +15,9 @@ interface BoxProps {
   flexFlow?: Properties["flexFlow"];
   alignItems?: Properties["alignItems"];
   justifyContent?: Properties["justifyContent"];
+  spacing?: StyleSizeType;
   overflow?: Properties["overflow"];
+  textAlign?: Properties["textAlign"];
   padding?: StyleSizeType | string;
   paddingTop?: StyleSizeType | string;
   paddingRight?: StyleSizeType | string;
@@ -43,7 +45,9 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
     height,
     flexFlow,
     alignItems,
+    textAlign,
     justifyContent,
+    spacing,
     overflow,
     ...styles
   },
@@ -86,6 +90,7 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         display: "flex",
         flexFlow: flexFlow || undefined,
         alignItems: alignItems || undefined,
+        textAlign: textAlign || undefined,
         justifyContent: justifyContent || undefined,
         width: width || undefined,
         height: height || undefined,
@@ -96,6 +101,7 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         boxSizing: "border-box",
         overflow: overflow || undefined,
         backgroundColor: styles.backgroundColor || undefined,
+        gap: spacing ? resolveStyleSize(spacing) : undefined,
         ...paddingStyle,
         ...marginStyle,
       }}

@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 export const inputStyle = css`
   div:has(> input + button) {
@@ -11,25 +11,56 @@ export const inputStyle = css`
     color: var(--input-text-color);
   }
 
-  label:not(.field-section):has(
-      > input,
-      > textarea,
-      > select,
-      > button,
-      > .boolswitch
-    ) {
+  label:not(.field-section):has(> input, > textarea, > select, > button, > .boolswitch) {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     color: var(--input-text-color);
     font-weight: bold;
+
+    &[data-unit] {
+      position: relative;
+      &:after {
+        content: attr(data-unit);
+        display: inline-block;
+        font-size: 1.25rem;
+        color: var(--input-text-color);
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &:has(> input[type='color']) {
+      position: relative;
+
+      .color-input-icon {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: 50%;
+        top: 50%;
+
+        transform: translate(50%, -50%);
+
+        pointer-events: none;
+      }
+    }
+  }
+
+  textarea.w-tc-editor-text,
+  .w-tc-editor-preview {
+    font-variation-settings: 'MONO' 1 !important;
+    letter-spacing: 0 !important;
   }
 
   span {
     color: var(--input-text-color);
   }
 
-  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  input:not([type='checkbox']):not([type='radio']):not([type='range']),
   button,
   select {
     font-size: 1.25rem;
@@ -52,18 +83,19 @@ export const inputStyle = css`
       outline-offset: 4px;
     }
 
-    &[type="color"] {
+    &[type='color'] {
       appearance: none;
       display: block;
       padding: 0;
+      position: relative;
 
       cursor: pointer;
 
       aspect-ratio: 1;
-      height: 36px;
+      height: 46px;
       inline-size: unset;
 
-      box-shadow: 0 0 0 3px white;
+      box-shadow: 0 0 0 2px var(--theme-text-color);
 
       &::-webkit-color-swatch-wrapper {
         aspect-ratio: 1;
@@ -77,7 +109,7 @@ export const inputStyle = css`
       }
 
       &:hover {
-        box-shadow: 0 0 0 5px white;
+        box-shadow: 0 0 0 5px var(--theme-text-color);
       }
     }
   }
@@ -116,9 +148,14 @@ export const inputStyle = css`
     }
 
     &.delete-button {
+      > * {
+        color: var(--white) !important;
+      }
+
       color: var(--white) !important;
       background-color: var(--color-delete);
       --button-color: var(--color-delete) !important;
+      --button-border-color: var(--color-delete-border) !important;
     }
   }
 
@@ -162,7 +199,7 @@ export const inputStyle = css`
       height: var(--v-size);
       width: calc(2 * var(--v-size));
 
-      background: var(--gray-900);
+      background: var(--gray-600);
 
       border: var(--border-size) solid var(--gray-500);
       border-radius: calc(0.5 * var(--v-size));
@@ -173,12 +210,11 @@ export const inputStyle = css`
 
       outline-offset: 0px;
 
-      transition: outline 0.2s ease, outline-offset 0.2s ease-in-out,
-        box-shadow 0.1s ease-in-out;
+      transition: outline 0.2s ease, outline-offset 0.2s ease-in-out, box-shadow 0.1s ease-in-out;
 
       // Toggle switch on BG color
       &:before {
-        content: "";
+        content: '';
         display: block;
         position: absolute;
 
@@ -194,7 +230,7 @@ export const inputStyle = css`
 
       // Toggle switch nub
       &:after {
-        content: "";
+        content: '';
         display: block;
         position: absolute;
 
@@ -205,8 +241,7 @@ export const inputStyle = css`
         left: 0;
         border-radius: calc(0.5 * var(--v-size));
         background: var(--white);
-        box-shadow: 0 0.1em calc(2px + 0.3em) rgba(0, 0, 0, 0.5),
-          0 0 0 2px var(--gray-100);
+        box-shadow: 0 0.1em calc(2px + 0.3em) rgba(0, 0, 0, 0.5), 0 0 0 2px var(--gray-100);
 
         transition: left 0.1s ease-in-out;
 

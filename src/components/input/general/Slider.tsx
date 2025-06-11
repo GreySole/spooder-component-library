@@ -50,7 +50,7 @@ const Slider: React.FC<SliderProps> = ({
         );
       }
       if (step) {
-        newValue = parseFloat((Math.round(newValue / step) * step).toFixed(2));
+        newValue = parseFloat((Math.round(newValue / step) * step).toFixed(3));
       }
 
       onChange(newValue);
@@ -137,7 +137,7 @@ const Slider: React.FC<SliderProps> = ({
   const sliderStyle =
     orientation === "horizontal"
       ? {
-          background: `linear-gradient(to right, ${backgroundGradient})`,
+          background: `linear-gradient(to right in oklch, ${backgroundGradient})`,
           position: "relative" as CSSProperties["position"],
           borderRadius: "10px",
           outline: "solid var(--button-border-color) 2px",
@@ -146,7 +146,7 @@ const Slider: React.FC<SliderProps> = ({
           cursor: "pointer",
         }
       : {
-          background: `linear-gradient(to bottom, ${backgroundGradient})`,
+          background: `linear-gradient(to bottom in oklch, ${backgroundGradient})`,
           position: "relative" as CSSProperties["position"],
           borderRadius: "10px",
           outline: "solid var(--button-border-color) 2px",

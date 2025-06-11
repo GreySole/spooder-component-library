@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import Box from "./Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretUp, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Columns from "./Columns";
 import TypeFace from "./TypeFace";
 import { StyleSize, StyleSizeType } from "../../Types";
@@ -42,7 +42,7 @@ export default function Expandable(props: ExpandableProps) {
           <TypeFace fontSize={fontSize ?? "xlarge"} userSelect="none">
             {label}
           </TypeFace>
-          <Icon icon={open ? faCaretUp : faCaretDown} iconSize="large" />
+          <Icon icon={open ? faMinus : faPlus} iconSize="large" />
         </Columns>
         {open ? children : undefined}
       </Box>

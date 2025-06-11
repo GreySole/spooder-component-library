@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface NumberInputProps {
   key?: string;
@@ -6,8 +6,10 @@ interface NumberInputProps {
   label?: string;
   precision?: number;
   value: number;
+  unit?: string;
   onInput: (value: number) => void;
   autoFocus?: boolean;
+  selectOnFocus?: boolean;
   onFocus?: () => void;
   onBlur?: () => void;
 }
@@ -19,31 +21,40 @@ export default function NumberInput(props: NumberInputProps) {
     label,
     precision,
     autoFocus,
+    selectOnFocus = false,
     value,
     onInput,
     onFocus,
     onBlur,
+    unit,
   } = props;
 
   function setPrecision(rawValue: string) {
     const value = parseFloat(rawValue);
-    onInput(
-      precision !== undefined ? parseFloat(value.toFixed(precision)) : value
-    );
+    onInput(precision !== undefined ? parseFloat(value.toFixed(precision)) : value);
   }
 
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (selectOnFocus) {
+      e.currentTarget.select();
+    }
+    if (onFocus) onFocus();
+  };
+
+  const forIdPair = label ? `number-${label}` : `number-${key || crypto.randomUUID()}`;
+
   return (
-    <label htmlFor={`number-${key}`}>
+    <label htmlFor={forIdPair} data-unit={unit ? unit : undefined}>
       {label}
       <input
-        id={`number-${key}`}
+        id={forIdPair}
         style={{ width: width }}
-        className="number-input"
-        type="number"
+        className='number-input'
+        type='number'
         value={value}
         autoFocus={autoFocus}
         onInput={(e) => setPrecision((e.target as HTMLInputElement).value)}
-        onFocus={onFocus}
+        onFocus={handleFocus}
         onBlur={onBlur}
       />
     </label>

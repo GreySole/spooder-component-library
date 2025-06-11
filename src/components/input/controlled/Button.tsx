@@ -70,7 +70,9 @@ export default function Button(props: ButtonProps) {
 
   const width = convertSizeToStyleSizeButton(props.width);
   const height = convertSizeToStyleSizeButton(props.height);
-  const iconSize = convertSizeToStyleSizeFont(props.iconSize);
+  const iconSize = convertSizeToStyleSizeFont(
+    props.iconSize ? props.iconSize : "medium"
+  );
   const iconGap = convertSizeToStyleSizeFont(
     props.iconGap ? props.iconGap : "1rem"
   );

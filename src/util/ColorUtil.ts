@@ -38,13 +38,21 @@ export function setLuminance(color: string, luminance: number): string {
   return rgbToHex(newLuminanceRgb[0], newLuminanceRgb[1], newLuminanceRgb[2]);
 }
 
-export function contrastingColor(color: string) {
-  let lum1 = luma('#fff');
-  let lum2 = luma(color);
-  let brightest = Math.max(lum1, lum2);
-  let darkest = Math.min(lum1, lum2);
+// Calculates the contrast ratio between two colors
+// The formula is (L1 + 0.05) / (L2 + 0.05) where L1 is the luminance of the brighter color and L2 is the luminance of the darker color
+// The result is a number between 1 and 21, where 1 means no contrast and 21 means maximum contrast
+export function calculateContrastRatio(color1: string, color2: string): number {
+  const lum1 = luma(color1);
+  const lum2 = luma(color2);
+  const brightest = Math.max(lum1, lum2);
+  const darkest = Math.min(lum1, lum2);
 
-  let contrastRatio = (brightest + 0.05) / (darkest + 0.05);
+  return (brightest + 0.05) / (darkest + 0.05);
+}
+
+// Determines whether a color should be black or white based on its contrast ratio with white
+export function contrastingColor(color: string) {
+  let contrastRatio = calculateContrastRatio(color, '#fff');
 
   return `#${contrastRatio <= 4.5 ? '000' : 'fff'}`;
 }
@@ -95,4 +103,14 @@ export const hslToRgb = (h: number, s: number, l: number) => {
   const rgb = [f(0), f(8), f(4)].map((v) => Math.round(v * 255));
 
   return rgb as [number, number, number];
+};
+
+export const hexToHsl = (color: string) => {
+  const [r, g, b] = hexToRGBArray(color);
+  return rgbToHsl(r, g, b);
+};
+
+export const hslToHex = (h: number, s: number, l: number) => {
+  const [r, g, b] = hslToRgb(h, s, l);
+  return rgbToHex(r, g, b);
 };

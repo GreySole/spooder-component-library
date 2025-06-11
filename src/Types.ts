@@ -123,6 +123,7 @@ export interface ThemeColors {
   darkColorAnalogousCCW: string;
   buttonFontColorAnalogousCW: string;
   buttonFontColorAnalogousCCW: string;
+    themeTextColor: string;
   inputTextColor: string;
   inputBackgroundColor: string;
 }

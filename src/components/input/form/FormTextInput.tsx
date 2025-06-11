@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { text } from "stream/consumers";
 
 interface TextInputProps {
   formKey: string;
   width?: string;
   label?: string;
   placeholder?: string;
+  color?: string;
   charLimit?: number;
   jsonFriendly?: boolean;
   password?: boolean;
@@ -16,6 +18,7 @@ interface TextInputProps {
   autoComplete?: boolean;
   autoCorrect?: boolean;
   spellCheck?: boolean;
+  style?: React.CSSProperties;
 }
 
 export default function FormTextInput(props: TextInputProps) {
@@ -29,11 +32,13 @@ export default function FormTextInput(props: TextInputProps) {
     password,
     onFocus,
     onBlur,
+    color,
     autoFocus,
     autoCapitalize,
     autoComplete,
     autoCorrect,
     spellCheck,
+    style = {},
   } = props;
   const { register } = useFormContext();
 
@@ -50,12 +55,15 @@ export default function FormTextInput(props: TextInputProps) {
     }
     return value;
   }
+
+  const forIdPair = label ? `text-${label}` : `text-${formKey}`;
+
   return (
-    <label htmlFor={`text-${label}`}>
+    <label htmlFor={forIdPair}>
       {label}
       <input
-        id={`text-${label}`}
-        style={{ width: width }}
+        id={forIdPair}
+        style={{ ...style, width, color }}
         className="text-input"
         placeholder={placeholder}
         type={password ? "password" : "text"}

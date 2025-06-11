@@ -37,21 +37,27 @@ export const indexStyle = css`
 
   &:vertical {
     &:hover {
-      background-color: var(--white);
+      background-color: var(--theme-text-color);
     }
     &:active {
-      background-color: var(--white);
+      background-color: var(--theme-text-color);
     }
   }
 }
 
 body {
   font-family: var(--font-family);
+  font-variation-settings:
+    "slnt" 0,
+    "CASL" 0,
+    "CRSV" 0,
+    "MONO" 0;
+  letter-spacing: -0.07em;
 
   overflow-y: overlay;
   background-color: var(--color-background-near);
 
-  color: var(--white);
+  color: var(--theme-text-color);
 }
 
 #ModUIViewer {
