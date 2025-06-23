@@ -4,26 +4,19 @@ export interface FilterProps {
   value: string;
 }
 
-export enum ToastType {
-  SAVE = "toast-save",
-  ERROR = "toast-error",
-  REFRESH = "toast-refresh",
-  SUCCESS = "toast-success",
-}
-
 export enum OSCConditionType {
-  equal = "==",
-  notEqual = "!=",
-  greaterThanOrEqual = ">=",
-  lessThanOrEqual = "<=",
-  greaterThan = ">",
-  lessThan = "<",
+  equal = '==',
+  notEqual = '!=',
+  greaterThanOrEqual = '>=',
+  lessThanOrEqual = '<=',
+  greaterThan = '>',
+  lessThan = '<',
 }
 
 export enum OSCHandleType {
-  trigger = "trigger",
-  toggle = "toggle",
-  search = "search",
+  trigger = 'trigger',
+  toggle = 'toggle',
+  search = 'search',
 }
 
 export interface PluginsObject {
@@ -123,7 +116,7 @@ export interface ThemeColors {
   darkColorAnalogousCCW: string;
   buttonFontColorAnalogousCW: string;
   buttonFontColorAnalogousCCW: string;
-    themeTextColor: string;
+  themeTextColor: string;
   inputTextColor: string;
   inputBackgroundColor: string;
 }
@@ -141,36 +134,36 @@ export interface ThemeConstants {
 }
 
 export enum StyleSize {
-  none = "0rem",
-  xsmall = "0.25rem",
-  small = "0.5rem",
-  smedium = "0.75rem",
-  medium = "1rem",
-  large = "1.5rem",
-  mlarge = "1.25rem",
-  xlarge = "2rem",
+  none = '0rem',
+  xsmall = '0.25rem',
+  small = '0.5rem',
+  smedium = '0.75rem',
+  medium = '1rem',
+  large = '1.5rem',
+  mlarge = '1.25rem',
+  xlarge = '2rem',
 }
 
 export enum StyleSizeButton {
-  none = "0rem",
-  xsmall = "1rem",
-  small = "3rem",
-  smedium = "4rem",
-  medium = "5rem",
-  large = "7rem",
-  mlarge = "8rem",
-  xlarge = "9rem",
+  none = '0rem',
+  xsmall = '1rem',
+  small = '3rem',
+  smedium = '4rem',
+  medium = '5rem',
+  large = '7rem',
+  mlarge = '8rem',
+  xlarge = '9rem',
 }
 
 export type StyleSizeType =
-  | "none"
-  | "xsmall"
-  | "small"
-  | "smedium"
-  | "medium"
-  | "large"
-  | "mlarge"
-  | "xlarge";
+  | 'none'
+  | 'xsmall'
+  | 'small'
+  | 'smedium'
+  | 'medium'
+  | 'large'
+  | 'mlarge'
+  | 'xlarge';
 
 export interface NewPlugin {
   [key: string]: {
