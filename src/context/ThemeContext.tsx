@@ -71,13 +71,6 @@ const applyThemeColors = (colors: ThemeColors, isMobileDevice: boolean) => {
   const isItTooCloseToRed = () => {
     let [baseColorHue, baseColorSat, baseColorLight] = hexToHsl(baseColor);
 
-    console.log(
-      'Base Color HSL:',
-      baseColorHue,
-      baseColorSat,
-      baseColorLight
-    );
-
     let hueClose = baseColorHue < 20 || baseColorHue > 330;
     let satClose = baseColorSat > 40;
 
@@ -92,6 +85,44 @@ const applyThemeColors = (colors: ThemeColors, isMobileDevice: boolean) => {
   } else {
     document.documentElement.style.setProperty('--color-delete', '#8f2525');
     document.documentElement.style.setProperty('--color-delete-border', '#df1414');
+  }
+
+  const isItTooCloseToWarn = () => {
+    let [baseColorHue, baseColorSat, baseColorLight] = hexToHsl(baseColor);
+
+    let hueClose = baseColorHue < 70 && baseColorHue > 20;
+    let satClose = baseColorSat > 40;
+
+    if (hueClose && satClose) {
+      return true;
+    }
+  }
+
+  if (isItTooCloseToWarn()) {
+    document.documentElement.style.setProperty('--color-warning', '#9c299c');
+    document.documentElement.style.setProperty('--color-warning-border', '#e100ff');
+  } else {
+    document.documentElement.style.setProperty('--color-warning', '#b66700');
+    document.documentElement.style.setProperty('--color-warning-border', '#ff9b19');
+  }
+
+  const isItTooCloseToSave = () => {
+    let [baseColorHue, baseColorSat, baseColorLight] = hexToHsl(baseColor);
+
+    let hueClose = baseColorHue < 150 && baseColorHue > 85;
+    let satClose = baseColorSat > 40;
+
+    if (hueClose && satClose) {
+      return true;
+    }
+  }
+
+  if (isItTooCloseToSave()) {
+    document.documentElement.style.setProperty('--color-save', '#141d99');
+    document.documentElement.style.setProperty('--color-save-border', '#0026ff');
+  } else {
+    document.documentElement.style.setProperty('--color-save', '#268626');
+    document.documentElement.style.setProperty('--color-save-border', '#1cc51c');
   }
 
   if (isMobileDevice) {

@@ -61,6 +61,7 @@ export const inputStyle = css`
   }
 
   input:not([type='checkbox']):not([type='radio']):not([type='range']),
+  textarea,
   button,
   select {
     font-size: 1.25rem;
@@ -156,6 +157,29 @@ export const inputStyle = css`
       background-color: var(--color-delete);
       --button-color: var(--color-delete) !important;
       --button-border-color: var(--color-delete-border) !important;
+    }
+
+    &.save-button {
+      > * {
+        color: var(--white) !important;
+      }
+
+      color: var(--white) !important;
+      background-color: var(--color-save);
+      --button-color: var(--color-save) !important;
+      --button-border-color: var(--color-save-border) !important;
+    }
+
+    &[disabled] {
+      color: var(--gray-400);
+      background-color: var(--gray-600);
+      cursor: not-allowed;
+      outline: solid 2px var(--gray-400);
+      box-shadow: 0 0 0 1px var(--gray-400);
+
+      &:hover {
+        filter: none;
+      }
     }
   }
 

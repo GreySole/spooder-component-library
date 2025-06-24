@@ -135,7 +135,7 @@ export default function MultiPageModal({
               {title}
             </TypeFace>
             <Columns spacing="medium">
-              <Button icon={faX} iconSize="large" onClick={_onClose} />
+              <Button icon={faX} iconSize="large" onClick={_onClose} className="delete-button" />
               {headerContent}
             </Columns>
           </Box>
