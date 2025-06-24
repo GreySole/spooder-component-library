@@ -61,6 +61,7 @@ export const inputStyle = css`
   }
 
   input:not([type='checkbox']):not([type='radio']):not([type='range']),
+  textarea,
   button,
   select {
     font-size: 1.25rem;
