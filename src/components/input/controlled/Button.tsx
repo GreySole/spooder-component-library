@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
-import { icon, IconProp } from "@fortawesome/fontawesome-svg-core";
-import { useTheme } from "../../../context/ThemeContext";
-import { StyleSize, StyleSizeButton, StyleSizeType } from "../../../Types";
-import Icon from "../../media/Icon";
+import React, { useRef, useState } from 'react';
+import { icon, IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useTheme } from '../../../context/ThemeContext';
+import { StyleSize, StyleSizeButton, StyleSizeType } from '../../../Types';
+import Icon from '../../media/Icon';
+import { useTooltip } from '../../../context/TooltipContext';
 
 interface ButtonProps {
   className?: string;
@@ -14,12 +15,13 @@ interface ButtonProps {
   fallbackIcon?: IconProp;
   iconSize?: string | StyleSizeType;
   iconGap?: string | StyleSizeType;
-  iconPosition?: "left" | "right" | "top" | "bottom";
+  iconPosition?: 'left' | 'right' | 'top' | 'bottom';
   color?: string;
   colorOnHover?: boolean;
   truncate?: boolean;
   onClick: () => void;
   onLongPress?: () => void;
+  tooltipText?: string;
 }
 
 export default function Button(props: ButtonProps) {
@@ -39,14 +41,22 @@ export default function Button(props: ButtonProps) {
     color,
     colorOnHover,
     truncate,
+    tooltipText = '',
   } = props;
   const { themeVariables } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
+  const { showTip, hideTip } = useTooltip();
 
-  function convertSizeToStyleSizeFont(
-    size: string | StyleSizeType | undefined
-  ) {
+  const showTooltip = () => {
+    showTip(tooltipText);
+  };
+
+  const hideTooltip = () => {
+    hideTip();
+  };
+
+  function convertSizeToStyleSizeFont(size: string | StyleSizeType | undefined) {
     if (!size) {
       return undefined;
     }
@@ -56,9 +66,7 @@ export default function Button(props: ButtonProps) {
     return size;
   }
 
-  function convertSizeToStyleSizeButton(
-    size: string | StyleSizeType | undefined
-  ) {
+  function convertSizeToStyleSizeButton(size: string | StyleSizeType | undefined) {
     if (!size) {
       return undefined;
     }
@@ -70,27 +78,23 @@ export default function Button(props: ButtonProps) {
 
   const width = convertSizeToStyleSizeButton(props.width);
   const height = convertSizeToStyleSizeButton(props.height);
-  const iconSize = convertSizeToStyleSizeFont(
-    props.iconSize ? props.iconSize : "medium"
-  );
-  const iconGap = convertSizeToStyleSizeFont(
-    props.iconGap ? props.iconGap : "1rem"
-  );
+  const iconSize = convertSizeToStyleSizeFont(props.iconSize ? props.iconSize : 'medium');
+  const iconGap = convertSizeToStyleSizeFont(props.iconGap ? props.iconGap : '1rem');
 
-  let flexFlow = "left";
+  let flexFlow = 'left';
 
   switch (iconPosition) {
-    case "right":
-      flexFlow = "row";
+    case 'right':
+      flexFlow = 'row';
       break;
-    case "left":
-      flexFlow = "row-reverse";
+    case 'left':
+      flexFlow = 'row-reverse';
       break;
-    case "bottom":
-      flexFlow = "column";
+    case 'bottom':
+      flexFlow = 'column';
       break;
-    case "top":
-      flexFlow = "column-reverse";
+    case 'top':
+      flexFlow = 'column-reverse';
       break;
   }
 
@@ -121,9 +125,9 @@ export default function Button(props: ButtonProps) {
   const truncateStyle = truncate
     ? {
         width,
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       }
     : {};
 
@@ -136,22 +140,22 @@ export default function Button(props: ButtonProps) {
       disabled={disabled ?? false}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
+      onPointerEnter={tooltipText ? showTooltip : undefined}
+      onPointerLeave={tooltipText ? hideTooltip : undefined}
       style={{
         width,
         height,
-        display: "flex",
+        display: 'flex',
         gap: iconGap,
         flexFlow,
-        fontSize: "1rem",
-        alignItems: "center",
-        justifyContent: "center",
+        fontSize: '1rem',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: colorOnHover ? (isHovered ? color : undefined) : color,
       }}
     >
       {label ? <span style={truncateStyle}>{label}</span> : null}
-      {icon ? (
-        <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} />
-      ) : null}
+      {icon ? <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} /> : null}
     </button>
   );
 }

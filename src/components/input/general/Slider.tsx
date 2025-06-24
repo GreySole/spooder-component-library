@@ -110,12 +110,13 @@ const Slider: React.FC<SliderProps> = ({
 
     const segment = 1 / (gradientColors.length - 1);
     const index = Math.floor(value / segment);
+
     const factor =
       orientation === 'horizontal'
         ? (value - index * segment) / segment
         : 1.0 - (value - index * segment) / segment;
 
-    const forwardIndex = segment === index ? index : index + 1;
+    const forwardIndex = segment === index ? index : Math.min(index + 1, gradientColors.length - 1);
 
     return interpolateColor(gradientColors[index], gradientColors[forwardIndex], factor);
   };
@@ -160,7 +161,7 @@ const Slider: React.FC<SliderProps> = ({
       className={`slider ${orientation}`}
       onPointerDown={handlePointerDown}
       style={{ userSelect: 'none', touchAction: 'none', ...sliderStyle }}
-      >
+    >
       <div
         onDoubleClick={handleDoubleClick}
         ref={knobRef}

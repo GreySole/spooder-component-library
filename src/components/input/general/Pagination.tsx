@@ -8,6 +8,7 @@ import { KeyedObject } from "../../../Types";
 import Box from "../../layout/Box";
 import TypeFace from "../../layout/TypeFace";
 import Button from "../controlled/Button";
+import { useTooltip } from "../../../context/TooltipContext";
 
 interface PaginationProps {
   pageTitles: string[];
@@ -48,6 +49,7 @@ export default function Pagination(props: PaginationProps) {
           iconSize="large"
           onClick={handlePrevious}
           disabled={isAtStart}
+          tooltipText={isAtStart ? "Already on the first page" : "Previous page"}
         />
       ) : null}
       <Box flexFlow="column" width="100%">
@@ -126,6 +128,7 @@ export default function Pagination(props: PaginationProps) {
           iconSize="large"
           onClick={handleNext}
           disabled={isAtEnd}
+          tooltipText={isAtEnd ? "Already on the last page" : "Next page"}
         />
       ) : null}
     </Box>

@@ -17,8 +17,11 @@ export const styleVariables = css`
 	--color-analogous-ccw: #006E37;
 	--color-delete: #8f2525;
 	--color-delete-border: #df1414;
+    --color-warning: #b66700;
+    --color-warning-border: #ff9b19;
 	--color-add: #4141ac;
 	--color-save: #268626;
+	--color-save-border: #1cc51c;
 	--color-plugin: #09c;
 	--color-obs: #555;
 	--color-obs-streaming: #09c;

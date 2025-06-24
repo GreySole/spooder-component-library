@@ -2,6 +2,8 @@ import React, { createContext, useContext, ReactNode, useState, useCallback, use
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useTheme } from './ThemeContext';
+import Icon from '../components/media/Icon';
+import { faCheck, faTimes, faExclamationTriangle, faInfo } from '@fortawesome/free-solid-svg-icons';
 
 export enum ToastType {
   SUCCESS = 'success',
@@ -57,9 +59,11 @@ const fadeOut = keyframes`
 // Styled Components
 const ToastContainer = styled.div`
   position: fixed;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 80px;
+  // bottom: 10%;
+  right: 10px;
+  // left: 50%;
+  // transform: translateX(-50%);
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -69,10 +73,15 @@ const ToastContainer = styled.div`
 `;
 
 const ToastItem = styled.div<{ type: ToastType; isVisible: boolean }>`
+  --border: var(--button-border-color);
+
+  position: relative;
   padding: 12px 16px;
   border-radius: 8px;
   color: white;
   font-weight: 500;
+  background: var(--color-background-far);
+  outline: 1px solid var(--border);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   pointer-events: auto;
@@ -86,35 +95,66 @@ const ToastItem = styled.div<{ type: ToastType; isVisible: boolean }>`
     switch (props.type) {
       case ToastType.SUCCESS:
         return css`
-          background: #047857;
-          outline: 1px solid #047857;
+          --border: var(--color-save-border);
         `;
       case ToastType.ERROR:
         return css`
-          background: var(--color-delete);
-          outline: 1px solid #b91c1c;
+          --border: var(--color-delete-border);
         `;
       case ToastType.WARNING:
         return css`
-          background: #047857;
-          outline: 1px solid #b45309;
-        `;
-      case ToastType.INFO:
-        return css`
-          background: var(--color-background-far);
-          outline: 1px solid var(--button-border-color);
+          --border: var(--color-warning-border);
         `;
       default:
         return css`
-          background: #047857;
-          outline: 1px solid #374151;
+          --border: var(--button-border-color);
         `;
     }
   }}
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
+`;
+
+const ToastItemBubble = styled.div<{ type: ToastType }>`
+  --bg: var(--button-background-color);
+  --border: var(--button-border-color);
+
+  color: white;
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 2px solid var(--border);
+  background: var(--bg);
+
+  ${(props) => {
+    switch (props.type) {
+      case ToastType.SUCCESS:
+        return css`
+          --bg: var(--color-save);
+          --border: var(--color-save-border);
+        `;
+      case ToastType.ERROR:
+        return css`
+          --bg: var(--color-delete);
+          --border: var(--color-delete-border);
+        `;
+      case ToastType.WARNING:
+        return css`
+          --bg: var(--color-warning);
+          --border: var(--color-warning-border);
+        `;
+    }
+  }}
 `;
 
 interface ToastProviderProps {
@@ -224,6 +264,20 @@ export function ToastProvider(props: ToastProviderProps) {
             onClick={() => hideToast(toast.id)}
           >
             {toast.message}
+            <ToastItemBubble type={toast.type}>
+              <Icon
+                icon={
+                  toast.type === ToastType.SUCCESS
+                    ? faCheck
+                    : toast.type === ToastType.ERROR
+                    ? faTimes
+                    : toast.type === ToastType.WARNING
+                    ? faExclamationTriangle
+                    : faInfo
+                }
+                iconSize='md'
+              />
+            </ToastItemBubble>
           </ToastItem>
         ))}
       </ToastContainer>

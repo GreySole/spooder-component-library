@@ -30,6 +30,21 @@ export function TooltipProvider(props: TooltipProps) {
     }, 200);
   };
 
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  const tooltipWidth = 200; // Approximate width of the tooltip
+  const tooltipHeight = 50; // Approximate height of the tooltip
+
+  const flipX = mouseCoords.x > screenWidth - (tooltipWidth + 50);
+  const flipY = mouseCoords.y < tooltipHeight * 2;
+
+  const positionCalc = {
+    top: flipY ? `calc(${mouseCoords.y}px) + 20px` : `unset`,
+    left: flipX ? `unset` : `calc(${mouseCoords.x}px + var(--font-size))`,
+    bottom: flipY ? `unset` : `calc(${screenHeight}px - ${mouseCoords.y}px)`,
+    right: flipX ? `calc(${screenWidth}px - ${mouseCoords.x}px + var(--font-size))` : `unset`,
+  };
+
   const onPointerMove = (e: React.MouseEvent<HTMLDivElement>) => {
     setMouseCoords({ x: e.clientX, y: e.clientY });
   };
@@ -41,14 +56,19 @@ export function TooltipProvider(props: TooltipProps) {
           <div
             style={{
               position: 'absolute',
-              top: `calc(${mouseCoords.y}px - var(--font-size) * 2.5)`,
-              left: `calc(${mouseCoords.x}px + var(--font-size))`,
+              top: positionCalc.top,
+              left: positionCalc.left,
+              bottom: positionCalc.bottom,
+              right: positionCalc.right,
+              maxWidth: '200px',
+              width: 'auto',
               backgroundColor: 'color-mix(in srgb, var(--color-background-far) 75%, transparent)',
               outline: '1px solid var(--button-border-color)',
               borderRadius: 'var(--interactive-radius)',
               zIndex: 999999,
-              opacity,
               transition: 'opacity 0.2s ease-in-out',
+              pointerEvents: 'none',
+              opacity,
             }}
           >
             <Box padding='small'>

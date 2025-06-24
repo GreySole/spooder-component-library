@@ -157,6 +157,29 @@ export const inputStyle = css`
       --button-color: var(--color-delete) !important;
       --button-border-color: var(--color-delete-border) !important;
     }
+
+    &.save-button {
+      > * {
+        color: var(--white) !important;
+      }
+
+      color: var(--white) !important;
+      background-color: var(--color-save);
+      --button-color: var(--color-save) !important;
+      --button-border-color: var(--color-save-border) !important;
+    }
+
+    &[disabled] {
+      color: var(--gray-400);
+      background-color: var(--gray-600);
+      cursor: not-allowed;
+      outline: solid 2px var(--gray-400);
+      box-shadow: 0 0 0 1px var(--gray-400);
+
+      &:hover {
+        filter: none;
+      }
+    }
   }
 
   select {

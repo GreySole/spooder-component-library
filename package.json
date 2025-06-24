@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/greysole"
   },
-  "version": "0.1.232",
+  "version": "0.1.274",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
