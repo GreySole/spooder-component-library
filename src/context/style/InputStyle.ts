@@ -31,19 +31,23 @@ export const inputStyle = css`
         transform: translateY(-50%);
       }
     }
+  }
 
-    &:has(> input[type='color']) {
+  label:has(input[type='color']) {
+    > .color-input-container {
       position: relative;
+      height: auto;
+      width: 46px;
 
-      .color-input-icon {
+      > .color-input-icon {
         position: absolute;
         display: flex;
         align-items: center;
         justify-content: center;
-        right: 50%;
+        left: 50%;
         top: 50%;
 
-        transform: translate(50%, -50%);
+        transform: translate(-50%, -50%);
 
         pointer-events: none;
       }
