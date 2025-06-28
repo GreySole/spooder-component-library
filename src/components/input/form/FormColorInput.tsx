@@ -20,20 +20,22 @@ export default function FormColorInput(props: TextInputProps) {
   return (
     <label htmlFor={forIdPair}>
       {label}
-      <input type='color' value={value} id={forIdPair} {...register(formKey)} />
-      {showWarning ? (
-        <FontAwesomeIcon
-          icon={faTriangleExclamation}
-          color={calculateContrastRatio(value, '#F00') < 2 ? '#500' : '#F00'}
-          className='color-input-icon'
-        />
-      ) : (
-        <FontAwesomeIcon
-          icon={faPalette}
-          className='color-input-icon'
-          color={calculateContrastRatio(value, '#FFF') < 4.5 ? '#000' : '#FFF'}
-        />
-      )}
+      <div className="color-input-container">
+        <input type='color' value={value} id={forIdPair} {...register(formKey)} />
+        {showWarning ? (
+          <FontAwesomeIcon
+            icon={faTriangleExclamation}
+            color={calculateContrastRatio(value, '#F00') < 2 ? '#500' : '#F00'}
+            className='color-input-icon'
+          />
+        ) : (
+          <FontAwesomeIcon
+            icon={faPalette}
+            className='color-input-icon'
+            color={calculateContrastRatio(value, '#FFF') < 4.5 ? '#000' : '#FFF'}
+          />
+        )}
+      </div>
     </label>
   );
 }

@@ -13,11 +13,10 @@ export default function EditCustomSpooderForm({
   const { control } = useFormContext();
   const { setCustomSpooder } = useTheme();
   const parts = useWatch({ control, name: "parts" });
-  const colors = useWatch({ control, name: "colors" });
 
   useEffect(() => {
-    setCustomSpooder(parts, colors);
-  }, [parts, colors]);
+    setCustomSpooder(parts);
+  }, [parts]);
 
   return <Box flexFlow="row wrap">{children}</Box>;
 }

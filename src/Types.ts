@@ -1,3 +1,5 @@
+import { Key } from 'react';
+
 export interface FilterProps {
   label: string;
   icon: any;
@@ -70,37 +72,13 @@ export interface ChatTriggerConditionObject {
   vip: boolean;
 }
 
+export interface SpooderPetPair {
+  partString: string;
+  partColor: string;
+}
+
 export interface SpooderPet {
-  parts: {
-    bigeyeleft: string;
-    bigeyeright: string;
-    littleeyeleft: string;
-    littleeyeright: string;
-    fangleft: string;
-    fangright: string;
-    mouth: string;
-    bodyleft: string;
-    bodyright: string;
-    shortlegleft: string;
-    longlegleft: string;
-    shortlegright: string;
-    longlegright: string;
-  };
-  colors: {
-    bigeyeleft: string;
-    bigeyeright: string;
-    littleeyeleft: string;
-    littleeyeright: string;
-    fangleft: string;
-    fangright: string;
-    mouth: string;
-    bodyleft: string;
-    bodyright: string;
-    shortlegleft: string;
-    shortlegright: string;
-    longlegleft: string;
-    longlegright: string;
-  };
+  parts: SpooderPetPair[];
 }
 
 export interface ThemeColors {
