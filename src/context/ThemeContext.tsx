@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { SpooderPet, ThemeColors, ThemeConstants, ThemeVariables } from '../Types';
+import { SpooderPetPair, ThemeColors, ThemeConstants, ThemeVariables } from '../Types';
 import {
   rgbToHsl,
   hslToRgb,
@@ -77,7 +77,7 @@ const applyThemeColors = (colors: ThemeColors, isMobileDevice: boolean) => {
     if (hueClose && satClose) {
       return true;
     }
-  }
+  };
 
   if (isItTooCloseToRed()) {
     document.documentElement.style.setProperty('--color-delete', '#93299c');
@@ -96,7 +96,7 @@ const applyThemeColors = (colors: ThemeColors, isMobileDevice: boolean) => {
     if (hueClose && satClose) {
       return true;
     }
-  }
+  };
 
   if (isItTooCloseToWarn()) {
     document.documentElement.style.setProperty('--color-warning', '#9c299c');
@@ -115,7 +115,7 @@ const applyThemeColors = (colors: ThemeColors, isMobileDevice: boolean) => {
     if (hueClose && satClose) {
       return true;
     }
-  }
+  };
 
   if (isItTooCloseToSave()) {
     document.documentElement.style.setProperty('--color-save', '#141d99');
@@ -189,7 +189,7 @@ const calculateThemeColors = (hue: number, saturation: number, isDarkTheme: bool
 
 interface ThemeProviderProps {
   theme: ThemeVariables;
-  spooder: SpooderPet;
+  spooder: SpooderPetPair[];
   children: ReactNode;
 }
 
@@ -197,13 +197,13 @@ interface ThemeContextProps {
   themeVariables: ThemeVariables;
   themeConstants: ThemeConstants;
   themeColors: ThemeColors;
-  customSpooder: SpooderPet;
+  customSpooder: SpooderPetPair[];
   isMobileDevice: boolean;
   setThemeHue: (hue: number) => void;
   setThemeSaturation: (saturation: number) => void;
   setThemeMode: (isDarkTheme: boolean) => void;
   refreshThemeColors: () => void;
-  setCustomSpooder: (parts: any, colors: any) => void;
+  setCustomSpooder: (parts: SpooderPetPair[]) => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
@@ -234,38 +234,22 @@ const ThemeContext = createContext<ThemeContextProps>({
     inputTextColor: '#fff',
     inputBackgroundColor: '#000',
   },
-  customSpooder: {
-    parts: {
-      bigeyeleft: 'o',
-      bigeyeright: 'o',
-      littleeyeleft: '\u00ba',
-      littleeyeright: '\u00ba',
-      fangleft: ' ',
-      fangright: ' ',
-      mouth: '\u03c9',
-      bodyleft: '(',
-      bodyright: ')',
-      shortlegleft: '/\\',
-      longlegleft: '/╲',
-      shortlegright: '/\\',
-      longlegright: '╱\\',
-    },
-    colors: {
-      bigeyeleft: '#FFFFFF',
-      bigeyeright: '#FFFFFF',
-      littleeyeleft: '#FFFFFF',
-      littleeyeright: '#FFFFFF',
-      fangleft: '#FFFFFF',
-      fangright: '#FFFFFF',
-      mouth: '#FFFFFF',
-      bodyleft: '#FFFFFF',
-      bodyright: '#FFFFFF',
-      shortlegleft: '#FFFFFF',
-      shortlegright: '#FFFFFF',
-      longlegleft: '#FFFFFF',
-      longlegright: '#FFFFFF',
-    },
-  },
+  customSpooder: [
+    { partString: '/\\', partColor: '#FFFFFF' },
+    { partString: '/╲', partColor: '#FFFFFF' },
+    { partString: '(', partColor: '#FFFFFF' },
+    { partString: ' ', partColor: '#FFFFFF' },
+    { partString: 'º', partColor: '#FFFFFF' },
+    { partString: 'o', partColor: '#FFFFFF' },
+    { partString: 'ω', partColor: '#FFFFFF' },
+    { partString: 'o', partColor: '#FFFFFF' },
+    { partString: 'º', partColor: '#FFFFFF' },
+    { partString: ' ', partColor: '#FFFFFF' },
+    { partString: ')', partColor: '#FFFFFF' },
+    { partString: '╱\\', partColor: '#FFFFFF' },
+    { partString: '/\\', partColor: '#FFFFFF' },
+  ],
+
   isMobileDevice: false,
   setThemeHue: () => {},
   setThemeSaturation: () => {},
@@ -278,7 +262,7 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
   const initialTheme = useRef(theme);
   const initialSpooder = useRef(spooder);
   const [themeVariables, setThemeVariables] = useState(initialTheme.current);
-  const [spooderPet, setSpooderPet] = useState<SpooderPet>(initialSpooder.current);
+  const [spooderPet, setSpooderPet] = useState<SpooderPetPair[]>(initialSpooder.current);
   const [isMobileDevice, setIsMobileDevice] = useState(
     /Mobi|Android/i.test(window.navigator.userAgent) || window.innerWidth <= 900,
   );
@@ -361,13 +345,9 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
     applyThemeColors(newColors, isMobileDevice);
   }
 
-  function setCustomSpooder(parts: any, colors: any) {
-    initialSpooder.current = { parts, colors };
-    setSpooderPet((prev) => ({
-      ...prev,
-      parts: { ...prev.parts, ...parts },
-      colors: { ...prev.colors, ...colors },
-    }));
+  function setCustomSpooder(parts: SpooderPetPair[]) {
+    initialSpooder.current = parts;
+    setSpooderPet(parts);
   }
 
   return (
