@@ -145,17 +145,13 @@ export default function Button(props: ButtonProps) {
       style={{
         width,
         height,
-        display: 'flex',
         gap: iconGap,
         flexFlow,
-        fontSize: '1rem',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colorOnHover ? (isHovered ? color : undefined) : color,
+        color,
       }}
     >
       {label ? <span style={truncateStyle}>{label}</span> : null}
-      {icon ? <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} /> : null}
+      {icon ? <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} iconColor={color} /> : null}
     </button>
   );
 }

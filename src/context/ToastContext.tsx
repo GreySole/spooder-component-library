@@ -16,17 +16,28 @@ export interface Toast {
   id: string;
   message: string;
   type: ToastType;
-  duration: number;
+  duration?: number;
+  delay?: number; // Optional delay before showing the toast
   isVisible: boolean;
 }
 
 interface ToastContextType {
   toasts: Toast[];
-  showSuccess: (message: string, duration?: number) => void;
-  showError: (message: string, duration?: number) => void;
-  showWarning: (message: string, duration?: number) => void;
-  showInfo: (message: string, duration?: number) => void;
-  showToast: (message: string, type: ToastType, duration?: number) => void;
+  showSuccess: (message: string, duration?: number, delay?: number) => void;
+  showError: (message: string, duration?: number, delay?: number) => void;
+  showWarning: (message: string, duration?: number, delay?: number) => void;
+  showInfo: (message: string, duration?: number, delay?: number) => void;
+  showToast: ({
+    message,
+    type,
+    duration,
+    delay,
+  }: {
+    message: string;
+    type: ToastType;
+    duration?: number;
+    delay?: number;
+  }) => void;
   hideToast: (id: string) => void;
   clearAll: () => void;
 }
@@ -187,7 +198,17 @@ export function ToastProvider(props: ToastProviderProps) {
   }, []);
 
   const showToast = useCallback(
-    (message: string, type: ToastType, duration: number = 4000) => {
+    ({
+      message,
+      type,
+      duration = 3000,
+      delay = 100,
+    }: {
+      message: string;
+      type: ToastType;
+      duration?: number;
+      delay?: number;
+    }) => {
       const id = generateId();
       const toast: Toast = {
         id,
@@ -197,40 +218,44 @@ export function ToastProvider(props: ToastProviderProps) {
         isVisible: true,
       };
 
-      setToasts((prev) => [...prev, toast]);
+      console.log(`Showing toast: ${message} (Type: ${type}, Duration: ${duration}, Delay: ${delay})`);
 
-      // Auto-hide after duration
-      timeoutRefs.current[id] = setTimeout(() => {
-        hideToast(id);
-      }, duration);
+
+      setTimeout(() => {
+        setToasts((prev) => [...prev, toast]);
+        // Auto-hide after duration
+        timeoutRefs.current[id] = setTimeout(() => {
+          hideToast(id);
+        }, duration);
+      }, delay); // Use delay if provided, otherwise default to 0
     },
     [hideToast],
   );
 
   const showSuccess = useCallback(
-    (message: string, duration?: number) => {
-      showToast(message, ToastType.SUCCESS, duration);
+    (message: string, duration?: number, delay?: number) => {
+      showToast({ message, type: ToastType.SUCCESS, duration, delay });
     },
     [showToast],
   );
 
   const showError = useCallback(
-    (message: string, duration?: number) => {
-      showToast(message, ToastType.ERROR, duration);
+    (message: string, duration?: number, delay?: number) => {
+      showToast({ message, type: ToastType.ERROR, duration, delay });
     },
     [showToast],
   );
 
   const showWarning = useCallback(
-    (message: string, duration?: number) => {
-      showToast(message, ToastType.WARNING, duration);
+    (message: string, duration?: number, delay?: number) => {
+      showToast({ message, type: ToastType.WARNING, duration, delay });
     },
     [showToast],
   );
 
   const showInfo = useCallback(
-    (message: string, duration?: number) => {
-      showToast(message, ToastType.INFO, duration);
+    (message: string, duration?: number, delay?: number) => {
+      showToast({ message, type: ToastType.INFO, duration, delay });
     },
     [showToast],
   );

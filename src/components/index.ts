@@ -55,4 +55,3 @@ export { default as Icon } from './media/Icon';
 export { default as CustomSpooder } from './custom_spooder/CustomSpooder';
 export { default as EditCustomSpooderForm } from './custom_spooder/customSpooderInput/EditCustomSpooderForm';
 export { default as EditCustomSpooderInputPair } from './custom_spooder/customSpooderInput/EditCustomSpooderInputPair';
-export { default as EditCustomSpooderAddButton } from './custom_spooder/customSpooderInput/EditCustomSpooderAddButton';

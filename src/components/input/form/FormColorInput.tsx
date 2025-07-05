@@ -13,7 +13,7 @@ interface TextInputProps {
 export default function FormColorInput(props: TextInputProps) {
   const { formKey, label, showWarning } = props;
   const { watch, register } = useFormContext();
-  const value = watch(formKey);
+  const value = watch(formKey, '#FFFFFF'); // Default color value
 
   const forIdPair = label ? `color-${label}` : `color-${formKey}`;
 

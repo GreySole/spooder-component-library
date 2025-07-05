@@ -125,7 +125,11 @@ export const inputStyle = css`
     color: var(--button-font-color);
     background-color: var(--button-background-color);
     outline: solid 2px var(--button-border-color);
-    font-size: 20px;
+
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
 
     padding: 0.5rem 1rem;
     box-shadow: 0 0 0 1px var(--button-color);
@@ -172,6 +176,19 @@ export const inputStyle = css`
       background-color: var(--color-save);
       --button-color: var(--color-save) !important;
       --button-border-color: var(--color-save-border) !important;
+    }
+
+    &.clear-button {
+      background-color: transparent;
+      color: var(--button-font-color);
+      box-shadow: none;
+      border: none;
+      outline: none;
+      padding: .25rem;
+
+      &:hover {
+        backdrop-filter: brightness(1.2);
+      }
     }
 
     &[disabled] {

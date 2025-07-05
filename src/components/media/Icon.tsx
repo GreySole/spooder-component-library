@@ -11,10 +11,11 @@ interface IconProps {
   iconSize?: string;
   fallbackIcon?: IconProp;
   clip?: "circle" | "square";
+  iconColor?: string;
 }
 
 export default function Icon(props: IconProps) {
-  const { icon, iconSize, fallbackIcon, clip } = props;
+  const { icon, iconSize, fallbackIcon, clip, iconColor } = props;
   const { themeVariables } = useTheme();
   const [hasError, setHasError] = useState(false);
 
@@ -53,7 +54,7 @@ export default function Icon(props: IconProps) {
       <FontAwesomeIcon
         icon={icon}
         style={{ width: size, height: size, clipPath: clipPath }}
-        color={isDarkTheme ? "white" : "black"}
+        color={iconColor ? iconColor : ( isDarkTheme ? "white" : "black" )}
         onError={() => {
           handleError();
         }}
