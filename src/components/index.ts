@@ -37,7 +37,10 @@ export { default as TooltipButton } from './input/general/TooltipButton';
 //layout
 export { default as Border } from './layout/Border';
 export { default as Box } from './layout/Box';
+export { default as Grid } from './layout/Grid';
 export { default as Columns } from './layout/Columns';
+export { default as Draggable } from './layout/Draggable';
+export { default as Droppable } from './layout/Droppable';
 export { default as Expandable } from './layout/Expandable';
 export { default as Stack } from './layout/Stack';
 export { default as TypeFace } from './layout/TypeFace';
@@ -54,5 +57,3 @@ export { default as Icon } from './media/Icon';
 //Custom Spooder
 export { default as CustomSpooder } from './custom_spooder/CustomSpooder';
 export { default as EditCustomSpooderForm } from './custom_spooder/customSpooderInput/EditCustomSpooderForm';
-export { default as EditCustomSpooderInputPair } from './custom_spooder/customSpooderInput/EditCustomSpooderInputPair';
-export { default as EditCustomSpooderAddButton } from './custom_spooder/customSpooderInput/EditCustomSpooderAddButton';

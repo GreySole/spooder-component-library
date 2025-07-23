@@ -18,5 +18,5 @@ export default function EditCustomSpooderForm({
     setCustomSpooder(parts);
   }, [parts]);
 
-  return <Box flexFlow="row wrap">{children}</Box>;
+  return <>{children}</>;
 }

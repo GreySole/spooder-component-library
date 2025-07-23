@@ -12,6 +12,7 @@ interface ButtonProps {
   height?: string;
   disabled?: boolean;
   icon?: IconProp | string;
+  iconColor?: string;
   fallbackIcon?: IconProp;
   iconSize?: string | StyleSizeType;
   iconGap?: string | StyleSizeType;
@@ -32,6 +33,7 @@ export default function Button(props: ButtonProps) {
     //height,
     disabled,
     icon,
+    iconColor,
     fallbackIcon,
     //iconSize,
     //iconGap = "1rem",
@@ -155,7 +157,7 @@ export default function Button(props: ButtonProps) {
       }}
     >
       {label ? <span style={truncateStyle}>{label}</span> : null}
-      {icon ? <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} /> : null}
+      {icon ? <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} iconColor={iconColor} /> : null}
     </button>
   );
 }
