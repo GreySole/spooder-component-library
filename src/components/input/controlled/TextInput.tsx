@@ -7,6 +7,7 @@ interface TextInputProps {
   label?: string;
   unit?: string;
   placeholder?: string;
+  color?: string;
   charLimit?: number;
   jsonFriendly?: boolean;
   password?: boolean;
@@ -20,6 +21,7 @@ interface TextInputProps {
   autoCorrect?: boolean;
   spellCheck?: boolean;
   readOnly?: boolean;
+  style?: React.CSSProperties;
 }
 
 export default function TextInput(props: TextInputProps) {
@@ -34,6 +36,7 @@ export default function TextInput(props: TextInputProps) {
     onInput,
     onFocus,
     onBlur,
+    color,
     selectOnFocus = false,
     autoFocus,
     autoCapitalize,
@@ -42,6 +45,7 @@ export default function TextInput(props: TextInputProps) {
     spellCheck,
     unit,
     readOnly = false,
+    style = {},
   } = props;
   function _onInput(value: string) {
     if (!onInput) return;
@@ -77,7 +81,7 @@ export default function TextInput(props: TextInputProps) {
         placeholder={placeholder}
         type={password ? 'password' : 'text'}
         value={value}
-        style={{ width: width }}
+        style={{ ...style, width, color }}
         onInput={(e) => _onInput(e.currentTarget.value)}
         onFocus={handleFocus}
         onBlur={onBlur}
