@@ -174,6 +174,21 @@ export const inputStyle = css`
       --button-border-color: var(--color-save-border) !important;
     }
 
+    &.minimal {
+      color: var(--button-font-color);
+        background-color: transparent;
+        box-shadow: none;
+        outline: none;
+        padding: 0.25rem 0.5rem;
+        &:hover {
+            filter: brightness(1.2);
+            }
+        &:focus-visible {
+            outline: solid 2px var(--button-color);
+            outline-offset: 2px;
+        }
+    }
+
     &[disabled] {
       color: var(--gray-400);
       background-color: var(--gray-600);
