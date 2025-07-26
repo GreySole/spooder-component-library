@@ -15,6 +15,7 @@ interface ButtonProps {
   iconColor?: string;
   fallbackIcon?: IconProp;
   iconSize?: string | StyleSizeType;
+  fontSize?: string | StyleSizeType;
   iconGap?: string | StyleSizeType;
   iconPosition?: 'left' | 'right' | 'top' | 'bottom';
   color?: string;
@@ -23,20 +24,17 @@ interface ButtonProps {
   onClick: () => void;
   onLongPress?: () => void;
   tooltipText?: string;
+  style?: React.CSSProperties;
 }
 
 export default function Button(props: ButtonProps) {
   const {
     className,
     label,
-    //width,
-    //height,
     disabled,
     icon,
     iconColor,
     fallbackIcon,
-    //iconSize,
-    //iconGap = "1rem",
     iconPosition,
     onClick,
     onLongPress,
@@ -44,8 +42,9 @@ export default function Button(props: ButtonProps) {
     colorOnHover,
     truncate,
     tooltipText = '',
+    style,
   } = props;
-  const { themeVariables } = useTheme();
+
   const [isHovered, setIsHovered] = useState(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
   const { showTip, hideTip } = useTooltip();
@@ -82,6 +81,7 @@ export default function Button(props: ButtonProps) {
   const height = convertSizeToStyleSizeButton(props.height);
   const iconSize = convertSizeToStyleSizeFont(props.iconSize ? props.iconSize : 'medium');
   const iconGap = convertSizeToStyleSizeFont(props.iconGap ? props.iconGap : '1rem');
+  const fontSize = convertSizeToStyleSizeFont(props.fontSize ? props.fontSize : 'medium');
 
   let flexFlow = 'left';
 
@@ -144,16 +144,23 @@ export default function Button(props: ButtonProps) {
       onMouseOut={() => setIsHovered(false)}
       onPointerEnter={tooltipText ? showTooltip : undefined}
       onPointerLeave={tooltipText ? hideTooltip : undefined}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleMouseUp();
+        }
+      }}
       style={{
         width,
         height,
         display: 'flex',
         gap: iconGap,
         flexFlow,
-        fontSize: '1rem',
+        fontSize: fontSize,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colorOnHover ? (isHovered ? color : undefined) : color,
+        ...style,
       }}
     >
       {label ? <span style={truncateStyle}>{label}</span> : null}

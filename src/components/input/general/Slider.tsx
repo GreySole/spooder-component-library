@@ -4,6 +4,7 @@ import { useTheme } from '../../../context/ThemeContext';
 interface SliderProps {
   value: number;
   step?: number;
+  minMax?: [number, number];
   orientation: 'horizontal' | 'vertical';
   gradient?: string;
   onChange: (value: number) => void;
@@ -13,6 +14,7 @@ interface SliderProps {
 const Slider: React.FC<SliderProps> = ({
   value,
   step,
+  minMax,
   orientation,
   gradient,
   onChange,
@@ -38,6 +40,9 @@ const Slider: React.FC<SliderProps> = ({
       if (orientation === 'horizontal') {
         const offsetX = event.clientX - sliderRect.left;
         newValue = Math.max(0, Math.min(1, offsetX / sliderRect.width));
+        if (minMax) {
+          newValue = minMax[0] + newValue * (minMax[1] - minMax[0]);
+        }
       } else {
         const offsetY = event.clientY - sliderRect.top;
         newValue = Math.max(0, Math.min(1, (sliderRect.height - offsetY) / sliderRect.height));
@@ -111,17 +116,24 @@ const Slider: React.FC<SliderProps> = ({
     const segment = 1 / (gradientColors.length - 1);
     const index = Math.floor(value / segment);
 
-    const factor =
-      orientation === 'horizontal'
-        ? (value - index * segment) / segment
-        : 1.0 - (value - index * segment) / segment;
+    let factor = 0;
+
+    if (orientation === 'horizontal') {
+      factor = (value - index * segment) / segment;
+      if (minMax) {
+        factor = factor * (minMax[1] - minMax[0]) + minMax[0];
+      }
+    } else {
+      factor = 1.0 - (value - index * segment) / segment;
+      if (minMax) {
+        factor = 1.0 - (factor * (minMax[1] - minMax[0]) + minMax[0]);
+      }
+    }
 
     const forwardIndex = segment === index ? index : Math.min(index + 1, gradientColors.length - 1);
 
     return interpolateColor(gradientColors[index], gradientColors[forwardIndex], factor);
   };
-
-  //console.log(backgroundGradient);
 
   const sliderStyle =
     orientation === 'horizontal'
@@ -144,6 +156,22 @@ const Slider: React.FC<SliderProps> = ({
           cursor: 'pointer',
         };
 
+  const knobPosition = minMax
+    ? {
+        left:
+          orientation === 'horizontal'
+            ? `${((value - minMax[0]) / (minMax[1] - minMax[0])) * 100}%`
+            : '50%',
+        top:
+          orientation === 'vertical'
+            ? `${(1 - (value - minMax[0]) / (minMax[1] - minMax[0])) * 100}%`
+            : '50%',
+      }
+    : {
+        left: orientation === 'horizontal' ? `${value * 100}%` : '50%',
+        top: orientation === 'vertical' ? '50%' : `${(1.0 - value) * 100}%`,
+      };
+
   const knobStyle = {
     position: 'absolute' as CSSProperties['position'],
     width: '40px',
@@ -152,7 +180,7 @@ const Slider: React.FC<SliderProps> = ({
     outline: 'solid var(--button-border-color) 2px',
     transform: orientation === 'horizontal' ? 'translate(-50%, -25%)' : 'translate(-25%, -50%)',
     [orientation === 'horizontal' ? 'left' : 'top']:
-      orientation === 'horizontal' ? `${value * 100}%` : `${(1.0 - value) * 100}%`,
+      orientation === 'horizontal' ? knobPosition.left : knobPosition.top,
   };
 
   return (

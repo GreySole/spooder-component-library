@@ -9,6 +9,16 @@ export const inputStyle = css`
 
   label {
     color: var(--input-text-color);
+    &[for^='rc-editable-input-'] {
+      color: var(--input-text-color) !important;
+    }
+  }
+
+  .sketch-picker {
+    > div:first-child,
+    > div:first-child div {
+      cursor: crosshair !important;
+    }
   }
 
   label:not(.field-section):has(> input, > textarea, > select, > button, > .boolswitch) {
@@ -22,6 +32,7 @@ export const inputStyle = css`
       position: relative;
       &:after {
         content: attr(data-unit);
+        font-variation-settings: 'MONO' 1;
         display: inline-block;
         font-size: 1.25rem;
         color: var(--input-text-color);
@@ -38,6 +49,12 @@ export const inputStyle = css`
       position: relative;
       height: auto;
       width: 46px;
+      margin: 2px;
+
+      /* input[type='color'] {
+        display: none;
+        appearance: none;
+      } */
 
       > .color-input-icon {
         position: absolute;
@@ -51,6 +68,20 @@ export const inputStyle = css`
 
         pointer-events: none;
       }
+      > .react-colorful {
+        position: absolute;
+        top: 100%;
+        box-shadow: 0 2px 12px var(--black);
+      }
+    }
+    &.smaller {
+      > .color-input-container {
+        width: 36px;
+        > input[type='color'] {
+          height: 36px;
+          width: 36px;
+        }
+      }
     }
   }
 
@@ -58,10 +89,6 @@ export const inputStyle = css`
   .w-tc-editor-preview {
     font-variation-settings: 'MONO' 1 !important;
     letter-spacing: 0 !important;
-  }
-
-  span {
-    color: var(--input-text-color);
   }
 
   input:not([type='checkbox']):not([type='radio']):not([type='range']),
@@ -124,11 +151,11 @@ export const inputStyle = css`
 
     color: var(--button-font-color);
     background-color: var(--button-background-color);
-    outline: solid 2px var(--button-border-color);
+    border: solid 2px var(--button-border-color);
     font-size: 20px;
 
     padding: 0.5rem 1rem;
-    box-shadow: 0 0 0 1px var(--button-color);
+    /* box-shadow: 0 0 0 1px var(--button-color); */
 
     cursor: pointer;
 
@@ -176,17 +203,32 @@ export const inputStyle = css`
 
     &.minimal {
       color: var(--button-font-color);
-        background-color: transparent;
-        box-shadow: none;
-        outline: none;
-        padding: 0.25rem 0.5rem;
-        &:hover {
-            filter: brightness(1.2);
-            }
-        &:focus-visible {
-            outline: solid 2px var(--button-color);
-            outline-offset: 2px;
-        }
+      background-color: transparent;
+      box-shadow: none;
+      outline: none;
+      border: none;
+      padding: 0.25rem 0.5rem;
+      backdrop-filter: brightness(1);
+
+      transition: outline-offset 0.2s ease-in-out, filter 0.2s, backdrop-filter 0.2s;
+
+      --b: 1.7;
+
+      &.selected {
+        outline: solid 3px var(--button-color);
+        outline-offset: -1px;
+        backdrop-filter: brightness(var(--b));
+      }
+
+      &:hover {
+        backdrop-filter: brightness(var(--b));
+      }
+
+      &:focus-visible {
+        backdrop-filter: brightness(var(--b));
+        outline: solid 2px var(--button-color);
+        outline-offset: 2px;
+      }
     }
 
     &[disabled] {
@@ -198,6 +240,43 @@ export const inputStyle = css`
 
       &:hover {
         filter: none;
+      }
+    }
+  }
+
+  label:has(input[type='text']) {
+    position: relative;
+    > input {
+      + button.text-input-clear-button {
+        position: absolute;
+        right: 0.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 80%;
+        background: transparent;
+        border: none;
+        color: var(--input-text-color);
+        cursor: pointer;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+
+        opacity: 0;
+        transition: opacity 0.2s;
+
+        &:hover {
+          color: var(--color-primary);
+        }
+      }
+
+      &:focus,
+      &:focus-visible {
+        + button.text-input-clear-button {
+          pointer-events: auto;
+          opacity: 1;
+        }
       }
     }
   }

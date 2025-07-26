@@ -2,9 +2,6 @@ import { css } from "@emotion/react";
 
 export const indexStyle = css`
   :root {
-  --header-height: 70px;
-  --navigation-tabs-height: 70px;
-  --footer-height: 70px;
   --interactive-radius: 0.5rem;
   --font-size: 16px;
   font-size: var(--font-size);

@@ -50,7 +50,7 @@ export default function Icon(props: IconProps) {
     return (
       <FontAwesomeIcon
         icon={icon}
-        style={{ width: size, height: size, clipPath: clipPath }}
+        style={{ width: size, height: size, clipPath: clipPath, pointerEvents: 'none' }}
         color={iconColor}
         onError={() => {
           handleError();

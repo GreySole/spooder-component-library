@@ -17,16 +17,22 @@ export function TooltipProvider(props: TooltipProps) {
   const [text, setText] = useState('');
   const [opacity, setOpacity] = useState(0);
 
-  const showTip = (text: string) => {
-    setText(text);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const showTip = (newText: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setText(newText);
     setOpacity(1);
   };
 
   const hideTip = () => {
     setOpacity(0);
-
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setText('');
+      timeoutRef.current = null;
     }, 200);
   };
 

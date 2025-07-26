@@ -1,23 +1,23 @@
-import { Properties } from "csstype";
-import React, { forwardRef, ReactNode } from "react";
-import { StyleSize, StyleSizeType } from "../../Types";
-import { resolveStyleSize } from "../../util/MediaUtil";
+import { Properties } from 'csstype';
+import React, { forwardRef, ReactNode } from 'react';
+import { StyleSize, StyleSizeType } from '../../Types';
+import { resolveStyleSize } from '../../util/MediaUtil';
 
 interface BoxProps {
   children: ReactNode;
   className?: string;
-  width?: Properties["width"];
-  height?: Properties["height"];
-  minWidth?: Properties["minWidth"];
-  minHeight?: Properties["minHeight"];
-  maxWidth?: Properties["maxWidth"];
-  maxHeight?: Properties["maxHeight"];
-  flexFlow?: Properties["flexFlow"];
-  alignItems?: Properties["alignItems"];
-  justifyContent?: Properties["justifyContent"];
+  width?: Properties['width'];
+  height?: Properties['height'];
+  minWidth?: Properties['minWidth'];
+  minHeight?: Properties['minHeight'];
+  maxWidth?: Properties['maxWidth'];
+  maxHeight?: Properties['maxHeight'];
+  flexFlow?: Properties['flexFlow'];
+  alignItems?: Properties['alignItems'];
+  justifyContent?: Properties['justifyContent'];
   spacing?: StyleSizeType;
-  overflow?: Properties["overflow"];
-  textAlign?: Properties["textAlign"];
+  overflow?: Properties['overflow'];
+  textAlign?: Properties['textAlign'];
   padding?: StyleSizeType | string;
   paddingTop?: StyleSizeType | string;
   paddingRight?: StyleSizeType | string;
@@ -28,8 +28,9 @@ interface BoxProps {
   marginRight?: StyleSizeType | string;
   marginBottom?: StyleSizeType | string;
   marginLeft?: StyleSizeType | string;
-  backgroundColor?: Properties["backgroundColor"];
+  backgroundColor?: Properties['backgroundColor'];
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  style?: React.CSSProperties;
 }
 
 export default forwardRef<HTMLDivElement, BoxProps>(function Box(
@@ -49,9 +50,10 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
     justifyContent,
     spacing,
     overflow,
+    style,
     ...styles
   },
-  ref
+  ref,
 ) {
   const paddingStyle = styles.padding
     ? {
@@ -61,10 +63,10 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         paddingLeft: resolveStyleSize(styles.padding),
       }
     : {
-        paddingTop: resolveStyleSize(styles.paddingTop ?? "none"),
-        paddingRight: resolveStyleSize(styles.paddingRight ?? "none"),
-        paddingBottom: resolveStyleSize(styles.paddingBottom ?? "none"),
-        paddingLeft: resolveStyleSize(styles.paddingLeft ?? "none"),
+        paddingTop: resolveStyleSize(styles.paddingTop ?? 'none'),
+        paddingRight: resolveStyleSize(styles.paddingRight ?? 'none'),
+        paddingBottom: resolveStyleSize(styles.paddingBottom ?? 'none'),
+        paddingLeft: resolveStyleSize(styles.paddingLeft ?? 'none'),
       };
 
   const marginStyle = styles.margin
@@ -75,19 +77,19 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         marginLeft: resolveStyleSize(styles.margin),
       }
     : {
-        marginTop: resolveStyleSize(styles.marginTop ?? "none"),
-        marginRight: resolveStyleSize(styles.marginRight ?? "none"),
-        marginBottom: resolveStyleSize(styles.marginBottom ?? "none"),
-        marginLeft: resolveStyleSize(styles.marginLeft ?? "none"),
+        marginTop: resolveStyleSize(styles.marginTop ?? 'none'),
+        marginRight: resolveStyleSize(styles.marginRight ?? 'none'),
+        marginBottom: resolveStyleSize(styles.marginBottom ?? 'none'),
+        marginLeft: resolveStyleSize(styles.marginLeft ?? 'none'),
       };
 
   return (
     <div
-      className={"box " + (className ? className : "")}
+      className={'box ' + (className ? className : '')}
       ref={ref}
       onClick={onClick}
       style={{
-        display: "flex",
+        display: 'flex',
         flexFlow: flexFlow || undefined,
         alignItems: alignItems || undefined,
         textAlign: textAlign || undefined,
@@ -98,12 +100,13 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         minHeight: minHeight || undefined,
         maxWidth: maxWidth || undefined,
         maxHeight: maxHeight || undefined,
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         overflow: overflow || undefined,
         backgroundColor: styles.backgroundColor || undefined,
         gap: spacing ? resolveStyleSize(spacing) : undefined,
         ...paddingStyle,
         ...marginStyle,
+        ...style,
       }}
     >
       {children}

@@ -186,6 +186,19 @@ export function ToastProvider(props: ToastProviderProps) {
     }
   }, []);
 
+  // If message contains HTML tags, parse it
+  const toastMessageParsed = (message: string) => {
+    if (!message) return '';
+    // Check if message contains HTML tags anywhere
+    if (!/<[a-z][\s\S]*>/i.test(message)) {
+      return message;
+    }
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(message, 'text/html');
+    console.log(doc.body.innerHTML);
+    return doc.body.innerHTML;
+  };
+
   const showToast = useCallback(
     (message: string, type: ToastType, duration: number = 4000) => {
       const id = generateId();
@@ -263,7 +276,7 @@ export function ToastProvider(props: ToastProviderProps) {
             isVisible={toast.isVisible}
             onClick={() => hideToast(toast.id)}
           >
-            {toast.message}
+            {toastMessageParsed(toast.message)}
             <ToastItemBubble type={toast.type}>
               <Icon
                 icon={
