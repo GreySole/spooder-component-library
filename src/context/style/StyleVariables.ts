@@ -56,5 +56,8 @@ export const styleVariables = css`
 
 	--input-text-color:#000;
 	--input-background-color:#fff;
+
+    --default-box-shadow: 0 4px 12px -2px var(--black);
+    --lighter-box-shadow: 0 4px 12px -6px var(--black);
 }
 `;

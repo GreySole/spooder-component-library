@@ -23,7 +23,7 @@ export default function SvgIcon(props: SvgIconProps) {
   return (
     <ReactSVG
       src={src}
-      style={{ clipPath: clipPath }}
+      style={{ clipPath: clipPath, pointerEvents: "none" }}
       beforeInjection={(svg) => {
         svg.setAttribute("width", width?.toString() || "100%");
         svg.setAttribute("height", height?.toString() || "100%");

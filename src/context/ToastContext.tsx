@@ -82,7 +82,7 @@ const ToastItem = styled.div<{ type: ToastType; isVisible: boolean }>`
   font-weight: 500;
   background: var(--color-background-far);
   outline: 1px solid var(--border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--lighter-box-shadow);
   cursor: pointer;
   pointer-events: auto;
   min-width: 300px;
@@ -114,7 +114,6 @@ const ToastItem = styled.div<{ type: ToastType; isVisible: boolean }>`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -185,6 +184,19 @@ export function ToastProvider(props: ToastProviderProps) {
       delete timeoutRefs.current[id];
     }
   }, []);
+
+  // If message contains HTML tags, parse it
+  const toastMessageParsed = (message: string) => {
+    if (!message) return '';
+    // Check if message contains HTML tags anywhere
+    if (!/<[a-z][\s\S]*>/i.test(message)) {
+      return message;
+    }
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(message, 'text/html');
+    console.log(doc.body.innerHTML);
+    return doc.body.innerHTML;
+  };
 
   const showToast = useCallback(
     (message: string, type: ToastType, duration: number = 4000) => {
@@ -263,7 +275,7 @@ export function ToastProvider(props: ToastProviderProps) {
             isVisible={toast.isVisible}
             onClick={() => hideToast(toast.id)}
           >
-            {toast.message}
+            {toastMessageParsed(toast.message)}
             <ToastItemBubble type={toast.type}>
               <Icon
                 icon={

@@ -103,6 +103,9 @@ export interface ThemeVariables {
   hue: number;
   saturation: number;
   isDarkTheme: boolean;
+  isMonospacedFont: boolean;
+  fontWeight: number;
+  letterSpacing: number;
 }
 
 export interface ThemeConstants {

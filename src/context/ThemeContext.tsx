@@ -151,7 +151,7 @@ const calculateThemeColors = (hue: number, saturation: number, isDarkTheme: bool
   const baseColor = fullLuminance(color);
   const backgroundColorFar = isDarkTheme
     ? setLuminance(baseColor, 0.05)
-    : setLuminance(baseColor, 0.4);
+    : setLuminance(baseColor, 0.75);
   const backgroundColorNear = isDarkTheme
     ? setLuminance(baseColor, 0.1)
     : setLuminance(baseColor, 0.55);
@@ -202,6 +202,9 @@ interface ThemeContextProps {
   setThemeHue: (hue: number) => void;
   setThemeSaturation: (saturation: number) => void;
   setThemeMode: (isDarkTheme: boolean) => void;
+  setThemeMonospacedFont: (isMonospacedFont: boolean) => void;
+  setThemeFontWeight: (fontWeight: number) => void;
+  setThemeLetterSpacing: (letterSpacing: number) => void;
   refreshThemeColors: () => void;
   setCustomSpooder: (parts: SpooderPetPair[]) => void;
 }
@@ -211,6 +214,9 @@ const ThemeContext = createContext<ThemeContextProps>({
     hue: 0.5,
     saturation: 1,
     isDarkTheme: true,
+    isMonospacedFont: false,
+    fontWeight: 700,
+    letterSpacing: 0,
   },
   themeConstants: {
     settings: '#090',
@@ -254,6 +260,9 @@ const ThemeContext = createContext<ThemeContextProps>({
   setThemeHue: () => {},
   setThemeSaturation: () => {},
   setThemeMode: () => {},
+  setThemeMonospacedFont: () => {},
+  setThemeFontWeight: () => {},
+  setThemeLetterSpacing: () => {},
   refreshThemeColors: () => {},
   setCustomSpooder: () => {},
 });
@@ -299,11 +308,17 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
       hue: theme.hue,
       saturation: theme.saturation,
       isDarkTheme: theme.isDarkTheme,
+      isMonospacedFont: theme.isMonospacedFont,
+      fontWeight: theme.fontWeight,
+      letterSpacing: theme.letterSpacing,
     };
     setThemeVariables({
       hue: theme.hue,
       saturation: theme.saturation,
       isDarkTheme: theme.isDarkTheme,
+      isMonospacedFont: theme.isMonospacedFont,
+      fontWeight: theme.fontWeight,
+      letterSpacing: theme.letterSpacing,
     });
     initialSpooder.current = spooder;
     setSpooderPet(spooder);
@@ -335,6 +350,21 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
     setThemeVariables((prev) => ({ ...prev, isDarkTheme }));
   }
 
+  function setThemeMonospacedFont(isMonospacedFont: boolean) {
+    initialTheme.current.isMonospacedFont = isMonospacedFont;
+    setThemeVariables((prev) => ({ ...prev, isMonospacedFont }));
+  }
+
+  function setThemeFontWeight(fontWeight: number) {
+    initialTheme.current.fontWeight = fontWeight;
+    setThemeVariables((prev) => ({ ...prev, fontWeight }));
+  }
+
+  function setThemeLetterSpacing(letterSpacing: number) {
+    initialTheme.current.letterSpacing = letterSpacing;
+    setThemeVariables((prev) => ({ ...prev, letterSpacing }));
+  }
+
   function refreshThemeColors() {
     const newColors = calculateThemeColors(
       themeVariables.hue,
@@ -361,6 +391,9 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
         setThemeHue,
         setThemeSaturation,
         setThemeMode,
+        setThemeLetterSpacing,
+        setThemeMonospacedFont,
+        setThemeFontWeight,
         refreshThemeColors,
         setCustomSpooder,
       }}

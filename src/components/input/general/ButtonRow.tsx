@@ -73,7 +73,7 @@ export default function ButtonRow(props: ButtonRowProps) {
 
   return (
     <TypeFace fontSize='medium'>
-      <Columns spacing='none' padding='small'>
+      <Columns spacing='none'>
         {buttonMap}
       </Columns>
     </TypeFace>

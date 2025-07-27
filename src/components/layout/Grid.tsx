@@ -14,6 +14,7 @@ interface GridProps {
     maxHeight?: Properties['maxHeight'];
     alignItems?: Properties['alignItems'];
     justifyContent?: Properties['justifyContent'];
+    justifyItems?: Properties['justifyItems'];
     spacing?: StyleSizeType;
     overflow?: Properties['overflow'];
     textAlign?: Properties['textAlign'];
@@ -48,6 +49,7 @@ const Grid: React.FC<GridProps> = ({
     maxHeight,
     alignItems,
     justifyContent,
+    justifyItems,
     spacing = '16px',
     overflow = 'scroll',
     textAlign,
@@ -95,6 +97,7 @@ const Grid: React.FC<GridProps> = ({
         maxHeight,
         alignItems,
         justifyContent,
+        justifyItems,
         overflow,
         textAlign,
         backgroundColor,
@@ -103,7 +106,7 @@ const Grid: React.FC<GridProps> = ({
     };
 
     return (
-        <div className={className} style={gridStyle} onClick={onClick}>
+        <div className={`${className} grid`} style={gridStyle} onClick={onClick}>
             {children}
         </div>
     );
