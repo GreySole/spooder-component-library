@@ -318,6 +318,7 @@ export const inputStyle = css`
   .boolswitch {
     display: flex;
     position: relative;
+    align-self: start;
 
     font-size: 20px;
 
