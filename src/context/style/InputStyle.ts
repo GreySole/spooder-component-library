@@ -44,47 +44,6 @@ export const inputStyle = css`
     }
   }
 
-  label:has(input[type='color']) {
-    > .color-input-container {
-      position: relative;
-      height: auto;
-      width: 46px;
-      margin: 2px;
-
-      /* input[type='color'] {
-        display: none;
-        appearance: none;
-      } */
-
-      > .color-input-icon {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        left: 50%;
-        top: 50%;
-
-        transform: translate(-50%, -50%);
-
-        pointer-events: none;
-      }
-      > .react-colorful {
-        position: absolute;
-        top: 100%;
-        box-shadow: 0 2px 12px var(--black);
-      }
-    }
-    &.smaller {
-      > .color-input-container {
-        width: 36px;
-        > input[type='color'] {
-          height: 36px;
-          width: 36px;
-        }
-      }
-    }
-  }
-
   textarea.w-tc-editor-text,
   .w-tc-editor-preview {
     font-variation-settings: 'MONO' 1 !important;
@@ -95,17 +54,16 @@ export const inputStyle = css`
   textarea,
   button,
   select {
-    font-size: 1.25rem;
+    font-size: 1rem;
     border: none;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--gray-700);
     border-radius: var(--interactive-radius);
 
     color: var(--input-text-color);
 
     background-color: var(--input-background-color);
     outline-offset: 0px;
-
-    box-shadow: 0 0 0 1px var(--gray-900);
 
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s ease-in-out,
       outline-offset 0.2s ease-in-out, filter 0.2s, padding 0.2s ease-in-out,
@@ -151,11 +109,14 @@ export const inputStyle = css`
 
     color: var(--button-font-color);
     background-color: var(--button-background-color);
-    border: solid 2px var(--button-border-color);
-    font-size: 20px;
+    border-color: var(--button-border-color);
+    font-size: 1rem;
 
-    padding: 0.5rem 1rem;
-    /* box-shadow: 0 0 0 1px var(--button-color); */
+    &.merge-with-input {
+      border-radius: 0 var(--interactive-radius) var(--interactive-radius) 0;
+      margin-left: -2px;
+      z-index: 2;
+    }
 
     cursor: pointer;
 
@@ -235,8 +196,7 @@ export const inputStyle = css`
       color: var(--gray-400);
       background-color: var(--gray-600);
       cursor: not-allowed;
-      outline: solid 2px var(--gray-400);
-      box-shadow: 0 0 0 1px var(--gray-400);
+      border-color: var(--gray-400);
 
       &:hover {
         filter: none;
@@ -278,6 +238,61 @@ export const inputStyle = css`
           opacity: 1;
         }
       }
+    }
+
+    button.text-input-clear-button:focus {
+      pointer-events: auto;
+      opacity: 1;
+    }
+  }
+
+  label:has(input[type='color']) {
+    > .color-input-container {
+      position: relative;
+      height: auto;
+      width: 46px;
+      margin: 2px;
+
+      input[type='color'] {
+        border: none;
+      }
+
+      > .color-input-icon {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        pointer-events: none;
+      }
+      > .react-colorful {
+        position: absolute;
+        top: 100%;
+        box-shadow: var(--default-box-shadow);
+      }
+    }
+    &.smaller {
+      > .color-input-container {
+        width: 36px;
+        > input[type='color'] {
+          height: 36px;
+          width: 36px;
+        }
+      }
+    }
+  }
+
+  label:has(~ button.merge-with-input) {
+    input:not([type='checkbox']):not([type='radio']):not([type='range']),
+    textarea,
+    button,
+    select {
+      border-radius: var(--interactive-radius) 0 0 var(--interactive-radius);
+      z-index: 1;
     }
   }
 
@@ -513,5 +528,49 @@ export const inputStyle = css`
   }
   input[type='range']:focus::-ms-fill-upper {
     background: #50555c;
+  }
+
+  .filter-button {
+    position: relative;
+    display: inline-block;
+
+    .dropdown {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 8px;
+      background-color: var(--color-background-far);
+      border-radius: var(--interactive-radius);
+      box-shadow: var(--default-box-shadow);
+      z-index: 9;
+      margin-top: 5px;
+      right: 0;
+      width: 130px;
+
+      &.above {
+        bottom: 100%;
+        margin-bottom: 5px;
+      }
+
+      &.below {
+        top: 100%;
+        margin-top: 5px;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+
+        &:hover {
+          background-color: var(--color-background-near);
+        }
+
+        input {
+          margin-right: 10px;
+        }
+      }
+    }
   }
 `;

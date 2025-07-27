@@ -151,7 +151,7 @@ const calculateThemeColors = (hue: number, saturation: number, isDarkTheme: bool
   const baseColor = fullLuminance(color);
   const backgroundColorFar = isDarkTheme
     ? setLuminance(baseColor, 0.05)
-    : setLuminance(baseColor, 0.4);
+    : setLuminance(baseColor, 0.75);
   const backgroundColorNear = isDarkTheme
     ? setLuminance(baseColor, 0.1)
     : setLuminance(baseColor, 0.55);

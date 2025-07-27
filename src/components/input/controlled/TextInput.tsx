@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Icon from '../../media/Icon';
 import { faTimes, faX } from '@fortawesome/free-solid-svg-icons';
@@ -52,6 +52,9 @@ export default function TextInput(props: TextInputProps) {
     readOnly = false,
     style = {},
   } = props;
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
   function _onInput(value: string) {
     if (!onInput) return;
     if (charLimit !== undefined) {
@@ -95,12 +98,19 @@ export default function TextInput(props: TextInputProps) {
 
   const forIdPair = label ? `text-${label}` : `text-${uuidv4()}`;
 
+  const handleClear = () => {
+    _onInput('');
+    // focus the input after clearing
+    inputRef.current?.focus();
+  };
+
   const clearButtonSpacing = unit ? unit.length : 0;
 
   return (
     <label htmlFor={forIdPair} data-unit={unit ? unit : undefined}>
       {label}
       <input
+        ref={inputRef}
         id={forIdPair}
         className='text-input'
         placeholder={placeholder}
@@ -120,7 +130,7 @@ export default function TextInput(props: TextInputProps) {
       />
       <Button
         className='text-input-clear-button minimal'
-        onClick={() => _onInput('')}
+        onClick={() => handleClear()}
         style={{ right: `calc(${clearButtonSpacing}ch + .25rem)` }}
         tooltipText='Clear input'
         icon={faTimes}

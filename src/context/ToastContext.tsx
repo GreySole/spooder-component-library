@@ -82,7 +82,7 @@ const ToastItem = styled.div<{ type: ToastType; isVisible: boolean }>`
   font-weight: 500;
   background: var(--color-background-far);
   outline: 1px solid var(--border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--lighter-box-shadow);
   cursor: pointer;
   pointer-events: auto;
   min-width: 300px;
@@ -114,7 +114,6 @@ const ToastItem = styled.div<{ type: ToastType; isVisible: boolean }>`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
 `;
 

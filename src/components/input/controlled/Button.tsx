@@ -124,6 +124,13 @@ export default function Button(props: ButtonProps) {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   const truncateStyle = truncate
     ? {
         width,
@@ -144,12 +151,7 @@ export default function Button(props: ButtonProps) {
       onMouseOut={() => setIsHovered(false)}
       onPointerEnter={tooltipText ? showTooltip : undefined}
       onPointerLeave={tooltipText ? hideTooltip : undefined}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleMouseUp();
-        }
-      }}
+      onKeyDown={handleKeyDown}
       style={{
         width,
         height,
@@ -164,7 +166,9 @@ export default function Button(props: ButtonProps) {
       }}
     >
       {label ? <span style={truncateStyle}>{label}</span> : null}
-      {icon ? <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} iconColor={iconColor} /> : null}
+      {icon ? (
+        <Icon icon={icon} iconSize={iconSize} fallbackIcon={fallbackIcon} iconColor={iconColor} />
+      ) : null}
     </button>
   );
 }

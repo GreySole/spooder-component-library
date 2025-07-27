@@ -41,11 +41,11 @@ export default function MultiPageModal({
     left: 0;
     right: 0;
     bottom: 0;
+    top: 0;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     flex-flow: column;
     height: calc(100dvh - var(--header-height));
-    top: var(--header-height);
     background: var(--color-background-far);
     z-index: 9;
   `;
