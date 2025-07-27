@@ -1,12 +1,12 @@
-import React, { ReactNode, useState } from "react";
-import Box from "../../layout/Box";
-import Button from "../controlled/Button";
-import { faX } from "@fortawesome/free-solid-svg-icons";
-import TypeFace from "../../layout/TypeFace";
-import Pagination from "./Pagination";
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
-import Columns from "../../layout/Columns";
+import React, { ReactNode, useState } from 'react';
+import Box from '../../layout/Box';
+import Button from '../controlled/Button';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import TypeFace from '../../layout/TypeFace';
+import Pagination from './Pagination';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import Columns from '../../layout/Columns';
 
 interface ModalPage {
   title: string;
@@ -45,7 +45,6 @@ export default function MultiPageModal({
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     flex-flow: column;
-    height: calc(100dvh - var(--header-height));
     background: var(--color-background-far);
     z-index: 9;
   `;
@@ -122,35 +121,35 @@ export default function MultiPageModal({
 
   return (
     <ModalOverlay>
-      <Box flexFlow="column" width="100%">
+      <Box flexFlow='column' width='100%'>
         <ModalHeader>
           <Box
-            className="modal-header"
-            width="100%"
-            justifyContent="space-between"
-            alignItems="center"
-            padding="small"
+            className='modal-header'
+            width='100%'
+            justifyContent='space-between'
+            alignItems='center'
+            padding='small'
           >
-            <TypeFace fontSize="xlarge" truncate>
+            <TypeFace fontSize='xlarge' truncate>
               {title}
             </TypeFace>
-            <Columns spacing="medium">
-              <Button icon={faX} iconSize="large" onClick={_onClose} className="delete-button" />
+            <Columns spacing='medium'>
+              <Button icon={faX} iconSize='large' onClick={_onClose} className='delete-button' />
               {headerContent}
             </Columns>
           </Box>
         </ModalHeader>
       </Box>
       <ModalContent>
-        <div className="modal-body">{pages[currentPage].content}</div>
+        <div className='modal-body'>{pages[currentPage].content}</div>
       </ModalContent>
       <ModalFooter>
         <Box
-          className="modal-footer"
-          width="100%"
-          flexFlow="row"
-          justifyContent="space-between"
-          padding="medium"
+          className='modal-footer'
+          width='100%'
+          flexFlow='row'
+          justifyContent='space-between'
+          padding='medium'
         >
           <Pagination
             pageTitles={pages.map((page) => page.title)}

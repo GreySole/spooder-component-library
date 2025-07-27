@@ -1,5 +1,5 @@
 import React from 'react';
-import {useTheme} from '../../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 interface FormLoaderProps {
   numRows?: number;
@@ -19,7 +19,7 @@ export default function FormLoader({ numRows = 3, width = '50%' }: FormLoaderPro
         </linearGradient>
       </defs>
       {Array.from({ length: numRows }).map((_, i) => (
-        <>
+        <g key={i}>
           <rect
             x='10'
             y={50 * i + 10}
@@ -50,7 +50,7 @@ export default function FormLoader({ numRows = 3, width = '50%' }: FormLoaderPro
             stroke={themeColors.buttonFontColor}
             strokeWidth='2'
           ></rect>
-        </>
+        </g>
       ))}
     </svg>
   );

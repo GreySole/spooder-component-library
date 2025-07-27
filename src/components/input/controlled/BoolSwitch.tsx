@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTooltip } from '../../..';
+import { useTooltip } from '../../../context/TooltipContext';
 
 interface BoolSwitchProps {
   label?: string;

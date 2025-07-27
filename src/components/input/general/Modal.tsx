@@ -1,11 +1,11 @@
-import React, { ReactNode } from "react";
-import Box from "../../layout/Box";
-import Button from "../controlled/Button";
-import { faX } from "@fortawesome/free-solid-svg-icons";
-import TypeFace from "../../layout/TypeFace";
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
-import Columns from "../../layout/Columns";
+import React, { ReactNode } from 'react';
+import Box from '../../layout/Box';
+import Button from '../controlled/Button';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import TypeFace from '../../layout/TypeFace';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import Columns from '../../layout/Columns';
 
 interface ModalProps {
   title: string;
@@ -33,11 +33,10 @@ export default function Modal({
     left: 0;
     right: 0;
     bottom: 0;
+    top: 0;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     flex-flow: column;
-    height: calc(100dvh - var(--header-height));
-    top: var(--header-height);
     background: var(--color-background-far);
     z-index: 9;
   `;
@@ -97,18 +96,18 @@ export default function Modal({
 
   return (
     <ModalOverlay>
-      <Box flexFlow="column" width="100%">
+      <Box flexFlow='column' width='100%'>
         <ModalHeader>
           <Box
-            className="modal-header"
-            width="100%"
-            justifyContent="space-between"
-            alignItems="center"
-            padding="small"
+            className='modal-header'
+            width='100%'
+            justifyContent='space-between'
+            alignItems='center'
+            padding='small'
           >
-            <TypeFace fontSize="xlarge">{title}</TypeFace>
-            <Columns spacing="small">
-              <Button icon={faX} iconSize="large" onClick={_onClose} />
+            <TypeFace fontSize='xlarge'>{title}</TypeFace>
+            <Columns spacing='small'>
+              <Button icon={faX} iconSize='large' onClick={_onClose} />
               {headerContent}
             </Columns>
           </Box>
@@ -116,12 +115,7 @@ export default function Modal({
       </Box>
       <ModalContent>{content}</ModalContent>
       <ModalFooter>
-        <Box
-          className="modal-footer"
-          width="100%"
-          flexFlow="column"
-          padding="medium"
-        >
+        <Box className='modal-footer' width='100%' flexFlow='column' padding='medium'>
           {footerContent}
         </Box>
       </ModalFooter>
