@@ -1,17 +1,17 @@
-import React, { useState, useRef, ReactNode } from "react";
-import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { Properties } from "csstype";
-import Border from "../../layout/Border";
-import Box from "../../layout/Box";
-import TypeFace from "../../layout/TypeFace";
-import MouseArea from "../controlled/MouseArea";
-import { useTheme } from "../../../context/ThemeContext";
-import Icon from "../../media/Icon";
+import React, { useState, useRef, ReactNode } from 'react';
+import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { Properties } from 'csstype';
+import Border from '../../layout/Border';
+import Box from '../../layout/Box';
+import TypeFace from '../../layout/TypeFace';
+import MouseArea from '../controlled/MouseArea';
+import { useTheme } from '../../../context/ThemeContext';
+import Icon from '../../media/Icon';
 
 interface FileDropZoneProps {
-  width: Properties["width"];
-  height: Properties["height"];
-  backgroundColor?: Properties["backgroundColor"];
+  width?: Properties['width'];
+  height?: Properties['height'];
+  backgroundColor?: Properties['backgroundColor'];
   acceptedFileTypes?: string[];
   handleFile: (file: FileList) => void;
   multiple?: boolean;
@@ -32,7 +32,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { isMobileDevice } = useTheme();
   const [fileDropMessage, setFileDropMessage] = useState(
-    isMobileDevice ? "Click to Browse" : "Drop File Here"
+    isMobileDevice ? 'Click to Browse' : 'Drop File Here',
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -67,58 +67,54 @@ export default function FileDropZone(props: FileDropZoneProps) {
   };
 
   return (
-    <Border borderWidth="0.25rem" borderStyle={isHovered ? "solid" : "dashed"}>
+    <Border borderWidth='0.25rem' borderStyle={isHovered ? 'solid' : 'dashed'}>
       <MouseArea
         onPointerEnter={() => {
           if (!isDragging) {
-            setFileDropMessage("Click to Browse");
+            setFileDropMessage('Click to Browse');
           }
           setIsHovered(true);
         }}
         onPointerLeave={() => {
-          setFileDropMessage(
-            isMobileDevice ? "Click to Browse" : "Drop File Here"
-          );
+          setFileDropMessage(isMobileDevice ? 'Click to Browse' : 'Drop File Here');
           setIsHovered(false);
         }}
         onDragOver={(e) => handleDragOver(e)}
         onDragLeave={handleDragLeave}
         onDrop={(e) => handleDrop(e)}
+        onClick={handleClick}
+        cursor='pointer'
       >
         {children ? (
           <>
             {children}
             <input
-              type="file"
+              type='file'
               ref={fileInputRef}
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={handleFileChange}
-              accept={
-                acceptedFileTypes ? acceptedFileTypes.join(",") : undefined
-              }
+              multiple={multiple}
+              accept={acceptedFileTypes ? acceptedFileTypes.join(',') : undefined}
             />
           </>
         ) : (
           <Box
-            flexFlow="column"
+            flexFlow='column'
             width={width}
             height={height}
-            justifyContent="center"
-            alignItems="center"
+            justifyContent='center'
+            alignItems='center'
             backgroundColor={backgroundColor}
-            onClick={handleClick}
           >
-            <Icon icon={faFileArrowDown} iconSize="10%" />
-            <TypeFace fontSize="large">{fileDropMessage}</TypeFace>
+            <Icon icon={faFileArrowDown} iconSize='10%' />
+            <TypeFace fontSize='large'>{fileDropMessage}</TypeFace>
             <input
-              type="file"
+              type='file'
               ref={fileInputRef}
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={handleFileChange}
               multiple={multiple}
-              accept={
-                acceptedFileTypes ? acceptedFileTypes.join(",") : undefined
-              }
+              accept={acceptedFileTypes ? acceptedFileTypes.join(',') : undefined}
             />
           </Box>
         )}

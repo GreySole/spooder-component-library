@@ -4,6 +4,8 @@ export const indexStyle = css`
   :root {
     --interactive-radius: 0.5rem;
     --font-size: 16px;
+    --header-height: 70px;
+    --footer-height: 78px;
     font-size: var(--font-size);
   }
 

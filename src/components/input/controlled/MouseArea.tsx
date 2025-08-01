@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 interface MouseAreaProps {
   children: ReactNode;
@@ -27,6 +27,7 @@ interface MouseAreaProps {
   onDragLeave?: (e: React.DragEvent<HTMLDivElement>) => void;
   onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
   onDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
+  cursor?: React.CSSProperties['cursor'];
 }
 
 export default function MouseArea(props: MouseAreaProps) {
@@ -53,6 +54,7 @@ export default function MouseArea(props: MouseAreaProps) {
     onDragLeave,
     onDragOver,
     onDrop,
+    cursor = 'default',
   } = props;
 
   return (
@@ -78,7 +80,7 @@ export default function MouseArea(props: MouseAreaProps) {
       onDragLeave={onDragLeave}
       onDragOver={onDragOver}
       onDrop={onDrop}
-      style={{ width: "inherit", height: "inherit" }}
+      style={{ width: 'inherit', height: 'inherit', cursor: cursor }}
     >
       {children}
     </div>
