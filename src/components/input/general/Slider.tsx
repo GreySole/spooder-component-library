@@ -169,7 +169,7 @@ const Slider: React.FC<SliderProps> = ({
       }
     : {
         left: orientation === 'horizontal' ? `${value * 100}%` : '50%',
-        top: orientation === 'vertical' ? '50%' : `${(1.0 - value) * 100}%`,
+        top: orientation === 'vertical' ? `${(1.0 - value) * 100}%` : '50%',
       };
 
   const knobStyle = {
