@@ -16,6 +16,7 @@ interface FileDropZoneProps {
   handleFile: (file: FileList) => void;
   multiple?: boolean;
   children?: ReactNode;
+  disableClickToBrowse?: boolean;
 }
 
 export default function FileDropZone(props: FileDropZoneProps) {
@@ -27,6 +28,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
     multiple = false,
     handleFile,
     children,
+    disableClickToBrowse = false,
   } = props;
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -82,7 +84,7 @@ export default function FileDropZone(props: FileDropZoneProps) {
         onDragOver={(e) => handleDragOver(e)}
         onDragLeave={handleDragLeave}
         onDrop={(e) => handleDrop(e)}
-        onClick={handleClick}
+        onClick={disableClickToBrowse ? undefined : handleClick}
         cursor='pointer'
       >
         {children ? (
