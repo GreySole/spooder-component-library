@@ -1,7 +1,8 @@
 import { Properties } from 'csstype';
-import React, { forwardRef, ReactNode } from 'react';
+import React, { forwardRef, ReactNode, use, useEffect, useState } from 'react';
 import { StyleSize, StyleSizeType } from '../../Types';
 import { resolveStyleSize } from '../../util/MediaUtil';
+import { useTheme } from '../../context/ThemeContext';
 
 interface BoxProps {
   children: ReactNode;
@@ -13,6 +14,7 @@ interface BoxProps {
   maxWidth?: Properties['maxWidth'];
   maxHeight?: Properties['maxHeight'];
   flexFlow?: Properties['flexFlow'];
+  mobileFlexFlow?: Properties['flexFlow'];
   alignItems?: Properties['alignItems'];
   justifyContent?: Properties['justifyContent'];
   spacing?: StyleSizeType;
@@ -45,6 +47,7 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
     maxHeight,
     height,
     flexFlow,
+    mobileFlexFlow,
     alignItems,
     textAlign,
     justifyContent,
@@ -55,6 +58,8 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
   },
   ref,
 ) {
+  const { isMobileDevice } = useTheme();
+  const [flexFlowStyle, setFlexFlowStyle] = useState('');
   const paddingStyle = styles.padding
     ? {
         paddingTop: resolveStyleSize(styles.padding),
@@ -83,6 +88,10 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         marginLeft: resolveStyleSize(styles.marginLeft ?? 'none'),
       };
 
+  useEffect(() => {
+    setFlexFlowStyle(isMobileDevice && mobileFlexFlow ? mobileFlexFlow : flexFlow || '');
+  }, [isMobileDevice, mobileFlexFlow, flexFlow]);
+
   return (
     <div
       className={'box ' + (className ? className : '')}
@@ -90,7 +99,7 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
       onClick={onClick}
       style={{
         display: 'flex',
-        flexFlow: flexFlow || undefined,
+        flexFlow: flexFlowStyle,
         alignItems: alignItems || undefined,
         textAlign: textAlign || undefined,
         justifyContent: justifyContent || undefined,

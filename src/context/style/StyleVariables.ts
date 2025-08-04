@@ -59,5 +59,12 @@ export const styleVariables = css`
 
     --default-box-shadow: 0 4px 12px -2px var(--black);
     --lighter-box-shadow: 0 4px 12px -6px var(--black);
+
+    --xsm-screen-width: 320px;
+    --sm-screen-width: 576px;
+    --md-screen-width: 768px;
+    --lg-screen-width: 992px;
+    --xl-screen-width: 1200px;
+    --xxl-screen-width: 1400px;
 }
 `;
