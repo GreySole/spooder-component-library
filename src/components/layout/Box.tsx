@@ -95,7 +95,6 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
         textAlign: textAlign || undefined,
         justifyContent: justifyContent || undefined,
         width: width || undefined,
-        flexBasis: width || undefined,
         height: height || undefined,
         minWidth: minWidth || undefined,
         minHeight: minHeight || undefined,
