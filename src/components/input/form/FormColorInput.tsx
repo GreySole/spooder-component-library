@@ -13,14 +13,14 @@ interface TextInputProps {
 export default function FormColorInput(props: TextInputProps) {
   const { formKey, label, showWarning } = props;
   const { watch, register } = useFormContext();
-  const value = watch(formKey);
+  const value = watch(formKey, '#000');
 
   const forIdPair = label ? `color-${label}` : `color-${formKey}`;
 
   return (
     <label htmlFor={forIdPair}>
       {label}
-      <div className="color-input-container">
+      <div className='color-input-container'>
         <input type='color' value={value} id={forIdPair} {...register(formKey)} />
         {showWarning ? (
           <FontAwesomeIcon
