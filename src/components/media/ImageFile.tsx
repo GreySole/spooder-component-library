@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface ImageProps {
   src: string;
@@ -22,6 +22,10 @@ export default function ImageFile({
   onError,
 }: ImageProps) {
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [src]);
 
   const handleError = () => {
     setHasError(true);

@@ -6,9 +6,9 @@ export const animations = css`
       background-color: transparent;
     }
     50% {
-      background-color: var(--button-save-color);
+      background-color: var(--color-save);
     }
-    0% {
+    100% {
       background-color: transparent;
     }
   }
@@ -45,16 +45,16 @@ export const animations = css`
   }
 
   @keyframes streamReconnecting{
-      0% {background-color:var(--button-obs-color)}
-      49% {background-color:var(--button-obs-color)}
-      50% {background-color:var(--button-obs-streaming)}
-      99% {background-color:var(--button-obs-streaming)}
+      0% {background-color:var(--color-obs)}
+      49% {background-color:var(--color-obs)}
+      50% {background-color:var(--color-obs-streaming)}
+      99% {background-color:var(--color-obs-streaming)}
   }
 
   @keyframes recordingPaused{
-      0% {background-color:var(--button-obs-color)}
-      49% {background-color:var(--button-obs-color)}
-      50% {background-color:var(--button-obs-recording)}
-      99% {background-color:var(--button-obs-recording)}
+      0% {background-color:var(--color-obs)}
+      49% {background-color:var(--color-obs)}
+      50% {background-color:var(--color-obs-recording)}
+      99% {background-color:var(--color-obs-recording)}
   }
   `;

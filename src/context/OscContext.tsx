@@ -78,8 +78,7 @@ export function OscProvider(props: OscProviderProps) {
     });
 
     if (listener !== undefined) {
-      oscListenersRef.current = oscListenersRef.current.splice(removeIndex, 1);
-      console.log(listener);
+      oscListenersRef.current = oscListenersRef.current.filter((_, index) => index !== removeIndex);
       oscRef.current.off(listener.address, listener.subId);
     }
   }, []);

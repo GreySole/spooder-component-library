@@ -18,7 +18,7 @@ export default function FormNumberInput(props: NumberInputProps) {
   const value = watch(formKey);
 
   function setPrecision(value: number) {
-    return precision !== undefined ? value.toFixed(precision) : value;
+    return precision !== undefined ? parseFloat(value.toFixed(precision)) : value;
   }
 
   return (

@@ -26,7 +26,7 @@ export default function RangeInput(props: RangeInputProps) {
         min={min}
         max={max}
         step={step}
-        defaultValue={value}
+        value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
       />
       {showValue ? value : null}

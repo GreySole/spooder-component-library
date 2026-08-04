@@ -80,9 +80,8 @@ export default function Pagination(props: PaginationProps) {
               strokeWidth={2}
             />
             {pageTitles.map((_, index) => (
-              <>
+              <React.Fragment key={index}>
                 <circle
-                  key={index}
                   cx={`${circleSpacing / 2 + index * circleSpacing}%`}
                   cy={`${remHeight / 2 + 1}rem`}
                   r={circleRadius}
@@ -117,7 +116,7 @@ export default function Pagination(props: PaginationProps) {
                   }}
                   style={{ cursor: "pointer" }}
                 />
-              </>
+              </React.Fragment>
             ))}
           </svg>
         </Box>

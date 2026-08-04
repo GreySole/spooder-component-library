@@ -1,9 +1,8 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React, { useRef, useState } from 'react';
-import { icon, IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useTheme } from '../../../context/ThemeContext';
+import { useTooltip } from '../../../context/TooltipContext';
 import { StyleSize, StyleSizeButton, StyleSizeType } from '../../../Types';
 import Icon from '../../media/Icon';
-import { useTooltip } from '../../../context/TooltipContext';
 
 interface ButtonProps {
   className?: string;
@@ -57,6 +56,19 @@ export default function Button(props: ButtonProps) {
     hideTip();
   };
 
+  const handlePointerEnter = () => {
+    if (tooltipText) {
+      showTooltip();
+    }
+  };
+
+  const handlePointerLeave = () => {
+    if (tooltipText) {
+      hideTooltip();
+    }
+    cancelLongPress();
+  };
+
   function convertSizeToStyleSizeFont(size: string | StyleSizeType | undefined) {
     if (!size) {
       return undefined;
@@ -100,7 +112,10 @@ export default function Button(props: ButtonProps) {
       break;
   }
 
-  const handleMouseDown = () => {
+  // Pointer events (not mouse events) so this works for touch/pen as well as
+  // mouse: on touch devices, synthetic mousedown/mouseup fire late (often not
+  // until after touchend), which broke the long-press timer entirely.
+  const handlePointerDown = () => {
     longPressTimeout.current = setTimeout(() => {
       if (onLongPress) {
         onLongPress();
@@ -109,7 +124,7 @@ export default function Button(props: ButtonProps) {
     }, 500); // 500ms threshold for long press
   };
 
-  const handleMouseUp = () => {
+  const handlePointerUp = () => {
     if (longPressTimeout.current) {
       clearTimeout(longPressTimeout.current);
       longPressTimeout.current = null;
@@ -117,7 +132,7 @@ export default function Button(props: ButtonProps) {
     }
   };
 
-  const handleMouseLeave = () => {
+  const cancelLongPress = () => {
     if (longPressTimeout.current) {
       clearTimeout(longPressTimeout.current);
       longPressTimeout.current = null;
@@ -143,14 +158,14 @@ export default function Button(props: ButtonProps) {
   return (
     <button
       className={className}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerLeave}
+      onPointerCancel={cancelLongPress}
       disabled={disabled ?? false}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
-      onPointerEnter={tooltipText ? showTooltip : undefined}
-      onPointerLeave={tooltipText ? hideTooltip : undefined}
+      onPointerEnter={handlePointerEnter}
       onKeyDown={handleKeyDown}
       style={{
         width,
@@ -162,6 +177,7 @@ export default function Button(props: ButtonProps) {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colorOnHover ? (isHovered ? color : undefined) : color,
+        userSelect: 'none',
         ...style,
       }}
     >

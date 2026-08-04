@@ -27,9 +27,13 @@ export default function Border(props: BorderProps) {
     inactiveColor = "transparent",
   } = props;
 
-  const [displayBorderColor, setDisplayBorderColor] = useState(
-    colorOnHover ? inactiveColor : borderColor
-  );
+  const [isHovered, setIsHovered] = useState(false);
+
+  const displayBorderColor = colorOnHover
+    ? isHovered
+      ? borderColor
+      : inactiveColor
+    : borderColor;
 
   const borderStyleValues =
     borderTop || borderRight || borderBottom || borderLeft
@@ -56,12 +60,8 @@ export default function Border(props: BorderProps) {
   return (
     <div
       className="border-component"
-      onMouseOver={
-        colorOnHover ? () => setDisplayBorderColor(borderColor) : () => {}
-      }
-      onMouseOut={
-        colorOnHover ? () => setDisplayBorderColor(inactiveColor) : () => {}
-      }
+      onMouseOver={colorOnHover ? () => setIsHovered(true) : undefined}
+      onMouseOut={colorOnHover ? () => setIsHovered(false) : undefined}
       style={{
         width: "inherit",
         height: "inherit",

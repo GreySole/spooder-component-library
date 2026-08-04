@@ -20,7 +20,7 @@ const Slider: React.FC<SliderProps> = ({
   onChange,
   onDoubleClick,
 }) => {
-  const [grabbed, setGrabbed] = useState(false);
+  const grabbedRef = useRef(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const knobRef = useRef<HTMLDivElement>(null);
   const { themeColors } = useTheme();
@@ -31,7 +31,7 @@ const Slider: React.FC<SliderProps> = ({
 
   const handlePointerMove = useCallback(
     (event: PointerEvent) => {
-      if (!sliderRef.current || !knobRef.current || !grabbed) return;
+      if (!sliderRef.current || !knobRef.current || !grabbedRef.current) return;
       event.preventDefault();
 
       const sliderRect = sliderRef.current.getBoundingClientRect();
@@ -46,6 +46,9 @@ const Slider: React.FC<SliderProps> = ({
       } else {
         const offsetY = event.clientY - sliderRect.top;
         newValue = Math.max(0, Math.min(1, (sliderRect.height - offsetY) / sliderRect.height));
+        if (minMax) {
+          newValue = minMax[0] + newValue * (minMax[1] - minMax[0]);
+        }
       }
       if (step) {
         newValue = parseFloat((Math.round(newValue / step) * step).toFixed(3));
@@ -53,24 +56,27 @@ const Slider: React.FC<SliderProps> = ({
 
       onChange(newValue);
     },
-    [grabbed, orientation, onChange],
+    [orientation, minMax, step, onChange],
   );
 
-  const handlePointerUp = useCallback((event: PointerEvent) => {
-    event.preventDefault();
-    handlePointerMove(event);
-    setGrabbed(false);
-    document.removeEventListener('pointerup', handlePointerUp);
-  }, []);
+  const handlePointerUp = useCallback(
+    (event: PointerEvent) => {
+      event.preventDefault();
+      handlePointerMove(event);
+      grabbedRef.current = false;
+      document.removeEventListener('pointerup', handlePointerUp);
+    },
+    [handlePointerMove],
+  );
 
   const handlePointerDown = useCallback(
     (event: any) => {
       event.preventDefault();
       document.addEventListener('pointerup', handlePointerUp);
-      setGrabbed(true);
+      grabbedRef.current = true;
       handlePointerMove(event);
     },
-    [handlePointerMove],
+    [handlePointerMove, handlePointerUp],
   );
 
   const handleDoubleClick = useCallback(
@@ -113,24 +119,14 @@ const Slider: React.FC<SliderProps> = ({
       return `rgb(${r}, ${g}, ${b})`;
     };
 
+    const normalizedValue = minMax ? (value - minMax[0]) / (minMax[1] - minMax[0]) : value;
+    const effectiveFraction = orientation === 'horizontal' ? normalizedValue : 1.0 - normalizedValue;
+
     const segment = 1 / (gradientColors.length - 1);
-    const index = Math.floor(value / segment);
+    const index = Math.min(Math.floor(effectiveFraction / segment), gradientColors.length - 1);
+    const factor = (effectiveFraction - index * segment) / segment;
 
-    let factor = 0;
-
-    if (orientation === 'horizontal') {
-      factor = (value - index * segment) / segment;
-      if (minMax) {
-        factor = factor * (minMax[1] - minMax[0]) + minMax[0];
-      }
-    } else {
-      factor = 1.0 - (value - index * segment) / segment;
-      if (minMax) {
-        factor = 1.0 - (factor * (minMax[1] - minMax[0]) + minMax[0]);
-      }
-    }
-
-    const forwardIndex = segment === index ? index : Math.min(index + 1, gradientColors.length - 1);
+    const forwardIndex = Math.min(index + 1, gradientColors.length - 1);
 
     return interpolateColor(gradientColors[index], gradientColors[forwardIndex], factor);
   };

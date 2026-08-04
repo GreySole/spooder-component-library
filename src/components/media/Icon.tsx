@@ -1,6 +1,6 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSize } from '../../Types';
 import SvgIcon from './SvgIcon';
 import { useTheme } from '../../context/ThemeContext';
@@ -18,6 +18,10 @@ export default function Icon(props: IconProps) {
   const { icon, iconSize, fallbackIcon, clip } = props;
   const { themeVariables } = useTheme();
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [icon]);
 
   const iconColor = props.iconColor || (themeVariables.isDarkTheme ? 'white' : 'black');
 
@@ -66,6 +70,7 @@ export default function Icon(props: IconProps) {
           width={size}
           height={size}
           src={icon}
+          clip={clip}
           onError={() => {
             handleError();
           }}

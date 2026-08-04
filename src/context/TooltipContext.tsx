@@ -45,7 +45,7 @@ export function TooltipProvider(props: TooltipProps) {
   const flipY = mouseCoords.y < tooltipHeight * 2;
 
   const positionCalc = {
-    top: flipY ? `calc(${mouseCoords.y}px) + 20px` : `unset`,
+    top: flipY ? `calc(${mouseCoords.y}px + 20px)` : `unset`,
     left: flipX ? `unset` : `calc(${mouseCoords.x}px + var(--font-size))`,
     bottom: flipY ? `unset` : `calc(${screenHeight}px - ${mouseCoords.y}px)`,
     right: flipX ? `calc(${screenWidth}px - ${mouseCoords.x}px + var(--font-size))` : `unset`,

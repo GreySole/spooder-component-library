@@ -294,8 +294,9 @@ export function ThemeProvider({ theme, spooder, children }: ThemeProviderProps) 
   });
 
   const handleResize = () => {
-    setIsMobileDevice(/Mobi|Android/i.test(window.navigator.userAgent) || window.innerWidth <= 900);
-    applyThemeColors(themeColors, isMobileDevice);
+    const isMobile = /Mobi|Android/i.test(window.navigator.userAgent) || window.innerWidth <= 900;
+    setIsMobileDevice(isMobile);
+    applyThemeColors(themeColors, isMobile);
   };
 
   useEffect(() => {
