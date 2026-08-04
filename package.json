@@ -4,7 +4,7 @@
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.cjs.js",
@@ -22,7 +22,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@greysole/osc-js": "^2.4.1",
+    "@spooder/osc-js": "^2.4.8",
     "@spooder/webui-component-library": "file:",
     "react-color": "^2.19.3",
     "react-input-color": "^4.0.1",

@@ -1,13 +1,13 @@
+import OSC from '@spooder/osc-js';
 import React, {
   createContext,
-  useState,
-  useEffect,
   ReactNode,
-  useContext,
   useCallback,
+  useContext,
+  useEffect,
   useRef,
+  useState,
 } from 'react';
-import OSC from '@greysole/osc-js';
 import { KeyedObject } from '../Types';
 
 export const OscContext = createContext({
@@ -20,21 +20,24 @@ export const OscContext = createContext({
 interface OscProviderProps {
   host: string;
   port: number;
+  tag?: string;
   children: ReactNode;
 }
 
 export function OscProvider(props: OscProviderProps) {
-  const { host, port, children } = props;
+  const { host, port, tag, children } = props;
   const [isReady, setIsReady] = useState(false);
   const oscRef = useRef<OSC | undefined>(undefined);
   const oscListenersRef = useRef<KeyedObject[]>([]);
 
   useEffect(() => {
-    console.log('OSC Provider', host, port);
-    const url = port ? `ws://${host}:${port}/osc` : `wss://${host}/osc`;
+    const path = tag !== undefined ? `/osc/${tag}` : '/osc';
     const osc = new OSC({
       plugin: new OSC.WebsocketClientPlugin({
-        url: url,
+        host,
+        port: port || undefined,
+        secure: !port,
+        path,
       }),
     });
     osc.on('open', () => {
@@ -54,7 +57,7 @@ export function OscProvider(props: OscProviderProps) {
       setIsReady(false);
       oscListenersRef.current = [];
     };
-  }, [host, port]);
+  }, [host, port, tag]);
 
   const addListener = useCallback((address: string, callback: (message: any) => void) => {
     if (!oscRef.current) {
