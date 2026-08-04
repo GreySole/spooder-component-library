@@ -1,9 +1,11 @@
 {
-  "name": "@greysole/spooder-component-library",
+  "name": "@spooder/webui-component-library",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/greysole"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "version": "0.1.450",
+  "license": "MIT",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -21,7 +23,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@greysole/osc-js": "^2.4.1",
-    "@greysole/spooder-component-library": "file:",
+    "@spooder/webui-component-library": "file:",
     "react-color": "^2.19.3",
     "react-input-color": "^4.0.1",
     "react-svg": "^16.2.0",
