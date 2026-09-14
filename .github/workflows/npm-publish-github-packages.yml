@@ -5,23 +5,26 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Authenticate with GitHub Package Registry
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          echo "@greysole:registry=https://npm.pkg.github.com" >> ~/.npmrc
+      - name: Update npm for staged trusted publishing support
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: npm install
@@ -29,7 +32,5 @@ jobs:
       - name: Build the package
         run: npm run build
 
-      - name: Publish to GitHub Packages
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Stage publish to npm
+        run: npm stage publish --provenance
