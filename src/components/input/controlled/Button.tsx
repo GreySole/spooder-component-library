@@ -1,5 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTooltip } from '../../../context/TooltipContext';
 import { StyleSize, StyleSizeButton, StyleSizeType } from '../../../Types';
 import Icon from '../../media/Icon';
@@ -47,12 +47,23 @@ export default function Button(props: ButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
   const { showTip, hideTip } = useTooltip();
+  // hideTip's identity changes every render (TooltipProvider isn't memoized), so it's read
+  // through a ref rather than listed as an effect dependency - that would tear the unmount
+  // cleanup below down and rebuild it on every render instead of only at unmount.
+  const hideTipRef = useRef(hideTip);
+  hideTipRef.current = hideTip;
+  // Whether THIS button is the one currently showing the (single, app-wide) tooltip - so the
+  // unmount cleanup below only hides it if this instance owns it, rather than hiding whatever
+  // unrelated button's tooltip happens to be open elsewhere.
+  const isTipShowingRef = useRef(false);
 
   const showTooltip = () => {
+    isTipShowingRef.current = true;
     showTip(tooltipText);
   };
 
   const hideTooltip = () => {
+    isTipShowingRef.current = false;
     hideTip();
   };
 
@@ -68,6 +79,18 @@ export default function Button(props: ButtonProps) {
     }
     cancelLongPress();
   };
+
+  // A click often removes this button from the tree before any pointerleave can fire (e.g. it
+  // becomes disabled, or its parent stops rendering it once the action completes) - the pointer
+  // is still physically over the cursor's old position, but there's no element left to leave,
+  // so its tooltip would otherwise stay on screen until something else happens to hide it.
+  useEffect(() => {
+    return () => {
+      if (isTipShowingRef.current) {
+        hideTipRef.current();
+      }
+    };
+  }, []);
 
   function convertSizeToStyleSizeFont(size: string | StyleSizeType | undefined) {
     if (!size) {

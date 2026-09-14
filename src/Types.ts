@@ -1,9 +1,16 @@
 import { Key } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface FilterProps {
   label: string;
   icon: any;
   value: string;
+}
+
+export interface ExpandableIcon {
+  icon: IconProp | string;
+  iconColor?: string;
+  tooltipText?: string;
 }
 
 export enum OSCConditionType {

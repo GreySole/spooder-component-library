@@ -1,23 +1,28 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import Box from "./Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretUp, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import Columns from "./Columns";
 import TypeFace from "./TypeFace";
-import { StyleSize, StyleSizeType } from "../../Types";
+import { ExpandableIcon, StyleSize, StyleSizeType } from "../../Types";
 import Icon from "../media/Icon";
 import Border from "./Border";
+import { useTooltip } from "../../context/TooltipContext";
 
 interface ExpandableProps {
   label: string;
   children: ReactNode;
   fontSize?: StyleSizeType;
   forceOpen?: boolean;
+  // Shown between the label and the expand/collapse indicator - e.g. which trigger kinds an
+  // event group holds, or that the group is disabled. Order is caller-controlled.
+  icons?: ExpandableIcon[];
 }
 
 export default function Expandable(props: ExpandableProps) {
-  const { label, fontSize, forceOpen, children } = props;
+  const { label, fontSize, forceOpen, children, icons } = props;
   const [open, setOpen] = useState<boolean>(forceOpen ? true : false);
+  const { showTip, hideTip } = useTooltip();
 
   useEffect(() => {
     if (forceOpen) {
@@ -39,10 +44,23 @@ export default function Expandable(props: ExpandableProps) {
           onClick={(e) => setOpen(!open)}
           marginLeft="medium"
         >
+          <Icon icon={open ? faCaretUp : faCaretDown} iconSize="large" />
           <TypeFace fontSize={fontSize ?? "xlarge"} userSelect="none">
             {label}
           </TypeFace>
-          <Icon icon={open ? faMinus : faPlus} iconSize="large" />
+          {icons && icons.length > 0 ? (
+            <Columns spacing="small">
+              {icons.map((entry, index) => (
+                <span
+                  key={index}
+                  onPointerEnter={() => entry.tooltipText && showTip(entry.tooltipText)}
+                  onPointerLeave={() => entry.tooltipText && hideTip()}
+                >
+                  <Icon icon={entry.icon} iconSize="medium" iconColor={entry.iconColor} />
+                </span>
+              ))}
+            </Columns>
+          ) : null}
         </Columns>
         {open ? children : undefined}
       </Box>
