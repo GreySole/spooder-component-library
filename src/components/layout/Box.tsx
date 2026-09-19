@@ -30,6 +30,8 @@ interface BoxProps {
   marginLeft?: StyleSizeType | string;
   backgroundColor?: Properties['backgroundColor'];
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void;
   style?: React.CSSProperties;
 }
 
@@ -38,6 +40,8 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
     children,
     className,
     onClick,
+    onMouseEnter,
+    onMouseLeave,
     width,
     minWidth,
     maxWidth,
@@ -88,6 +92,8 @@ export default forwardRef<HTMLDivElement, BoxProps>(function Box(
       className={'box ' + (className ? className : '')}
       ref={ref}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       style={{
         display: 'flex',
         flexFlow: flexFlow || undefined,

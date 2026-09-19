@@ -149,7 +149,7 @@ export default function MultiPageModal({
           width='100%'
           flexFlow='row'
           justifyContent='space-between'
-          padding='medium'
+          padding='small'
         >
           <Pagination
             pageTitles={pages.map((page) => page.title)}
@@ -157,6 +157,7 @@ export default function MultiPageModal({
             handleCircleClick={handleCircleClick}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
+            compact
           />
           {footerContent}
         </Box>

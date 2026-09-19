@@ -16,6 +16,8 @@ interface PaginationProps {
   handleCircleClick?: (page: number) => void;
   handleNext?: () => void;
   handlePrevious?: () => void;
+  // A shorter strip for a footer where every row counts: a smaller title and dot track.
+  compact?: boolean;
 }
 
 export default function Pagination(props: PaginationProps) {
@@ -25,6 +27,7 @@ export default function Pagination(props: PaginationProps) {
     handleCircleClick,
     handleNext,
     handlePrevious,
+    compact,
   } = props;
 
   const [hoveredText, setHoveredText] = useState<KeyedObject>({
@@ -32,10 +35,10 @@ export default function Pagination(props: PaginationProps) {
     position: -1,
   });
 
-  const circleRadius = "0.75rem";
+  const circleRadius = compact ? "0.5rem" : "0.75rem";
 
   const circleSpacing = (1 / pageTitles.length) * 100;
-  const remHeight = 2;
+  const remHeight = compact ? 1.25 : 2;
   const svgHeight = `${remHeight + 1}rem`;
 
   const isAtEnd = currentPage === pageTitles.length - 1;
@@ -53,7 +56,11 @@ export default function Pagination(props: PaginationProps) {
         />
       ) : null}
       <Box flexFlow="column" width="100%">
-        <TypeFace fontSize="large" textAlign="center" fontWeight="bold">
+        <TypeFace
+          fontSize={compact ? "medium" : "large"}
+          textAlign="center"
+          fontWeight="bold"
+        >
           {pageTitles[currentPage]}
         </TypeFace>
         <Box width="100%">
